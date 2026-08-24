@@ -240,10 +240,19 @@ function showGoogleAuthModal() {
   if (modal) {
     modal.classList.remove("hidden");
     renderGoogleAccountsList();
+    const accounts = getDeviceGoogleAccounts();
     const inputSection = document.getElementById("googleCustomInputSection");
-    if (inputSection) inputSection.classList.add("hidden");
+    if (inputSection) {
+      if (accounts.length === 0) {
+        inputSection.classList.remove("hidden");
+      } else {
+        inputSection.classList.add("hidden");
+      }
+    }
     const emailInput = document.getElementById("googleDirectEmail");
-    if (emailInput) emailInput.value = "";
+    if (emailInput && accounts.length === 0) {
+      emailInput.focus();
+    }
   }
 }
 
