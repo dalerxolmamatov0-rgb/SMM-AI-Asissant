@@ -78,6 +78,8 @@ class AuthService:
                 detail="Google akkauntidan email ma'lumotlarini olib bo'lmadi"
             )
 
+        email = str(email).strip().lower()
+
         # Foydalanuvchini bazadan qidirish
         user = db.query(User).filter(User.email == email).first()
         if not user:

@@ -29,9 +29,12 @@ app = FastAPI(
 
 @app.on_event("startup")
 async def startup_event():
-    import asyncio
-    from app.services.telegram_bot_poller import start_telegram_poller
-    asyncio.create_task(start_telegram_poller())
+    import os
+    # Vercel serverless muhitida cheksiz polling vazifasini ishga tushirmaymiz (timeout bo'lmasligi uchun)
+    if not os.getenv("VERCEL"):
+        import asyncio
+        from app.services.telegram_bot_poller import start_telegram_poller
+        asyncio.create_task(start_telegram_poller())
 
 # CORS sozlamalari
 app.add_middleware(
