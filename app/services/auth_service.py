@@ -10,17 +10,29 @@ from app.config import settings
 class AuthService:
     @staticmethod
     def register_user(db: Session, user_data: UserRegister) -> User:
+        email = str(user_data.email).strip().lower()
+        name = str(user_data.name).strip()
+
         # Email bandligini tekshirish
-        existing_user = db.query(User).filter(User.email == user_data.email).first()
+        existing_user = db.query(User).filter(User.email == email).first()
         if existing_user:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Ushbu elektron pochta manzili allaqachon ro'yxatdan o'tgan"
-            )
+            # Agar foydalanuvchi avvalroq Google orqali kirgan bo'lsa yoki yangilamoqchi bo'lsa
+            if existing_user.auth_provider == "google" or not existing_user.password_hash:
+                existing_user.password_hash = hash_password(user_data.password)
+                if name:
+                    existing_user.name = name
+                db.commit()
+                db.refresh(existing_user)
+                return existing_user
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Ushbu elektron pochta manzili allaqachon ro'yxatdan o'tgan. Iltimos, Kirish bo'limidan kiring."
+                )
 
         new_user = User(
-            name=user_data.name,
-            email=user_data.email,
+            name=name,
+            email=email,
             password_hash=hash_password(user_data.password),
             auth_provider="local"
         )
@@ -31,7 +43,8 @@ class AuthService:
 
     @staticmethod
     def authenticate_user(db: Session, login_data: UserLogin) -> dict:
-        user = db.query(User).filter(User.email == login_data.email).first()
+        email = str(login_data.email).strip().lower()
+        user = db.query(User).filter(User.email == email).first()
         if not user or not verify_password(login_data.password, user.password_hash):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,

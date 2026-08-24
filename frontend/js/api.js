@@ -60,14 +60,25 @@ const API = {
       const data = await response.json().catch(() => null);
 
       if (!response.ok) {
-        const errorMsg = data?.detail || data?.message || "Serverda xatolik yuz berdi.";
+        let errorMsg = "Serverda xatolik yuz berdi.";
+        if (data) {
+          if (typeof data.detail === "string") {
+            errorMsg = data.detail;
+          } else if (Array.isArray(data.detail) && data.detail.length > 0) {
+            errorMsg = data.detail.map(d => d.msg || d).join(", ");
+          } else if (data.detail && typeof data.detail === "object") {
+            errorMsg = data.detail.msg || JSON.stringify(data.detail);
+          } else if (data.message) {
+            errorMsg = data.message;
+          }
+        }
         throw new Error(errorMsg);
       }
 
       return data;
     } catch (err) {
       if (!options.silent && typeof showToast === "function") {
-        let msg = err.message;
+        let msg = err.message || "Xatolik yuz berdi";
         if (msg === "Failed to fetch" || msg.includes("fetch")) {
           msg = "Internet yoki server bilan aloqa yo'q.";
         }
