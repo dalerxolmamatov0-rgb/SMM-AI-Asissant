@@ -131,13 +131,23 @@ function handleGoogleLogin() {
       setGoogleButtonLoading(false);
     }
   } else {
-    showToast("Google xizmati yuklanmoqda, iltimos qayta urinib ko'ring", "info");
+    // Direct OAuth 2.0 Web Popup Fallback
+    try {
+      const redirectUri = encodeURIComponent(window.location.origin);
+      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(googleClientId)}&response_type=token&scope=openid%20email%20profile&prompt=select_account&redirect_uri=${redirectUri}`;
+      const popup = window.open(authUrl, "GoogleSignIn", "width=500,height=600,menubar=no,toolbar=no,status=no");
+      if (!popup) {
+        showToast("Brauzeringizda popup bloklangan. Iltimos, popup oynalarga ruxsat bering.", "warning");
+      }
+    } catch (e) {
+      showToast("Google xizmati yuklanmoqda, iltimos qayta urinib ko'ring", "info");
+    }
     setGoogleButtonLoading(false);
   }
 }
 
 function setGoogleButtonLoading(isLoading) {
-  const loginBtn = document.getElementById("btnGoogleAuthLogin");
+  const loginBtn = document.getElementById("google-login") || document.getElementById("btnGoogleAuthLogin");
   const regBtn = document.getElementById("btnGoogleAuthRegister");
   const loginText = document.getElementById("googleLoginBtnText");
   const regText = document.getElementById("googleRegisterBtnText");
