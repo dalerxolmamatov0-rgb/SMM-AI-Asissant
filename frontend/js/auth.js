@@ -1,7 +1,5 @@
-/**
- * Authentication and User Session Controller
- * Dedicated Email/Password Register & Login + Optional Google OAuth
- */
+let googleTokenClient = null;
+let googleClientId = "1084877712345-gsiwebclientappforaismm.apps.googleusercontent.com";
 
 function initAuth() {
   const token = API.getToken();
@@ -23,6 +21,113 @@ function initAuth() {
   document.getElementById("registerForm")?.addEventListener("submit", handleRegisterSubmit);
   document.getElementById("googleDirectLoginForm")?.addEventListener("submit", handleGoogleDirectSubmit);
   document.getElementById("btnLogout")?.addEventListener("click", handleLogout);
+
+  // Initialize Google Identity Services (GIS)
+  initGoogleAuthSDK();
+}
+
+/**
+ * Initialize Google Identity Services SDK for Native Account Chooser
+ */
+function initGoogleAuthSDK() {
+  // Fetch Google Client ID from backend
+  fetch("/api/auth/config")
+    .then(res => res.json())
+    .then(cfg => {
+      if (cfg && cfg.google_client_id) {
+        googleClientId = cfg.google_client_id;
+      }
+      setupGoogleGIS();
+    })
+    .catch(() => {
+      setupGoogleGIS();
+    });
+}
+
+function setupGoogleGIS() {
+  if (typeof google !== "undefined" && google.accounts) {
+    // 1. One Tap & Credential response
+    google.accounts.id.initialize({
+      client_id: googleClientId,
+      callback: handleGoogleGISCredential,
+      cancel_on_tap_outside: false
+    });
+
+    // 2. Render Google Button in GIS container if present
+    const btnContainer = document.getElementById("googleGisButton");
+    if (btnContainer) {
+      google.accounts.id.renderButton(btnContainer, {
+        theme: "filled_blue",
+        size: "large",
+        shape: "pill",
+        text: "continue_with",
+        width: 280
+      });
+    }
+
+    // 3. OAuth 2.0 Token Client with prompt: 'select_account'
+    if (google.accounts.oauth2) {
+      googleTokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: googleClientId,
+        scope: "email profile openid",
+        prompt: "select_account",
+        callback: async (tokenResponse) => {
+          if (tokenResponse && tokenResponse.access_token) {
+            await fetchGoogleUserInfo(tokenResponse.access_token);
+          }
+        }
+      });
+    }
+  } else {
+    // Retry in 1 second if SDK is still loading
+    setTimeout(setupGoogleGIS, 1000);
+  }
+}
+
+/**
+ * Handle Google One-Tap / ID Token Callback
+ */
+async function handleGoogleGISCredential(response) {
+  if (response && response.credential) {
+    try {
+      const base64Url = response.credential.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+      const profile = JSON.parse(jsonPayload);
+
+      await executeGoogleLogin({
+        credential: response.credential,
+        email: profile.email,
+        name: profile.name || profile.given_name || profile.email.split("@")[0],
+        avatar_url: profile.picture
+      });
+    } catch {
+      await executeGoogleLogin({ credential: response.credential });
+    }
+  }
+}
+
+/**
+ * Fetch Google Profile via UserInfo endpoint after account selection
+ */
+async function fetchGoogleUserInfo(accessToken) {
+  try {
+    showToast("Google hisobingiz tasdiqlanmoqda... ⏳", "info");
+    const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    if (res.ok) {
+      const profile = await res.json();
+      await executeGoogleLogin({
+        email: profile.email,
+        name: profile.name || profile.given_name || profile.email.split("@")[0],
+        avatar_url: profile.picture
+      });
+      return;
+    }
+  } catch (err) {
+    console.log("UserInfo fetch error:", err);
+  }
 }
 
 /**
@@ -53,15 +158,26 @@ function closeAuthModal() {
 }
 
 /**
- * Open Google OAuth Modal
+ * User clicks "Google bilan davom etish"
+ * Triggers Google's native device account chooser!
  */
-function openGoogleChooserModal() {
+function handleGoogleLogin() {
   closeAuthModal();
-  showGoogleAuthModal();
+
+  if (googleTokenClient) {
+    // Request Google native account picker popup
+    googleTokenClient.requestAccessToken({ prompt: "select_account" });
+  } else if (typeof google !== "undefined" && google.accounts && google.accounts.id) {
+    google.accounts.id.prompt();
+    showGoogleAuthModal();
+  } else {
+    // Direct modal fallback
+    showGoogleAuthModal();
+  }
 }
 
-function handleGoogleLogin() {
-  openGoogleChooserModal();
+function openGoogleChooserModal() {
+  handleGoogleLogin();
 }
 
 function showGoogleAuthModal() {
