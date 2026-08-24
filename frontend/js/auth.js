@@ -108,28 +108,31 @@ function closeAuthModal() {
 }
 
 /**
- * Default starter Google accounts for first-time visitors
+ * Device-saved Google accounts (starts empty for every device)
  */
-const DEFAULT_GOOGLE_ACCOUNTS = [
-  { name: "Daler Xolmamatov", email: "dalerxolmamatov0@gmail.com", avatar: "🦅", bgColor: "bg-[#1e293b]" },
-  { name: "Roblox Game", email: "robloxgamee1227@gmail.com", avatar: "🎮", bgColor: "bg-[#0f3443]" },
-  { name: "SMM Creator Pro", email: "creator.smm@gmail.com", avatar: "⚡", bgColor: "bg-[#7c3aed]" }
-];
+const DEFAULT_GOOGLE_ACCOUNTS = [];
 
 /**
- * Get device-saved Google accounts
+ * Get device-saved Google accounts for THIS specific device only
  */
 function getDeviceGoogleAccounts() {
   try {
+    // Clear old legacy test cache if present
+    if (!localStorage.getItem("smm_accounts_cleaned_v3")) {
+      localStorage.removeItem("smm_device_google_accounts");
+      localStorage.setItem("smm_accounts_cleaned_v3", "true");
+      return [];
+    }
+
     const raw = localStorage.getItem("smm_device_google_accounts");
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      if (Array.isArray(parsed)) return parsed;
     }
   } catch (e) {
     // fallback
   }
-  return DEFAULT_GOOGLE_ACCOUNTS;
+  return [];
 }
 
 /**
@@ -166,18 +169,21 @@ function removeDeviceGoogleAccount(email) {
  */
 function renderGoogleAccountsList() {
   const container = document.getElementById("deviceGoogleAccountsList");
+  const formSection = document.getElementById("googleCustomInputSection");
   if (!container) return;
 
   const accounts = getDeviceGoogleAccounts();
+  
   if (accounts.length === 0) {
-    container.innerHTML = `
-      <div class="py-4 text-center text-xs text-slate-400">
-        Qurilmada saqlangan hisoblar yo'q. Quyidagi tugma orqali yangi hisob qo'shing.
-      </div>
-    `;
+    // No accounts on this device yet: show the input form directly
+    container.innerHTML = "";
+    if (formSection) {
+      formSection.classList.remove("hidden");
+    }
     return;
   }
 
+  // If accounts exist on this device, display them
   let html = "";
   accounts.forEach(acc => {
     const initial = acc.avatar || (acc.name ? acc.name.charAt(0).toUpperCase() : "G");
