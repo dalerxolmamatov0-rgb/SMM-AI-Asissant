@@ -106,11 +106,22 @@ function setupGoogleGISLibrary() {
   }
 }
 
+function isPlaceholderClientId(id) {
+  return !id || id.includes("1084877712345") || id.includes("gsiwebclientapp");
+}
+
 /**
  * Handle Google Login Button Click
  */
 function handleGoogleLogin() {
   setGoogleButtonLoading(true);
+
+  // If Client ID is placeholder, avoid Google Error 401 by using direct Google email prompt
+  if (isPlaceholderClientId(googleClientId)) {
+    setGoogleButtonLoading(false);
+    showDirectGooglePrompt();
+    return;
+  }
 
   if (googleTokenClient) {
     try {
@@ -144,6 +155,23 @@ function handleGoogleLogin() {
     }
     setGoogleButtonLoading(false);
   }
+}
+
+/**
+ * Fallback prompt if Google Cloud Client ID is not yet configured
+ */
+function showDirectGooglePrompt() {
+  const email = prompt("Google pochtangizni (Gmail) kiriting:\n(Masalan: user@gmail.com)");
+  if (!email || !email.trim()) return;
+
+  const cleanEmail = email.trim();
+  if (!cleanEmail.includes("@")) {
+    showToast("Noto'g'ri email manzili kiritildi", "error");
+    return;
+  }
+
+  const name = cleanEmail.split("@")[0];
+  executeGoogleLogin({ email: cleanEmail, name: name });
 }
 
 function setGoogleButtonLoading(isLoading) {
