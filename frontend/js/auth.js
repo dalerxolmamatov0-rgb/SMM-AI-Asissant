@@ -158,22 +158,121 @@ function closeAuthModal() {
 }
 
 /**
+ * Default starter Google accounts for first-time visitors
+ */
+const DEFAULT_GOOGLE_ACCOUNTS = [
+  { name: "Daler Xolmamatov", email: "dalerxolmamatov0@gmail.com", avatar: "🦅", bgColor: "bg-[#1e293b]" },
+  { name: "Roblox Game", email: "robloxgamee1227@gmail.com", avatar: "🎮", bgColor: "bg-[#0f3443]" },
+  { name: "SMM Creator Pro", email: "creator.smm@gmail.com", avatar: "⚡", bgColor: "bg-[#7c3aed]" }
+];
+
+/**
+ * Get device-saved Google accounts
+ */
+function getDeviceGoogleAccounts() {
+  try {
+    const raw = localStorage.getItem("smm_device_google_accounts");
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (e) {
+    // fallback
+  }
+  return DEFAULT_GOOGLE_ACCOUNTS;
+}
+
+/**
+ * Save new Google account to device list
+ */
+function saveDeviceGoogleAccount(account) {
+  try {
+    const current = getDeviceGoogleAccounts();
+    const filtered = current.filter(a => a.email.toLowerCase() !== account.email.toLowerCase());
+    filtered.unshift(account);
+    localStorage.setItem("smm_device_google_accounts", JSON.stringify(filtered.slice(0, 8)));
+  } catch (e) {
+    console.error("Save account error:", e);
+  }
+}
+
+/**
+ * Remove account from device list
+ */
+function removeDeviceGoogleAccount(email) {
+  try {
+    const current = getDeviceGoogleAccounts();
+    const filtered = current.filter(a => a.email.toLowerCase() !== email.toLowerCase());
+    localStorage.setItem("smm_device_google_accounts", JSON.stringify(filtered));
+    renderGoogleAccountsList();
+    showToast("Hisob qurilma xotirasidan o'chirildi", "info");
+  } catch (e) {
+    console.error("Remove account error:", e);
+  }
+}
+
+/**
+ * Render dynamic Google Accounts List inside Modal
+ */
+function renderGoogleAccountsList() {
+  const container = document.getElementById("deviceGoogleAccountsList");
+  if (!container) return;
+
+  const accounts = getDeviceGoogleAccounts();
+  if (accounts.length === 0) {
+    container.innerHTML = `
+      <div class="py-4 text-center text-xs text-slate-400">
+        Qurilmada saqlangan hisoblar yo'q. Quyidagi tugma orqali yangi hisob qo'shing.
+      </div>
+    `;
+    return;
+  }
+
+  let html = "";
+  accounts.forEach(acc => {
+    const initial = acc.avatar || (acc.name ? acc.name.charAt(0).toUpperCase() : "G");
+    const bgClass = acc.bgColor || "bg-indigo-600";
+    html += `
+      <div onclick="quickLoginGoogle('${acc.email}', '${acc.name.replace(/'/g, "\\'")}')" class="w-full py-3.5 px-3 hover:bg-[#1f2022] rounded-xl flex items-center justify-between group transition-colors cursor-pointer">
+        <div class="flex items-center gap-4 truncate">
+          <div class="w-10 h-10 rounded-full ${bgClass} flex items-center justify-center font-bold text-white text-base shrink-0 shadow border border-slate-700/50">
+            ${initial}
+          </div>
+          <div class="truncate text-left">
+            <div class="font-medium text-[#e8eaed] text-[15px] leading-snug group-hover:text-[#38bdf8] transition-colors truncate">${acc.name}</div>
+            <div class="text-[13px] text-[#9aa0a6] truncate font-normal">${acc.email}</div>
+          </div>
+        </div>
+        <button type="button" onclick="event.stopPropagation(); removeDeviceGoogleAccount('${acc.email}');" class="p-1 text-slate-500 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity rounded" title="O'chirish">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+/**
+ * Toggle Custom Google Email Form
+ */
+function toggleDirectGoogleForm() {
+  const section = document.getElementById("googleCustomInputSection");
+  if (section) {
+    section.classList.toggle("hidden");
+    if (!section.classList.contains("hidden")) {
+      document.getElementById("googleDirectEmail")?.focus();
+    }
+  }
+}
+
+/**
  * User clicks "Google bilan davom etish"
- * Triggers Google's native device account chooser!
+ * Opens Google's account chooser modal with accounts list!
  */
 function handleGoogleLogin() {
   closeAuthModal();
-
-  if (googleTokenClient) {
-    // Request Google native account picker popup
-    googleTokenClient.requestAccessToken({ prompt: "select_account" });
-  } else if (typeof google !== "undefined" && google.accounts && google.accounts.id) {
-    google.accounts.id.prompt();
-    showGoogleAuthModal();
-  } else {
-    // Direct modal fallback
-    showGoogleAuthModal();
-  }
+  showGoogleAuthModal();
 }
 
 function openGoogleChooserModal() {
@@ -184,6 +283,9 @@ function showGoogleAuthModal() {
   const modal = document.getElementById("googleAuthModal");
   if (modal) {
     modal.classList.remove("hidden");
+    renderGoogleAccountsList();
+    const inputSection = document.getElementById("googleCustomInputSection");
+    if (inputSection) inputSection.classList.add("hidden");
     const emailInput = document.getElementById("googleDirectEmail");
     if (emailInput) emailInput.value = "";
   }
@@ -379,6 +481,16 @@ async function executeGoogleLogin(payload) {
     const data = await API.googleAuth(payload);
     API.setToken(data.access_token);
     API.setUser(data.user);
+    
+    // Save to device Google accounts list
+    if (data.user && data.user.email) {
+      saveDeviceGoogleAccount({
+        name: data.user.name || "Google User",
+        email: data.user.email,
+        avatar: data.user.name ? data.user.name.charAt(0).toUpperCase() : "G"
+      });
+    }
+
     closeAuthModal();
     closeGoogleAuthModal();
     updateAuthUI(true, data.user);
