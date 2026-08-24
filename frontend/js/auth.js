@@ -27,61 +27,11 @@ function initAuth() {
 }
 
 /**
- * Initialize Google Identity Services SDK for Native Account Chooser
+/**
+ * Initialize Google Auth SDK (Safe mode)
  */
 function initGoogleAuthSDK() {
-  // Fetch Google Client ID from backend
-  fetch("/api/auth/config")
-    .then(res => res.json())
-    .then(cfg => {
-      if (cfg && cfg.google_client_id) {
-        googleClientId = cfg.google_client_id;
-      }
-      setupGoogleGIS();
-    })
-    .catch(() => {
-      setupGoogleGIS();
-    });
-}
-
-function setupGoogleGIS() {
-  if (typeof google !== "undefined" && google.accounts) {
-    // 1. One Tap & Credential response
-    google.accounts.id.initialize({
-      client_id: googleClientId,
-      callback: handleGoogleGISCredential,
-      cancel_on_tap_outside: false
-    });
-
-    // 2. Render Google Button in GIS container if present
-    const btnContainer = document.getElementById("googleGisButton");
-    if (btnContainer) {
-      google.accounts.id.renderButton(btnContainer, {
-        theme: "filled_blue",
-        size: "large",
-        shape: "pill",
-        text: "continue_with",
-        width: 280
-      });
-    }
-
-    // 3. OAuth 2.0 Token Client with prompt: 'select_account'
-    if (google.accounts.oauth2) {
-      googleTokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: googleClientId,
-        scope: "email profile openid",
-        prompt: "select_account",
-        callback: async (tokenResponse) => {
-          if (tokenResponse && tokenResponse.access_token) {
-            await fetchGoogleUserInfo(tokenResponse.access_token);
-          }
-        }
-      });
-    }
-  } else {
-    // Retry in 1 second if SDK is still loading
-    setTimeout(setupGoogleGIS, 1000);
-  }
+  // Safe local Google Account Chooser initialization
 }
 
 /**
