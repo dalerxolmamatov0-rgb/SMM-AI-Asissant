@@ -19,6 +19,7 @@ function initAuth() {
   // Bind Form Submit Handlers
   document.getElementById("loginForm")?.addEventListener("submit", handleLoginSubmit);
   document.getElementById("registerForm")?.addEventListener("submit", handleRegisterSubmit);
+  document.getElementById("google-login")?.addEventListener("click", handleGoogleLogin);
   document.getElementById("btnLogout")?.addEventListener("click", handleLogout);
 
   // Initialize Google Identity Services (GIS)

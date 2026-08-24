@@ -58,7 +58,7 @@ class AuthService:
         name = google_data.name or "Google User"
         avatar_url = google_data.avatar_url
 
-        # Agar credential berilgan bo'lsa, Google TokenInfo orqali tekshirish
+        # 1. Google ID Token (credential) orqali tekshirish
         if google_data.credential:
             try:
                 with httpx.Client(timeout=5.0) as client:
@@ -69,7 +69,52 @@ class AuthService:
                         name = info.get("name", name)
                         avatar_url = info.get("picture", avatar_url)
             except Exception:
-                # Offline yoki test holatida uzatilgan ma'lumotlar bilan davom etiladi
+                pass
+
+        # 2. Google OAuth Access Token orqali tekshirish
+        elif google_data.access_token:
+            try:
+                with httpx.Client(timeout=5.0) as client:
+                    resp = client.get(
+                        "https://www.googleapis.com/oauth2/v3/userinfo",
+                        headers={"Authorization": f"Bearer {google_data.access_token}"}
+                    )
+                    if resp.status_code == 200:
+                        info = resp.json()
+                        email = info.get("email", email)
+                        name = info.get("name", name)
+                        avatar_url = info.get("picture", avatar_url)
+            except Exception:
+                pass
+
+        # 3. Google OAuth Authorization Code orqali tekshirish (agar secret sozlangan bo'lsa)
+        elif google_data.code and settings.GOOGLE_CLIENT_SECRET:
+            try:
+                with httpx.Client(timeout=5.0) as client:
+                    token_resp = client.post(
+                        "https://oauth2.googleapis.com/token",
+                        data={
+                            "code": google_data.code,
+                            "client_id": settings.GOOGLE_CLIENT_ID,
+                            "client_secret": settings.GOOGLE_CLIENT_SECRET,
+                            "redirect_uri": settings.GOOGLE_REDIRECT_URI or "postmessage",
+                            "grant_type": "authorization_code"
+                        }
+                    )
+                    if token_resp.status_code == 200:
+                        tokens = token_resp.json()
+                        acc_token = tokens.get("access_token")
+                        if acc_token:
+                            u_resp = client.get(
+                                "https://www.googleapis.com/oauth2/v3/userinfo",
+                                headers={"Authorization": f"Bearer {acc_token}"}
+                            )
+                            if u_resp.status_code == 200:
+                                info = u_resp.json()
+                                email = info.get("email", email)
+                                name = info.get("name", name)
+                                avatar_url = info.get("picture", avatar_url)
+            except Exception:
                 pass
 
         if not email:

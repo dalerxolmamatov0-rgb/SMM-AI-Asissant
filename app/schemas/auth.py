@@ -19,8 +19,10 @@ class UserLogin(BaseModel):
     password: str
 
 class GoogleAuthRequest(BaseModel):
-    credential: Optional[str] = Field(None, description="Google Identity Services ID Token")
-    email: Optional[EmailStr] = Field(None, description="Google orqali berilgan email (fallback/test uchun)")
+    credential: Optional[str] = Field(None, description="Google Identity Services ID Token (JWT)")
+    access_token: Optional[str] = Field(None, description="Google OAuth 2.0 Access Token")
+    code: Optional[str] = Field(None, description="Google OAuth 2.0 Authorization Code")
+    email: Optional[EmailStr] = Field(None, description="Google orqali berilgan email")
     name: Optional[str] = Field(None, description="Foydalanuvchi ismi")
     avatar_url: Optional[str] = Field(None, description="Profil rasmi")
 
