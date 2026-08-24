@@ -30,8 +30,21 @@ function initAuth() {
  * @param {'login'|'register'} mode 
  */
 function showAuthModal(mode = "login") {
-  closeAuthModal();
-  showGoogleAuthModal();
+  closeGoogleAuthModal();
+  const modal = document.getElementById("authModal");
+  const loginView = document.getElementById("authModalLogin");
+  const regView = document.getElementById("authModalRegister");
+  
+  if (!modal) return;
+  modal.classList.remove("hidden");
+  
+  if (mode === "register") {
+    loginView?.classList.add("hidden");
+    regView?.classList.remove("hidden");
+  } else {
+    loginView?.classList.remove("hidden");
+    regView?.classList.add("hidden");
+  }
 }
 
 function closeAuthModal() {
@@ -40,7 +53,7 @@ function closeAuthModal() {
 }
 
 /**
- * Open Google OAuth Account Chooser Modal
+ * Open Google OAuth Modal
  */
 function openGoogleChooserModal() {
   closeAuthModal();
@@ -55,24 +68,14 @@ function showGoogleAuthModal() {
   const modal = document.getElementById("googleAuthModal");
   if (modal) {
     modal.classList.remove("hidden");
-    const inputSection = document.getElementById("googleCustomInputSection");
-    if (inputSection) inputSection.classList.add("hidden");
+    const emailInput = document.getElementById("googleDirectEmail");
+    if (emailInput) emailInput.value = "";
   }
 }
 
 function closeGoogleAuthModal() {
   const modal = document.getElementById("googleAuthModal");
   if (modal) modal.classList.add("hidden");
-}
-
-function toggleDirectGoogleForm() {
-  const section = document.getElementById("googleCustomInputSection");
-  if (section) {
-    section.classList.toggle("hidden");
-    if (!section.classList.contains("hidden")) {
-      document.getElementById("googleDirectEmail")?.focus();
-    }
-  }
 }
 
 /**
