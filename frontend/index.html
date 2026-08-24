@@ -1026,15 +1026,18 @@
           <div class="h-px bg-[#282a2c] flex-1"></div>
         </div>
 
-        <!-- Google OAuth Optional Button -->
-        <button type="button" onclick="openGoogleChooserModal()" class="w-full py-3 px-4 rounded-xl bg-[#1e1f20] hover:bg-[#282a2c] text-[#e8eaed] font-medium text-xs border border-[#3c4043] transition-all flex items-center justify-center gap-2.5 shadow-sm">
+        <!-- Official Google Identity Services Container -->
+        <div id="googleGisLoginBtn" class="flex justify-center my-1"></div>
+
+        <!-- Google OAuth Button -->
+        <button type="button" id="btnGoogleAuthLogin" onclick="handleGoogleLogin()" class="w-full py-3 px-4 rounded-xl bg-[#1e1f20] hover:bg-[#282a2c] text-[#e8eaed] font-medium text-xs border border-[#3c4043] transition-all flex items-center justify-center gap-2.5 shadow-sm">
           <svg class="w-4 h-4" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
             <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
             <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
             <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
           </svg>
-          <span>Google bilan davom etish</span>
+          <span id="googleLoginBtnText">Google orqali davom etish</span>
         </button>
 
         <p class="text-center text-xs text-slate-400 pt-1">
@@ -1085,117 +1088,24 @@
           <div class="h-px bg-[#282a2c] flex-1"></div>
         </div>
 
-        <!-- Google OAuth Optional Button -->
-        <button type="button" onclick="openGoogleChooserModal()" class="w-full py-3 px-4 rounded-xl bg-[#1e1f20] hover:bg-[#282a2c] text-[#e8eaed] font-medium text-xs border border-[#3c4043] transition-all flex items-center justify-center gap-2.5 shadow-sm">
+        <!-- Official Google Identity Services Container -->
+        <div id="googleGisRegisterBtn" class="flex justify-center my-1"></div>
+
+        <!-- Google OAuth Button -->
+        <button type="button" id="btnGoogleAuthRegister" onclick="handleGoogleLogin()" class="w-full py-3 px-4 rounded-xl bg-[#1e1f20] hover:bg-[#282a2c] text-[#e8eaed] font-medium text-xs border border-[#3c4043] transition-all flex items-center justify-center gap-2.5 shadow-sm">
           <svg class="w-4 h-4" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
             <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
             <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
             <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
           </svg>
-          <span>Google bilan davom etish</span>
+          <span id="googleRegisterBtnText">Google orqali davom etish</span>
         </button>
 
         <p class="text-center text-xs text-slate-400 pt-1">
           Hisobingiz bormi? <button type="button" onclick="showAuthModal('login')" class="text-indigo-400 font-bold hover:underline">Kirish</button>
         </p>
       </div>
-    </div>
-  </div>
-
-  <!-- ================= GOOGLE ACCOUNTS CHOOSER MODAL (OFFICIAL GOOGLE OAUTH 2-COLUMN DARK UI) ================= -->
-  <div id="googleAuthModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-6 overflow-y-auto" onclick="if(event.target === this) closeGoogleAuthModal();">
-    <div class="bg-[#131314] border border-[#2d2f31] rounded-[28px] w-full max-w-[920px] p-6 sm:p-10 relative shadow-2xl space-y-6 text-left my-auto">
-      
-      <!-- Top Google Bar -->
-      <div class="flex items-center justify-between pb-4 border-b border-[#282a2c]/80">
-        <div class="flex items-center gap-2.5">
-          <svg class="w-5 h-5" viewBox="0 0 24 24">
-            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
-            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
-            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
-            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-          </svg>
-          <span class="text-sm font-medium text-[#e8eaed]">Sign in with Google</span>
-        </div>
-        <button type="button" onclick="closeGoogleAuthModal()" class="text-slate-400 hover:text-white p-1.5 rounded-full hover:bg-[#202124] transition-colors" title="Yopish">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-      </div>
-
-      <!-- 2-Column Main Content -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start">
-        
-        <!-- Left Column: App Brand & Heading -->
-        <div class="space-y-5 pt-2">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 p-0.5 flex items-center justify-center shadow-xl shadow-indigo-500/25">
-            <div class="w-full h-full bg-[#131314] rounded-[14px] flex items-center justify-center">
-              <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-              </svg>
-            </div>
-          </div>
-
-          <div>
-            <h1 class="text-3xl lg:text-4xl font-normal text-[#e8eaed] tracking-tight leading-tight">Choose an account</h1>
-            <p class="text-sm text-[#9aa0a6] mt-2.5">
-              to continue to <span class="text-indigo-400 font-medium">AI SMM Assistant</span>
-            </p>
-          </div>
-
-          <div class="hidden md:block pt-4 border-t border-[#282a2c]/60">
-            <p class="text-[12px] text-[#9aa0a6] leading-relaxed">
-              Google orqali kirganingizda har bir hisob uchun oyiga <strong class="text-emerald-400">10 ta bepul AI generatsiya</strong> taqdim etiladi.
-            </p>
-          </div>
-        </div>
-
-        <!-- Right Column: Dynamic Accounts List & Add Account -->
-        <div class="space-y-4">
-          
-          <!-- Dynamic Accounts Container -->
-          <div id="deviceGoogleAccountsList" class="border-t border-[#282a2c] divide-y divide-[#282a2c]">
-            <!-- Rendered dynamically by renderGoogleAccountsList() -->
-          </div>
-
-          <!-- Use Another Account Button -->
-          <button type="button" onclick="toggleDirectGoogleForm()" class="w-full py-3.5 px-3 hover:bg-[#1f2022] rounded-xl flex items-center gap-4 text-left transition-colors text-[#e8eaed] group">
-            <div class="w-10 h-10 rounded-full border border-[#5f6368] group-hover:border-indigo-400 flex items-center justify-center text-[#9aa0a6] group-hover:text-indigo-400 shrink-0 transition-colors">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-            </div>
-            <div>
-              <div class="font-normal text-[#e8eaed] text-[15px] group-hover:text-indigo-300 transition-colors">Use another account</div>
-              <div class="text-[12px] text-[#9aa0a6]">Boshqa Google hisob qo'shish</div>
-            </div>
-          </button>
-
-          <!-- Expandable Custom Google Email Form -->
-          <div id="googleCustomInputSection" class="hidden p-4 rounded-2xl bg-[#1e1f20] border border-[#3c4043] space-y-3 shadow-inner">
-            <form id="googleDirectLoginForm" class="space-y-3">
-              <div>
-                <label class="block text-xs text-[#bdc1c6] font-medium mb-1">Google Email (Gmail) *</label>
-                <input type="email" id="googleDirectEmail" required placeholder="example@gmail.com" class="w-full p-2.5 rounded-lg bg-[#131314] border border-[#5f6368] text-white text-xs focus:border-indigo-400 focus:outline-none">
-              </div>
-              <div>
-                <label class="block text-xs text-[#bdc1c6] font-medium mb-1">Ismingiz (profil uchun)</label>
-                <input type="text" id="googleDirectName" placeholder="Ismingiz" class="w-full p-2.5 rounded-lg bg-[#131314] border border-[#5f6368] text-white text-xs focus:border-indigo-400 focus:outline-none">
-              </div>
-              <button type="submit" class="w-full py-2.5 rounded-lg bg-[#1a73e8] hover:bg-[#1b66c9] text-white font-medium text-xs shadow transition-colors flex items-center justify-center gap-2">
-                <span>Davom etish (Next) 🚀</span>
-              </button>
-            </form>
-          </div>
-
-          <!-- Footer Disclaimer -->
-          <div class="pt-2">
-            <p class="text-[11px] text-[#9aa0a6] leading-relaxed">
-              Before using this app, you can review AI SMM Assistant's <a href="#" class="text-[#8ab4f8] hover:underline">Privacy Policy</a> and <a href="#" class="text-[#8ab4f8] hover:underline">Terms of Service</a>.
-            </p>
-          </div>
-        </div>
-
-      </div>
-
     </div>
   </div>
 

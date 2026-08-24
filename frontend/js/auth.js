@@ -19,19 +19,151 @@ function initAuth() {
   // Bind Form Submit Handlers
   document.getElementById("loginForm")?.addEventListener("submit", handleLoginSubmit);
   document.getElementById("registerForm")?.addEventListener("submit", handleRegisterSubmit);
-  document.getElementById("googleDirectLoginForm")?.addEventListener("submit", handleGoogleDirectSubmit);
   document.getElementById("btnLogout")?.addEventListener("click", handleLogout);
 
   // Initialize Google Identity Services (GIS)
-  initGoogleAuthSDK();
+  initGoogleGIS();
 }
 
 /**
-/**
- * Initialize Google Auth SDK (Safe mode)
+ * Initialize Google Identity Services (GIS)
  */
-function initGoogleAuthSDK() {
-  // Safe local Google Account Chooser initialization
+async function initGoogleGIS() {
+  try {
+    const res = await fetch("/api/auth/config");
+    if (res.ok) {
+      const cfg = await res.json();
+      if (cfg && cfg.google_client_id) {
+        googleClientId = cfg.google_client_id;
+      }
+    }
+  } catch (e) {
+    // fallback to default
+  }
+
+  setupGoogleGISLibrary();
+}
+
+function setupGoogleGISLibrary() {
+  if (typeof google !== "undefined" && google.accounts) {
+    try {
+      // 1. Google ID One Tap & Credential response
+      google.accounts.id.initialize({
+        client_id: googleClientId,
+        callback: handleGoogleGISCredential,
+        auto_select: false,
+        cancel_on_tap_outside: true
+      });
+
+      // 2. Render official Google buttons if containers exist
+      const loginBtnContainer = document.getElementById("googleGisLoginBtn");
+      if (loginBtnContainer) {
+        google.accounts.id.renderButton(loginBtnContainer, {
+          theme: "filled_black",
+          size: "large",
+          shape: "pill",
+          text: "continue_with",
+          width: 320
+        });
+      }
+
+      const regBtnContainer = document.getElementById("googleGisRegisterBtn");
+      if (regBtnContainer) {
+        google.accounts.id.renderButton(regBtnContainer, {
+          theme: "filled_black",
+          size: "large",
+          shape: "pill",
+          text: "continue_with",
+          width: 320
+        });
+      }
+
+      // 3. OAuth 2.0 Token Client with prompt: 'select_account'
+      if (google.accounts.oauth2) {
+        googleTokenClient = google.accounts.oauth2.initTokenClient({
+          client_id: googleClientId,
+          scope: "openid email profile",
+          prompt: "select_account",
+          callback: async (tokenResponse) => {
+            if (tokenResponse && tokenResponse.access_token) {
+              await fetchGoogleUserInfo(tokenResponse.access_token);
+            } else if (tokenResponse && tokenResponse.error) {
+              handleGoogleAuthError(tokenResponse.error);
+            }
+          },
+          error_callback: (err) => {
+            handleGoogleAuthError(err);
+          }
+        });
+      }
+    } catch (err) {
+      console.warn("Google GIS init:", err);
+    }
+  } else {
+    // Retry loading GIS SDK
+    setTimeout(setupGoogleGISLibrary, 800);
+  }
+}
+
+/**
+ * Handle Google Login Button Click
+ */
+function handleGoogleLogin() {
+  setGoogleButtonLoading(true);
+
+  if (googleTokenClient) {
+    try {
+      googleTokenClient.requestAccessToken({ prompt: "select_account" });
+    } catch (err) {
+      handleGoogleAuthError(err);
+      setGoogleButtonLoading(false);
+    }
+  } else if (typeof google !== "undefined" && google.accounts && google.accounts.id) {
+    try {
+      google.accounts.id.prompt((notification) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          setGoogleButtonLoading(false);
+        }
+      });
+    } catch (err) {
+      handleGoogleAuthError(err);
+      setGoogleButtonLoading(false);
+    }
+  } else {
+    showToast("Google xizmati yuklanmoqda, iltimos qayta urinib ko'ring", "info");
+    setGoogleButtonLoading(false);
+  }
+}
+
+function setGoogleButtonLoading(isLoading) {
+  const loginBtn = document.getElementById("btnGoogleAuthLogin");
+  const regBtn = document.getElementById("btnGoogleAuthRegister");
+  const loginText = document.getElementById("googleLoginBtnText");
+  const regText = document.getElementById("googleRegisterBtnText");
+
+  if (isLoading) {
+    if (loginBtn) loginBtn.disabled = true;
+    if (regBtn) regBtn.disabled = true;
+    if (loginText) loginText.innerText = "Google ochilmoqda...";
+    if (regText) regText.innerText = "Google ochilmoqda...";
+  } else {
+    if (loginBtn) loginBtn.disabled = false;
+    if (regBtn) regBtn.disabled = false;
+    if (loginText) loginText.innerText = "Google orqali davom etish";
+    if (regText) regText.innerText = "Google orqali davom etish";
+  }
+}
+
+function handleGoogleAuthError(err) {
+  setGoogleButtonLoading(false);
+  console.log("Google Auth error:", err);
+  if (err === "popup_closed_by_user" || (err && err.type === "popup_closed")) {
+    showToast("Google orqali kirish bekor qilindi", "info");
+  } else if (err === "access_denied") {
+    showToast("Google akkauntiga ruxsat berilmadi", "error");
+  } else {
+    showToast("Google orqali kirishda xatolik yuz berdi. Qayta urinib ko'ring.", "error");
+  }
 }
 
 /**
@@ -40,28 +172,22 @@ function initGoogleAuthSDK() {
 async function handleGoogleGISCredential(response) {
   if (response && response.credential) {
     try {
-      const base64Url = response.credential.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
-      const profile = JSON.parse(jsonPayload);
-
-      await executeGoogleLogin({
-        credential: response.credential,
-        email: profile.email,
-        name: profile.name || profile.given_name || profile.email.split("@")[0],
-        avatar_url: profile.picture
-      });
-    } catch {
+      setGoogleButtonLoading(true);
       await executeGoogleLogin({ credential: response.credential });
+    } catch (err) {
+      handleGoogleAuthError(err);
+    } finally {
+      setGoogleButtonLoading(false);
     }
   }
 }
 
 /**
- * Fetch Google Profile via UserInfo endpoint after account selection
+ * Fetch Google Profile via UserInfo endpoint after token received
  */
 async function fetchGoogleUserInfo(accessToken) {
   try {
+    setGoogleButtonLoading(true);
     showToast("Google hisobingiz tasdiqlanmoqda... ⏳", "info");
     const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
       headers: { Authorization: `Bearer ${accessToken}` }
@@ -73,10 +199,13 @@ async function fetchGoogleUserInfo(accessToken) {
         name: profile.name || profile.given_name || profile.email.split("@")[0],
         avatar_url: profile.picture
       });
-      return;
+    } else {
+      throw new Error("Google ma'lumotlarini olib bo'lmadi");
     }
   } catch (err) {
-    console.log("UserInfo fetch error:", err);
+    handleGoogleAuthError(err);
+  } finally {
+    setGoogleButtonLoading(false);
   }
 }
 
@@ -85,7 +214,6 @@ async function fetchGoogleUserInfo(accessToken) {
  * @param {'login'|'register'} mode 
  */
 function showAuthModal(mode = "login") {
-  closeGoogleAuthModal();
   const modal = document.getElementById("authModal");
   const loginView = document.getElementById("authModalLogin");
   const regView = document.getElementById("authModalRegister");
@@ -104,160 +232,6 @@ function showAuthModal(mode = "login") {
 
 function closeAuthModal() {
   const modal = document.getElementById("authModal");
-  if (modal) modal.classList.add("hidden");
-}
-
-/**
- * Device-saved Google accounts (starts empty for every device)
- */
-const DEFAULT_GOOGLE_ACCOUNTS = [];
-
-/**
- * Get device-saved Google accounts for THIS specific device only
- */
-function getDeviceGoogleAccounts() {
-  try {
-    // Clear old legacy test cache if present
-    if (!localStorage.getItem("smm_accounts_cleaned_v3")) {
-      localStorage.removeItem("smm_device_google_accounts");
-      localStorage.setItem("smm_accounts_cleaned_v3", "true");
-      return [];
-    }
-
-    const raw = localStorage.getItem("smm_device_google_accounts");
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) return parsed;
-    }
-  } catch (e) {
-    // fallback
-  }
-  return [];
-}
-
-/**
- * Save new Google account to device list
- */
-function saveDeviceGoogleAccount(account) {
-  try {
-    const current = getDeviceGoogleAccounts();
-    const filtered = current.filter(a => a.email.toLowerCase() !== account.email.toLowerCase());
-    filtered.unshift(account);
-    localStorage.setItem("smm_device_google_accounts", JSON.stringify(filtered.slice(0, 8)));
-  } catch (e) {
-    console.error("Save account error:", e);
-  }
-}
-
-/**
- * Remove account from device list
- */
-function removeDeviceGoogleAccount(email) {
-  try {
-    const current = getDeviceGoogleAccounts();
-    const filtered = current.filter(a => a.email.toLowerCase() !== email.toLowerCase());
-    localStorage.setItem("smm_device_google_accounts", JSON.stringify(filtered));
-    renderGoogleAccountsList();
-    showToast("Hisob qurilma xotirasidan o'chirildi", "info");
-  } catch (e) {
-    console.error("Remove account error:", e);
-  }
-}
-
-/**
- * Render dynamic Google Accounts List inside Modal
- */
-function renderGoogleAccountsList() {
-  const container = document.getElementById("deviceGoogleAccountsList");
-  const formSection = document.getElementById("googleCustomInputSection");
-  if (!container) return;
-
-  const accounts = getDeviceGoogleAccounts();
-  
-  if (accounts.length === 0) {
-    // No accounts on this device yet: show the input form directly
-    container.innerHTML = "";
-    if (formSection) {
-      formSection.classList.remove("hidden");
-    }
-    return;
-  }
-
-  // If accounts exist on this device, display them
-  let html = "";
-  accounts.forEach(acc => {
-    const initial = acc.avatar || (acc.name ? acc.name.charAt(0).toUpperCase() : "G");
-    const bgClass = acc.bgColor || "bg-indigo-600";
-    html += `
-      <div onclick="quickLoginGoogle('${acc.email}', '${acc.name.replace(/'/g, "\\'")}')" class="w-full py-3.5 px-3 hover:bg-[#1f2022] rounded-xl flex items-center justify-between group transition-colors cursor-pointer">
-        <div class="flex items-center gap-4 truncate">
-          <div class="w-10 h-10 rounded-full ${bgClass} flex items-center justify-center font-bold text-white text-base shrink-0 shadow border border-slate-700/50">
-            ${initial}
-          </div>
-          <div class="truncate text-left">
-            <div class="font-medium text-[#e8eaed] text-[15px] leading-snug group-hover:text-[#38bdf8] transition-colors truncate">${acc.name}</div>
-            <div class="text-[13px] text-[#9aa0a6] truncate font-normal">${acc.email}</div>
-          </div>
-        </div>
-        <button type="button" onclick="event.stopPropagation(); removeDeviceGoogleAccount('${acc.email}');" class="p-1 text-slate-500 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity rounded" title="O'chirish">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-      </div>
-    `;
-  });
-
-  container.innerHTML = html;
-}
-
-/**
- * Toggle Custom Google Email Form
- */
-function toggleDirectGoogleForm() {
-  const section = document.getElementById("googleCustomInputSection");
-  if (section) {
-    section.classList.toggle("hidden");
-    if (!section.classList.contains("hidden")) {
-      document.getElementById("googleDirectEmail")?.focus();
-    }
-  }
-}
-
-/**
- * User clicks "Google bilan davom etish"
- * Opens Google's account chooser modal with accounts list!
- */
-function handleGoogleLogin() {
-  closeAuthModal();
-  showGoogleAuthModal();
-}
-
-function openGoogleChooserModal() {
-  handleGoogleLogin();
-}
-
-function showGoogleAuthModal() {
-  const modal = document.getElementById("googleAuthModal");
-  if (modal) {
-    modal.classList.remove("hidden");
-    renderGoogleAccountsList();
-    const accounts = getDeviceGoogleAccounts();
-    const inputSection = document.getElementById("googleCustomInputSection");
-    if (inputSection) {
-      if (accounts.length === 0) {
-        inputSection.classList.remove("hidden");
-      } else {
-        inputSection.classList.add("hidden");
-      }
-    }
-    const emailInput = document.getElementById("googleDirectEmail");
-    if (emailInput && accounts.length === 0) {
-      emailInput.focus();
-    }
-  }
-}
-
-function closeGoogleAuthModal() {
-  const modal = document.getElementById("googleAuthModal");
   if (modal) modal.classList.add("hidden");
 }
 
@@ -415,52 +389,18 @@ async function handleRegisterSubmit(e) {
 }
 
 /**
- * Handle Google Quick Login from Chooser
- */
-async function quickLoginGoogle(email, name) {
-  showToast(`Google hisob tanlandi: ${email}...`, "info");
-  await executeGoogleLogin({ email, name });
-}
-
-/**
- * Handle Direct Google Email Input Submit
- */
-async function handleGoogleDirectSubmit(e) {
-  e.preventDefault();
-  const email = document.getElementById("googleDirectEmail")?.value.trim();
-  const name = document.getElementById("googleDirectName")?.value.trim() || email.split("@")[0];
-
-  if (!email) {
-    showToast("Google elektron pochtangizni kiriting!", "error");
-    return;
-  }
-
-  await executeGoogleLogin({ email, name });
-}
-
-/**
- * Execute Google Auth API Call
+ * Execute Google Auth API Call to Backend
  */
 async function executeGoogleLogin(payload) {
   try {
     const data = await API.googleAuth(payload);
     API.setToken(data.access_token);
     API.setUser(data.user);
-    
-    // Save to device Google accounts list
-    if (data.user && data.user.email) {
-      saveDeviceGoogleAccount({
-        name: data.user.name || "Google User",
-        email: data.user.email,
-        avatar: data.user.name ? data.user.name.charAt(0).toUpperCase() : "G"
-      });
-    }
 
     closeAuthModal();
-    closeGoogleAuthModal();
     updateAuthUI(true, data.user);
     refreshUsage();
-    showToast(`Google orqali kirdingiz, ${data.user.name}! 🚀`, "success");
+    showToast(`Google orqali muvaffaqiyatli kirdingiz, ${data.user.name}! 🚀`, "success");
   } catch (err) {
     // Handled by API.request
   }

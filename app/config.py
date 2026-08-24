@@ -41,6 +41,8 @@ class Settings:
         "GOOGLE_CLIENT_ID",
         "1084877712345-gsiwebclientappforaismm.apps.googleusercontent.com"
     )
+    GOOGLE_CLIENT_SECRET: str = os.getenv("GOOGLE_CLIENT_SECRET", "")
+    GOOGLE_REDIRECT_URI: str = os.getenv("GOOGLE_REDIRECT_URI", "")
 
     # Telegram Feedback Bot
     TELEGRAM_BOT_TOKEN: str = os.getenv("TELEGRAM_BOT_TOKEN", "8646563898:AAFAWpPT6VQbvrRowFKovf0AGWw-UMV951U")
