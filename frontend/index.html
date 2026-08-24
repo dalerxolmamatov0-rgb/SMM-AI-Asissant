@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="uz" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI SMM Assistant — Professional Instagram Marketing & Kontent Platformasi</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- jsPDF for PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- Google Identity Services (GIS) SDK -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-[#090d16] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- TOP HEADER / NAVBAR -->
+  <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80 px-4 lg:px-8 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 p-0.5 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+        <div class="w-full h-full bg-[#0d1322] rounded-[14px] flex items-center justify-center">
+          <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="font-extrabold text-lg text-white tracking-tight">AI SMM <span class="gradient-text">Assistant</span></h1>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold">Free MVP</span>
+        </div>
+        <p class="text-[11px] text-slate-400">Professional SMM & Kontent Generatori</p>
+      </div>
+    </div>
+
+    <!-- Right Header Actions (Guest vs Logged-In) -->
+    <div class="flex items-center gap-3">
+      <!-- Guest Menu -->
+      <div id="navAuthGuest" class="flex items-center gap-2">
+        <button onclick="showAuthModal('login')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all border border-slate-700">
+          Kirish
+        </button>
+        <button onclick="showAuthModal('register')" class="px-4 py-2 rounded-xl gradient-btn text-white text-xs font-bold shadow-md transition-all">
+          Bepul Boshlash 🚀
+        </button>
+      </div>
+
+      <!-- Logged-in User Info -->
+      <div id="navAuthUser" class="hidden flex items-center gap-3">
+        <!-- Usage Counter Badge -->
+        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs">
+          <span class="text-slate-400">Oylik limit:</span>
+          <span id="headerUsageBadge" class="font-extrabold text-indigo-400">0 / 10</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-indigo-300 font-bold text-xs">
+            <span id="headerUserName">User</span>
+          </div>
+          <button id="btnLogout" class="p-2 rounded-xl bg-slate-800 hover:bg-rose-900/30 hover:text-rose-300 text-slate-400 transition-all border border-slate-700" title="Chiqish">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= 1. GUEST LANDING VIEW ================= -->
+  <div id="landingView" class="space-y-20 pb-20">
+    <!-- Hero Section -->
+    <section class="relative pt-16 lg:pt-24 px-4 max-w-5xl mx-auto text-center space-y-6">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold">
+        <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+        Sun'iy Intellekt Davrida SMM Yangi Bosqichda
+      </div>
+      
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+        AI yordamida SMM kontentingizni <br class="hidden sm:inline"/>
+        <span class="gradient-text">bir necha soniyada</span> yarating.
+      </h1>
+
+      <p class="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Postlar, virusli Reels g‘oyalari, 7-30 kunlik kontent-rejalar, reklama matnlari va marketing strategiyalarini professional darajada yarating.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
+        <button onclick="showAuthModal('register')" class="w-full sm:w-auto px-8 py-4 rounded-2xl gradient-btn text-white font-extrabold text-sm shadow-xl shadow-indigo-600/30 hover:scale-105 transition-all flex items-center justify-center gap-2">
+          <span>Bepul boshlash (Oyiga 10 ta AI generatsiya)</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+        <button onclick="showAuthModal('login')" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-bold text-sm border border-slate-700 transition-all">
+          Tizimga kirish
+        </button>
+      </div>
+
+      <!-- Quick Social Proof / Feature Tags -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-10 text-center">
+        <div class="p-4 rounded-2xl glass-card">
+          <div class="text-indigo-400 font-black text-xl">100%</div>
+          <div class="text-xs text-slate-400 mt-1">O'zbek tiliga mos</div>
+        </div>
+        <div class="p-4 rounded-2xl glass-card">
+          <div class="text-purple-400 font-black text-xl">7 ta</div>
+          <div class="text-xs text-slate-400 mt-1">Kuchli AI Asboblar</div>
+        </div>
+        <div class="p-4 rounded-2xl glass-card">
+          <div class="text-pink-400 font-black text-xl">AIDA</div>
+          <div class="text-xs text-slate-400 mt-1">Sotuvchi Kopirayting</div>
+        </div>
+        <div class="p-4 rounded-2xl glass-card">
+          <div class="text-emerald-400 font-black text-xl">30 kun</div>
+          <div class="text-xs text-slate-400 mt-1">Mutlaqo Bepul</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Tools Grid -->
+    <section class="max-w-6xl mx-auto px-4 space-y-8">
+      <div class="text-center space-y-2">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Platforma Imkoniyatlari</h2>
+        <p class="text-xs sm:text-sm text-slate-400">Marketing va SMM uchun barcha zarur vositalar bitta joyda</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="glass-card p-5 rounded-3xl space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg">📝</div>
+          <h3 class="font-bold text-white text-base">AI Post Generator</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">AIDA formulasi, jalb qiluvchi sarlavha, to'liq matn, CTA va hashtaglar to'plami.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-3xl space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center text-lg">🎬</div>
+          <h3 class="font-bold text-white text-base">Reels Idea Generator</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">3 soniyalik virusli Hook, kadrlar bo'yicha ssenariy, voice-over va saundtrek tavsiyalari.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-3xl space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg">📅</div>
+          <h3 class="font-bold text-white text-base">Content Plan (7, 14, 30 kun)</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">Formatlar (Reels, Karusel, Stories) taqsimlangan to'liq haftalik yoki oylik taqvim.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-3xl space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg">🏷</div>
+          <h3 class="font-bold text-white text-base">Hashtag Generator</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">High, Medium, Niche, Mahalliy va Brendli toifalangan hashtaglar.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-3xl space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg">📣</div>
+          <h3 class="font-bold text-white text-base">Ad Copy (Target Reklama)</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">Short, Medium va Long variantlardagi konversiyali reklama matnlari.</p>
+        </div>
+
+        <div class="glass-card p-5 rounded-3xl space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-lg">🎯</div>
+          <h3 class="font-bold text-white text-base">Audience Analyzer</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">Ideal mijoz portreti, og'riqlar, ehtiyojlar va sotib olishga undovchi omillar tahlili.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="max-w-4xl mx-auto px-4 space-y-8 text-center">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Qanday Ishlaydi?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+        <div class="p-5 rounded-3xl glass-card space-y-2">
+          <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">1</span>
+          <h4 class="font-bold text-white text-sm">Biznes ma'lumotlarini kiriting</h4>
+          <p class="text-xs text-slate-400">Soha, mahsulot va maqsadli auditoriyani belgilang.</p>
+        </div>
+        <div class="p-5 rounded-3xl glass-card space-y-2">
+          <span class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center text-xs font-bold">2</span>
+          <h4 class="font-bold text-white text-sm">Kerakli AI asbobni tanlang</h4>
+          <p class="text-xs text-slate-400">Post, Reels, Reja yoki Reklama matnini tanlang va Generate tugmasini bosing.</p>
+        </div>
+        <div class="p-5 rounded-3xl glass-card space-y-2">
+          <span class="w-7 h-7 rounded-lg bg-pink-600 text-white flex items-center justify-center text-xs font-bold">3</span>
+          <h4 class="font-bold text-white text-sm">Natijani oling va nusxalang</h4>
+          <p class="text-xs text-slate-400">Tayyor professional kontentni 1-bosishda nusxalang yoki PDF qilib oling.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="max-w-4xl mx-auto px-4">
+      <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-indigo-500/40 text-center space-y-5 relative overflow-hidden">
+        <h2 class="text-2xl sm:text-4xl font-black text-white">SMM jarayoningizni bugunoq avtomatlashtiring</h2>
+        <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto">Hech qanday to'lov kartasi talab qilinmaydi. Ro'yxatdan o'ting va 10 ta bepul AI generatsiyaga ega bo'ling.</p>
+        <button onclick="showAuthModal('register')" class="px-8 py-3.5 rounded-2xl gradient-btn text-white font-extrabold text-sm shadow-xl shadow-indigo-600/30">
+          Bepul Boshlash 🚀
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer with Shikoyat va Takliflar -->
+    <footer class="border-t border-slate-800/80 pt-12 pb-8 px-4 max-w-6xl mx-auto space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center justify-between">
+        <div class="space-y-2 text-left">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-pink-500 flex items-center justify-center font-bold text-white text-xs">AI</div>
+            <h3 class="font-extrabold text-white text-base">AI SMM <span class="gradient-text">Assistant</span></h3>
+          </div>
+          <p class="text-xs text-slate-400">Instagram, Telegram va Facebook uchun professional marketing yechimlari.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button onclick="showFeedbackModal('suggestion')" class="px-4 py-2.5 rounded-xl bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 text-xs font-semibold flex items-center gap-2 transition-all">
+            <span>💡 Taklif yuborish</span>
+          </button>
+          <button onclick="showFeedbackModal('complaint')" class="px-4 py-2.5 rounded-xl bg-rose-600/10 hover:bg-rose-600/20 text-rose-300 border border-rose-500/30 text-xs font-semibold flex items-center gap-2 transition-all">
+            <span>⚠️ Shikoyat qoldirish</span>
+          </button>
+        </div>
+
+        <div class="text-right text-xs text-slate-400 space-y-1">
+          <p class="font-medium text-slate-300">Fikr-mulohazangiz biz uchun muhim!</p>
+          <p class="text-slate-500 text-[11px]">Platformani yaxshilashga yordam bering.</p>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-900 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
+        <p>© 2026 AI SMM Assistant. Barcha huquqlar himoyalangan.</p>
+        <div class="flex items-center gap-4">
+          <button onclick="showFeedbackModal('suggestion')" class="hover:text-indigo-400 transition-all">Shikoyat va takliflar</button>
+          <span>•</span>
+          <span class="text-slate-600">v1.0.0 Free MVP</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ================= 2. AUTHENTICATED DASHBOARD VIEW ================= -->
+  <div id="dashboardAppView" class="hidden flex-1 flex flex-col md:flex-row relative min-h-0">
+    
+    <!-- Desktop Sidebar -->
+    <aside class="hidden md:flex md:w-64 glass-panel border-r border-slate-800/80 p-4 flex-col justify-between shrink-0 sticky top-[69px] h-[calc(100vh-69px)] overflow-y-auto">
+      <div class="space-y-6">
+        <!-- Navigation Links -->
+        <nav class="space-y-1 text-xs font-semibold">
+          <button data-view="dashboardHomeView" class="sidebar-nav-item sidebar-link-active w-full px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 transition-all text-left">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+            Dashboard
+          </button>
+          <button data-view="toolsView" class="sidebar-nav-item text-slate-400 hover:text-white w-full px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 transition-all text-left">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            AI Asboblar (Tools)
+          </button>
+          <button data-view="proView" class="sidebar-nav-item text-amber-400/90 hover:text-amber-300 w-full px-3.5 py-2.5 rounded-xl flex items-center justify-between transition-all text-left group hover:bg-amber-500/10">
+            <div class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+              <span class="font-bold">SMM AI Pro</span>
+            </div>
+            <span class="px-1.5 py-0.5 rounded-md bg-gradient-to-r from-amber-500/20 to-pink-500/20 text-amber-300 border border-amber-500/40 text-[9px] font-extrabold uppercase tracking-wider">PRO</span>
+          </button>
+          <button data-view="chatView" class="sidebar-nav-item text-slate-400 hover:text-white w-full px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 transition-all text-left">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+            AI Marketing Chat
+          </button>
+          <button data-view="historyView" class="sidebar-nav-item text-slate-400 hover:text-white w-full px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 transition-all text-left">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            Tarix (History)
+          </button>
+          <button data-view="profileView" class="sidebar-nav-item text-slate-400 hover:text-white w-full px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 transition-all text-left">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+            Biznes Profil
+          </button>
+          <button onclick="showFeedbackModal('suggestion')" class="w-full px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 transition-all text-left text-slate-400 hover:text-indigo-300 hover:bg-slate-900/60">
+            <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
+            Shikoyat va Takliflar
+          </button>
+        </nav>
+      </div>
+
+      <!-- Bottom Monthly Usage Card in Sidebar -->
+      <div class="glass-card p-3.5 rounded-2xl border border-slate-700/60 text-xs space-y-2 mt-4">
+        <div class="flex items-center justify-between">
+          <span class="text-slate-400 font-medium">Oylik Foydalanish</span>
+          <span class="text-[11px] font-bold text-indigo-400"><span id="statUsageCount">0</span> / 10</span>
+        </div>
+        <div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
+          <div id="usageProgressBar" class="bg-indigo-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+        <p class="text-[10px] text-slate-500">Qolgan generatsiyalar: <strong id="statRemainingCount" class="text-slate-300">10</strong> ta</p>
+      </div>
+    </aside>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0c1220]/95 backdrop-blur-xl border-t border-slate-800 flex items-center justify-around px-2 py-2 safe-area-bottom shadow-2xl">
+      <button data-view="dashboardHomeView" class="sidebar-nav-item sidebar-link-active flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-slate-400 hover:text-white transition-all text-center group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+        <span class="text-[10px] font-semibold leading-none">Asosiy</span>
+      </button>
+      <button data-view="toolsView" class="sidebar-nav-item flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-slate-400 hover:text-white transition-all text-center group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        <span class="text-[10px] font-semibold leading-none">Asboblar</span>
+      </button>
+      <button data-view="proView" class="sidebar-nav-item flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-amber-400 hover:text-amber-300 transition-all text-center group">
+        <div class="relative">
+          <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+          <span class="absolute -top-1 -right-2 px-1 py-0.2 bg-gradient-to-r from-amber-500 to-pink-500 text-[7px] font-black text-white rounded-full leading-none">PRO</span>
+        </div>
+        <span class="text-[10px] font-bold text-amber-300 leading-none">Pro Hub</span>
+      </button>
+      <button data-view="chatView" class="sidebar-nav-item flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-slate-400 hover:text-white transition-all text-center group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+        <span class="text-[10px] font-semibold leading-none">Chat</span>
+      </button>
+      <button data-view="historyView" class="sidebar-nav-item flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-slate-400 hover:text-white transition-all text-center group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span class="text-[10px] font-semibold leading-none">Tarix</span>
+      </button>
+      <button data-view="profileView" class="sidebar-nav-item flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-slate-400 hover:text-white transition-all text-center group">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+        <span class="text-[10px] font-semibold leading-none">Profil</span>
+      </button>
+    </nav>
+
+    <!-- Main Content Stage -->
+    <main class="flex-1 p-3.5 sm:p-5 lg:p-8 overflow-y-auto max-w-6xl w-full mx-auto pb-24 md:pb-8">
+      
+      <!-- SUB-VIEW 1: DASHBOARD HOME -->
+      <section id="dashboardHomeView" class="space-y-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-2xl font-black text-white">Dashboard</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Xush kelibsiz! Kerakli AI asbobni tanlang va kontent yaratishni boshlang.</p>
+          </div>
+        </div>
+
+        <!-- Quick Action Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+          <button data-tool="toolPanelPost" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-indigo-500/50">
+            <div class="text-xl">📝</div>
+            <div class="font-bold text-white text-xs">Post Yaratish</div>
+            <div class="text-[11px] text-slate-400">AIDA matn & teglar</div>
+          </button>
+          <button data-tool="toolPanelReels" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-rose-500/50">
+            <div class="text-xl">🎬</div>
+            <div class="font-bold text-white text-xs">Reels G'oyalari</div>
+            <div class="text-[11px] text-slate-400">Viral ssenariylar</div>
+          </button>
+          <button data-tool="toolPanelPlan" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-purple-500/50">
+            <div class="text-xl">📅</div>
+            <div class="font-bold text-white text-xs">Kontent Reja</div>
+            <div class="text-[11px] text-slate-400">7/14/30 kunlik reja</div>
+          </button>
+          <button data-tool="toolPanelHashtags" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-cyan-500/50">
+            <div class="text-xl">🏷</div>
+            <div class="font-bold text-white text-xs">Hashtaglar</div>
+            <div class="text-[11px] text-slate-400">Toifalangan teglar</div>
+          </button>
+          <button data-tool="toolPanelAdCopy" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-amber-500/50">
+            <div class="text-xl">📣</div>
+            <div class="font-bold text-white text-xs">Reklama Matni</div>
+            <div class="text-[11px] text-slate-400">Short, Medium, Long</div>
+          </button>
+          <button data-tool="toolPanelImagePrompt" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-emerald-500/50">
+            <div class="text-xl">🎨</div>
+            <div class="font-bold text-white text-xs">Rasm Prompts</div>
+            <div class="text-[11px] text-slate-400">Midjourney & DALL-E</div>
+          </button>
+          <button data-tool="toolPanelAudience" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-blue-500/50">
+            <div class="text-xl">🎯</div>
+            <div class="font-bold text-white text-xs">Auditoriya Tahlili</div>
+            <div class="text-[11px] text-slate-400">Ideal mijoz avatar</div>
+          </button>
+          <button onclick="switchAppView('chatView')" class="glass-card p-4 rounded-2xl text-left space-y-2 hover:border-indigo-500/50">
+            <div class="text-xl">💬</div>
+            <div class="font-bold text-white text-xs">Marketing Chat</div>
+            <div class="text-[11px] text-slate-400">AI Konsultant</div>
+          </button>
+        </div>
+
+        <!-- Recent Generations Section -->
+        <div class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-white text-sm">Oxirgi Generatsiyalar (Recent Generations)</h3>
+            <button onclick="switchAppView('historyView')" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold">Barchasini ko'rish →</button>
+          </div>
+          <div id="recentGenerationsList"></div>
+        </div>
+      </section>
+
+      <!-- SUB-VIEW 2: AI TOOLS VIEW -->
+      <section id="toolsView" class="hidden space-y-6">
+        <!-- Tools Nav Bar -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-2">
+          <button data-tool-panel="toolPanelPost" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-lg whitespace-nowrap">📝 AI Post</button>
+          <button data-tool-panel="toolPanelReels" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">🎬 Reels Ssenariy</button>
+          <button data-tool-panel="toolPanelPlan" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">📅 Kontent Reja</button>
+          <button data-tool-panel="toolPanelHashtags" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">🏷 Hashtaglar</button>
+          <button data-tool-panel="toolPanelAdCopy" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">📣 Reklama (Ads)</button>
+          <button data-tool-panel="toolPanelImagePrompt" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">🎨 Image Prompts</button>
+          <button data-tool-panel="toolPanelAudience" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">🎯 Auditoriya</button>
+        </div>
+
+        <!-- 1. Post Panel -->
+        <div id="toolPanelPost" class="space-y-5">
+          <form id="formGenPost" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
+            <h3 class="font-bold text-white text-base">📝 AI Post Generator</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Nomi</label>
+                <input type="text" id="postBizName" placeholder="Masalan: 'Chustiyosh'" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+                <input type="text" id="postBizType" required value="Restoran va Kafexona" placeholder="Restoran, Kiyim do'koni..." class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Xizmat *</label>
+                <input type="text" id="postProduct" required value="Mualliflik go'shtli bifsteks taomi" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Post Mavzusi *</label>
+                <input type="text" id="postTopic" required value="Maxsus oshpaz siri va juma aksiyasi" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Ohang (Tone)</label>
+                <select id="postTone" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                  <option value="Do'stona va ishtahani ochuvchi">Do'stona va ishtahani ochuvchi</option>
+                  <option value="Ekspert va professional">Ekspert va professional</option>
+                  <option value="Savdoga yo'naltirilgan">Savdoga yo'naltirilgan</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Post Maqsadi</label>
+                <select id="postGoal" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                  <option value="Sotuvni oshirish va buyurtma olish">Sotuv va buyurtma olish</option>
+                  <option value="Obunachi jalb qilish">Obunachi jalb qilish</option>
+                  <option value="Ishonchni mustahkamlash">Ishonchni mustahkamlash</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" id="btnSubmitPost" class="w-full py-3 rounded-xl gradient-btn text-white font-bold text-xs shadow-md">
+              Postni Generatsiya Qilish 🚀
+            </button>
+          </form>
+          <div id="postResultContainer"></div>
+        </div>
+
+        <!-- 2. Reels Panel -->
+        <div id="toolPanelReels" class="hidden space-y-5">
+          <form id="formGenReels" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
+            <h3 class="font-bold text-white text-base">🎬 Reels Idea Generator</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+                <input type="text" id="reelsBizType" required value="Kiyim-kechak do'koni" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Xizmat *</label>
+                <input type="text" id="reelsProduct" required value="Yangi bahorgi liboslar" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Maxsus Mavzu (ixtiyoriy)</label>
+                <input type="text" id="reelsTopic" placeholder="Masalan: 1 ta kiyim bilan 4 xil obraz" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+            </div>
+            <button type="submit" id="btnSubmitReels" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-md">
+              Reels Ssenariy Yaratish 🎬
+            </button>
+          </form>
+          <div id="reelsResultContainer"></div>
+        </div>
+
+        <!-- 3. Plan Panel -->
+        <div id="toolPanelPlan" class="hidden space-y-5">
+          <form id="formGenPlan" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
+            <h3 class="font-bold text-white text-base">📅 Kontent Reja Generatori (7, 14, 30 Kun)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+                <input type="text" id="planBizType" required value="IT Kurslar va Dasturlash Akademiyasi" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Davomiylik (Kunlar) *</label>
+                <select id="planDuration" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-indigo-400">
+                  <option value="7">7 Kunlik Reja</option>
+                  <option value="14">14 Kunlik Reja</option>
+                  <option value="30">30 Kunlik Reja (To'liq Oy)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Asosiy Maqsad</label>
+                <input type="text" id="planGoal" value="Yangi guruhlarga qabul va sotuv" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+            </div>
+            <button type="submit" id="btnSubmitPlan" class="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md">
+              Kontent Kalendarni Yaratish 📅
+            </button>
+          </form>
+          <div id="planResultContainer"></div>
+        </div>
+
+        <!-- 4. Hashtags Panel -->
+        <div id="toolPanelHashtags" class="hidden space-y-5">
+          <form id="formGenHashtags" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
+            <h3 class="font-bold text-white text-base">🏷 Toifalangan Hashtag Generator</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+                <input type="text" id="hashBizType" required value="Go'zallik Saloni" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Xizmat *</label>
+                <input type="text" id="hashProduct" required value="Soch turmagi va makiyaj" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Shahar / Hudud</label>
+                <input type="text" id="hashCity" value="Toshkent" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+            </div>
+            <button type="submit" id="btnSubmitHashtags" class="w-full py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs shadow-md">
+              Hashtaglarni Saralash 🏷
+            </button>
+          </form>
+          <div id="hashtagsResultContainer"></div>
+        </div>
+
+        <!-- 5. Ad Copy Panel -->
+        <div id="toolPanelAdCopy" class="hidden space-y-5">
+          <form id="formGenAdCopy" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
+            <h3 class="font-bold text-white text-base">📣 Ad Copy Generator (Short / Medium / Long)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+                <input type="text" id="adBizType" required value="Ingliz tili kursi" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Kurs *</label>
+                <input type="text" id="adProduct" required value="IELTS 7.5+ intensiv kursi" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Maqsadli Auditoriya *</label>
+                <input type="text" id="adAudience" required value="Talabalar va xorijga ketuvchilar" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Maxsus Taklif / Chegirma *</label>
+                <input type="text" id="adOffer" required value="Birinchi 10 kishiga 25% chegirma va bepul mock test" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+            </div>
+            <button type="submit" id="btnSubmitAdCopy" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md">
+              Reklama Matnlarini Yaratish 📣
+            </button>
+          </form>
+          <div id="adCopyResultContainer"></div>
+        </div>
+
+        <!-- 6. Image Prompt Panel -->
+        <div id="toolPanelImagePrompt" class="hidden space-y-5">
+          <form id="formGenImagePrompt" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
+            <h3 class="font-bold text-white text-base">🎨 AI Image Prompt Generator (Midjourney / DALL-E)</h3>
+            <div class="space-y-3">
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot yoki Post Vizual Tavsifi *</label>
+                <input type="text" id="imgDesc" required value="Nafis bej rangli qahva chashkasi va zamonaviy laptop shinam kafeda" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs text-slate-300 font-semibold mb-1">Uslub (Style Preference)</label>
+                  <input type="text" id="imgStyle" value="Photorealistic, Studio Lighting, 8k, Hasselblad" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                </div>
+                <div>
+                  <label class="block text-xs text-slate-300 font-semibold mb-1">Brend Ranglari</label>
+                  <input type="text" id="imgColors" placeholder="Och pastel, oltin, qora" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                </div>
+              </div>
+            </div>
+            <button type="submit" id="btnSubmitImagePrompt" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md">
+              Image Promptlarni Yaratish 🎨
+            </button>
+          </form>
+          <div id="imagePromptResultContainer"></div>
+        </div>
+
+        <!-- 7. Audience Panel -->
+        <div id="toolPanelAudience" class="hidden space-y-5">
+          <form id="formGenAudience" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
+            <h3 class="font-bold text-white text-base">🎯 Target Audience Analyzer (Auditoriya Tahlili)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Nomi</label>
+                <input type="text" id="audBizName" placeholder="Kompaniya nomi" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+                <input type="text" id="audBizType" required value="Ko'chmas mulk agentligi (Novostroyka)" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Segment</label>
+                <input type="text" id="audProduct" value="Toshkent markazidagi premium xonadonlar" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+            </div>
+            <button type="submit" id="btnSubmitAudience" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md">
+              Auditoriyani Tahlil Qilish 🎯
+            </button>
+          </form>
+          <div id="audienceResultContainer"></div>
+        </div>
+
+      </section>
+
+      <!-- SUB-VIEW 2.5: SMM AI PRO VIEW -->
+      <section id="proView" class="hidden space-y-6 animate-fade-in">
+        <!-- Hero Pro Header -->
+        <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-amber-500/40 relative overflow-hidden bg-gradient-to-br from-amber-500/10 via-slate-900/60 to-purple-900/20">
+          <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div class="space-y-2">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-extrabold">
+                <span>👑 SMM AI Pro Hub</span>
+                <span>•</span>
+                <span class="text-emerald-400">30 Kunlik Bepul Sinov Faol</span>
+              </div>
+              <h2 class="text-2xl sm:text-3xl font-black text-white">SMM AI Pro Imkoniyatlari</h2>
+              <p class="text-xs sm:text-sm text-slate-300 max-w-xl">Biznesingizni avtopilot rejimida yurgizish, virusli trendlarni tahlil qilish va yuqori konversiyali kontentlarni yaratish markazi.</p>
+            </div>
+            <button onclick="switchAppView('toolsView'); activateToolTab('toolPanelPlan');" class="px-5 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 text-white font-extrabold text-xs shadow-lg shadow-amber-500/20 hover:opacity-95 transition-all flex items-center gap-2">
+              <span>🚀 30 Kunlik Avto-Plan</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Pro Feature Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Pro Feature 1: Auto-Pilot Planner -->
+          <div onclick="showPricingModal('50 000 so\'m', 'Standart Pro')" class="glass-card p-5 rounded-3xl border border-slate-800 hover:border-amber-500/50 transition-all space-y-3 flex flex-col justify-between cursor-pointer group">
+            <div class="space-y-2">
+              <div class="w-10 h-10 rounded-2xl bg-amber-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center text-lg">
+                ⚡
+              </div>
+              <h3 class="font-bold text-white text-sm group-hover:text-amber-300 transition-colors">Auto-Pilot SMM Rejalashtiruvchi</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">1 oylik kontent kalendar, Reels ssenariylari va postlarni 1-bosishda to'liq shakllantiring.</p>
+            </div>
+            <button onclick="event.stopPropagation(); showPricingModal('50 000 so\'m', 'Standart Pro')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-amber-600 text-white font-bold text-xs transition-all border border-slate-700">
+              Pro Olish →
+            </button>
+          </div>
+
+          <!-- Pro Feature 2: Competitor AI Spy -->
+          <div onclick="showPricingModal('50 000 so\'m', 'Standart Pro')" class="glass-card p-5 rounded-3xl border border-slate-800 hover:border-indigo-500/50 transition-all space-y-3 flex flex-col justify-between cursor-pointer group">
+            <div class="space-y-2">
+              <div class="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-lg">
+                🔍
+              </div>
+              <h3 class="font-bold text-white text-sm group-hover:text-indigo-300 transition-colors">Raqobatchilarni AI Tahlili</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">Sohangizdagi eng kuchli raqobatchilar strategiyasini tahlil qilib, ulardan ustun g'oyalar oling.</p>
+            </div>
+            <button onclick="event.stopPropagation(); showPricingModal('50 000 so\'m', 'Standart Pro')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-indigo-600 text-white font-bold text-xs transition-all border border-slate-700">
+              Pro Olish →
+            </button>
+          </div>
+
+          <!-- Pro Feature 3: Trending Audio & Hooks -->
+          <div onclick="showPricingModal('30 000 so\'m', 'Boshlang\'ich Pro')" class="glass-card p-5 rounded-3xl border border-slate-800 hover:border-rose-500/50 transition-all space-y-3 flex flex-col justify-between cursor-pointer group">
+            <div class="space-y-2">
+              <div class="w-10 h-10 rounded-2xl bg-rose-500/20 border border-rose-500/30 text-rose-400 flex items-center justify-center text-lg">
+                🎵
+              </div>
+              <h3 class="font-bold text-white text-sm group-hover:text-rose-300 transition-colors">Viral Reels & Trending Saundtreklar</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">Instagram va TikTok'da millionlab ko'rishlar to'playotgan eng so'nggi 3 soniyalik Hooklar.</p>
+            </div>
+            <button onclick="event.stopPropagation(); showPricingModal('30 000 so\'m', 'Boshlang\'ich Pro')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-rose-600 text-white font-bold text-xs transition-all border border-slate-700">
+              Pro Olish →
+            </button>
+          </div>
+
+          <!-- Pro Feature 4: Brand Voice Fine-Tuning -->
+          <div onclick="showPricingModal('50 000 so\'m', 'Standart Pro')" class="glass-card p-5 rounded-3xl border border-slate-800 hover:border-purple-500/50 transition-all space-y-3 flex flex-col justify-between cursor-pointer group">
+            <div class="space-y-2">
+              <div class="w-10 h-10 rounded-2xl bg-purple-500/20 border border-purple-500/30 text-purple-400 flex items-center justify-center text-lg">
+                🎙
+              </div>
+              <h3 class="font-bold text-white text-sm group-hover:text-purple-300 transition-colors">Maxsus Brend Ohangi (Tone of Voice)</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">AI sizning biznes profilingizga 100% moslashadi va brendingiz nomidan professional yozadi.</p>
+            </div>
+            <button onclick="event.stopPropagation(); showPricingModal('50 000 so\'m', 'Standart Pro')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-purple-600 text-white font-bold text-xs transition-all border border-slate-700">
+              Pro Olish →
+            </button>
+          </div>
+
+          <!-- Pro Feature 5: High Converting Ads -->
+          <div onclick="showPricingModal('100 000 so\'m', 'VIP Biznes Pro')" class="glass-card p-5 rounded-3xl border border-slate-800 hover:border-emerald-500/50 transition-all space-y-3 flex flex-col justify-between cursor-pointer group">
+            <div class="space-y-2">
+              <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-lg">
+                🎯
+              </div>
+              <h3 class="font-bold text-white text-sm group-hover:text-emerald-300 transition-colors">Konversiyali Target Reklama</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">Reklama byudjetini tejab, sotuvni oshiruvchi A/B test reklama matnlari va takliflar.</p>
+            </div>
+            <button onclick="event.stopPropagation(); showPricingModal('100 000 so\'m', 'VIP Biznes Pro')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-emerald-600 text-white font-bold text-xs transition-all border border-slate-700">
+              Pro Olish →
+            </button>
+          </div>
+
+          <!-- Pro Feature 6: 24/7 AI Marketing Chat -->
+          <div onclick="showPricingModal('100 000 so\'m', 'VIP Biznes Pro')" class="glass-card p-5 rounded-3xl border border-slate-800 hover:border-cyan-500/50 transition-all space-y-3 flex flex-col justify-between cursor-pointer group">
+            <div class="space-y-2">
+              <div class="w-10 h-10 rounded-2xl bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 flex items-center justify-center text-lg">
+                💬
+              </div>
+              <h3 class="font-bold text-white text-sm group-hover:text-cyan-300 transition-colors">24/7 Shaxsiy AI Marketing Strateg</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">Sotuv voronkalari, chekni oshirish va mijozlarni jalb qilish bo'yicha cheksiz konsultatsiya.</p>
+            </div>
+            <button onclick="event.stopPropagation(); showPricingModal('100 000 so\'m', 'VIP Biznes Pro')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-cyan-600 text-white font-bold text-xs transition-all border border-slate-700">
+              Pro Olish →
+            </button>
+          </div>
+        </div>
+
+        <!-- 3 TA'RIFLAR BO'LIMI (PRICING TIERS) -->
+        <div class="pt-6 space-y-6">
+          <div class="text-center space-y-2">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-bold">
+              <span>💎 Qulay va Shaffof Narxlar</span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-black text-white">SMM AI Pro Ta'riflar Rejasi</h3>
+            <p class="text-xs sm:text-sm text-slate-400 max-w-lg mx-auto">O'zingizga mos ta'rifni tanlang va biznesingiz marketingini yangi bosqichga olib chiqing.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- 1-Ta'rif: 30 000 so'm -->
+            <div class="glass-card p-6 rounded-3xl border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between space-y-6 relative">
+              <div class="space-y-4">
+                <div class="space-y-1">
+                  <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">1-Ta'rif</span>
+                  <h4 class="text-xl font-black text-white">Boshlang'ich Pro</h4>
+                  <p class="text-xs text-slate-400">Yangi boshlovchi va kichik loyihalar uchun</p>
+                </div>
+
+                <div class="pt-2">
+                  <span class="text-3xl font-black text-white">30 000</span>
+                  <span class="text-xs text-slate-400">so'm / oy</span>
+                </div>
+
+                <ul class="space-y-2.5 text-xs text-slate-300 pt-2 border-t border-slate-800">
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span> Oyiga 35 ta AI Generatsiya
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span> 7 kunlik Kontent Reja
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span> Reels ssenariy va hooklar
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span> Hashtag va Target matnlari
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span> Standart AI server tezligi
+                  </li>
+                </ul>
+              </div>
+
+              <button onclick="openCheckoutModal('Boshlang\'ich Pro', '30 000 so\'m')" class="w-full py-3 rounded-2xl bg-slate-800 hover:bg-indigo-600 text-white font-bold text-xs transition-all border border-slate-700 shadow-md">
+                30 000 so'm — Tanlash 🚀
+              </button>
+            </div>
+
+            <!-- 2-Ta'rif: 50 000 so'm (Eng Mashhur) -->
+            <div class="glass-card p-6 rounded-3xl border-2 border-indigo-500 bg-gradient-to-b from-indigo-950/40 via-slate-900/90 to-slate-950 flex flex-col justify-between space-y-6 relative shadow-2xl shadow-indigo-600/20 transform md:-translate-y-2">
+              <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 text-white text-[10px] font-black uppercase tracking-wider shadow-md">
+                ⭐ Eng Mashhur / Tavsiya
+              </div>
+
+              <div class="space-y-4">
+                <div class="space-y-1 pt-1">
+                  <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">2-Ta'rif</span>
+                  <h4 class="text-xl font-black text-white">Standart Pro</h4>
+                  <p class="text-xs text-slate-300">Faol SMM mutaxassislar va o'suvchi brendlar uchun</p>
+                </div>
+
+                <div class="pt-2">
+                  <span class="text-3xl font-black text-white">50 000</span>
+                  <span class="text-xs text-slate-400">so'm / oy</span>
+                </div>
+
+                <ul class="space-y-2.5 text-xs text-slate-200 pt-2 border-t border-slate-800">
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span> Oyiga 50 ta AI Generatsiya
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span> 30 kunlik Auto-Pilot Kontent Kalendar
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span> Raqobatchilarni AI Tahlili (Spy)
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span> Maxsus Brend Ohangi (Tone of Voice)
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span> PDF & Word eksport qilish
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-emerald-400 font-bold">✓</span> Turbo tezlikdagi AI Serverlar
+                  </li>
+                </ul>
+              </div>
+
+              <button onclick="openCheckoutModal('Standart Pro', '50 000 so\'m')" class="w-full py-3.5 rounded-2xl gradient-btn text-white font-black text-xs shadow-xl shadow-indigo-600/30 hover:opacity-95 transition-all">
+                50 000 so'm — Tanlash ⭐
+              </button>
+            </div>
+
+            <!-- 3-Ta'rif: 100 000 so'm (VIP Biznes) -->
+            <div class="glass-card p-6 rounded-3xl border border-amber-500/40 bg-gradient-to-b from-amber-950/20 via-slate-900/90 to-slate-950 flex flex-col justify-between space-y-6 relative">
+              <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-wider shadow-md">
+                👑 Maksimal VIP
+              </div>
+
+              <div class="space-y-4">
+                <div class="space-y-1 pt-1">
+                  <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">3-Ta'rif</span>
+                  <h4 class="text-xl font-black text-white">VIP Biznes Pro</h4>
+                  <p class="text-xs text-slate-400">Agentliklar, tadbirkorlar va yirik kompaniyalar uchun</p>
+                </div>
+
+                <div class="pt-2">
+                  <span class="text-3xl font-black text-white">100 000</span>
+                  <span class="text-xs text-slate-400">so'm / oy</span>
+                </div>
+
+                <ul class="space-y-2.5 text-xs text-slate-300 pt-2 border-t border-slate-800">
+                  <li class="flex items-center gap-2">
+                    <span class="text-amber-400 font-bold">✓</span> <strong>Barcha Pro Imkoniyatlar + Cheksiz</strong>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-amber-400 font-bold">✓</span> 24/7 Shaxsiy AI Marketing Strateg
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-amber-400 font-bold">✓</span> 5 tagacha Biznes Profilni bir vaqtda boshqarish
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-amber-400 font-bold">✓</span> Cheksiz Target Reklama & Voronkalar
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-amber-400 font-bold">✓</span> Telegram Bot orqali Avto-Postlash
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="text-amber-400 font-bold">✓</span> VIP Shaxsiy Menejer & Ustuvor Yordam
+                  </li>
+                </ul>
+              </div>
+
+              <button onclick="openCheckoutModal('VIP Biznes Pro', '100 000 so\'m')" class="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-xs transition-all shadow-lg shadow-amber-500/20">
+                100 000 so'm — Tanlash 👑
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUB-VIEW 3: CHAT VIEW -->
+      <section id="chatView" class="hidden h-[75vh] flex flex-col glass-panel rounded-3xl border border-slate-800 overflow-hidden">
+        <!-- Chat Header -->
+        <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/40">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold text-xs">AI</div>
+            <div>
+              <h4 class="font-bold text-white text-xs">AI Marketing Konsultant</h4>
+              <p class="text-[10px] text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Online</p>
+            </div>
+          </div>
+          <button id="btnClearChat" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-900/30 text-slate-400 hover:text-rose-300 text-xs transition-all border border-slate-700">
+            Tozalash 🗑
+          </button>
+        </div>
+
+        <!-- Messages Container -->
+        <div id="chatMessagesContainer" class="flex-1 p-4 overflow-y-auto space-y-4"></div>
+
+        <!-- Chat Input Form -->
+        <form id="chatForm" class="p-3 border-t border-slate-800 flex items-center gap-2 bg-slate-950/60">
+          <input type="text" id="chatInput" placeholder="Marketing, Reels yoki sotuv bo'yicha savol bering..." 
+            class="flex-1 p-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:outline-none focus:border-indigo-500">
+          <button type="submit" class="px-5 py-3 rounded-xl gradient-btn text-white font-bold text-xs shadow-md">
+            Yuborish 🚀
+          </button>
+        </form>
+      </section>
+
+      <!-- SUB-VIEW 4: HISTORY VIEW -->
+      <section id="historyView" class="hidden space-y-5">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-2xl font-black text-white">Generatsiyalar Tarixi</h2>
+            <p class="text-xs text-slate-400">Barcha yaratilgan kontentlar xavfsiz saqlanadi.</p>
+          </div>
+          <select id="historyFilterType" class="p-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-slate-200">
+            <option value="">Barcha turlar</option>
+            <option value="post">Postlar</option>
+            <option value="reels">Reels</option>
+            <option value="content_plan">Kontent Reja</option>
+            <option value="hashtags">Hashtaglar</option>
+            <option value="ad_copy">Reklama</option>
+            <option value="image_prompt">Image Prompts</option>
+            <option value="audience">Auditoriya</option>
+          </select>
+        </div>
+
+        <div id="historyListContainer"></div>
+      </section>
+
+      <!-- SUB-VIEW 5: BUSINESS PROFILE VIEW -->
+      <section id="profileView" class="hidden space-y-5">
+        <div class="max-w-2xl mx-auto glass-panel p-6 rounded-3xl border border-slate-800 space-y-5">
+          <div>
+            <h2 class="text-xl font-bold text-white">🏢 Biznes Profil Sozlamalari</h2>
+            <p class="text-xs text-slate-400 mt-1">Ushbu ma'lumotlar saqlanadi va AI generatorlarda avtomatik to'ldiriladi.</p>
+          </div>
+
+          <form id="businessProfileForm" class="space-y-4">
+            <div>
+              <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes / Brend Nomi *</label>
+              <input type="text" id="profBizName" required placeholder="Masalan: 'Chustiyosh'" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+            </div>
+            <div>
+              <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+              <input type="text" id="profBizType" required placeholder="Restoran, Butik, IT Kurs..." class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+            </div>
+            <div>
+              <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes / Mahsulot Tavsifi</label>
+              <textarea id="profDesc" rows="3" placeholder="Biznesingizning asosiy xususiyatlari..." class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs"></textarea>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Maqsadli Auditoriya</label>
+                <input type="text" id="profAudience" placeholder="18-35 yoshli yoshlar" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              </div>
+              <div>
+                <label class="block text-xs text-slate-300 font-semibold mb-1">Tone of Voice (Ohang)</label>
+                <select id="profTone" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                  <option value="Do'stona va samimiy">Do'stona va samimiy</option>
+                  <option value="Ekspert va professional">Ekspert va professional</option>
+                  <option value="Savdoga yo'naltirilgan">Savdoga yo'naltirilgan</option>
+                  <option value="Trendbop va dinamik">Trendbop va dinamik</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs text-slate-300 font-semibold mb-1">Asosiy Platforma</label>
+              <select id="profPlatform" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <option value="Instagram">Instagram</option>
+                <option value="Telegram">Telegram</option>
+                <option value="TikTok">TikTok</option>
+                <option value="Facebook">Facebook</option>
+              </select>
+            </div>
+            <button type="submit" class="w-full py-3 rounded-xl gradient-btn text-white font-bold text-xs shadow-md">
+              Profilni Saqlash 💾
+            </button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================= 1. DEDICATED EMAIL/PASSWORD AUTH MODAL ================= -->
+  <div id="authModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-panel bg-[#131314] border border-[#2d2f31] rounded-[28px] w-full max-w-md p-6 sm:p-8 relative shadow-2xl space-y-5 text-left">
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-1.5 rounded-full hover:bg-[#202124] transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <!-- LOGIN VIEW -->
+      <div id="authModalLogin" class="space-y-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white font-black text-xs shadow-md">
+              AI
+            </div>
+            <span class="font-bold text-white text-sm tracking-tight">AI SMM Assistant</span>
+          </div>
+          <h3 class="font-extrabold text-white text-2xl tracking-tight">Tizimga Kirish</h3>
+          <p class="text-xs text-slate-400">Profilingizga kirish uchun emailingiz va parolingizni kiriting</p>
+        </div>
+
+        <form id="loginForm" class="space-y-3.5 pt-1">
+          <div>
+            <label class="block text-xs text-slate-300 font-semibold mb-1">Elektron Pochta</label>
+            <input type="email" id="loginEmail" required placeholder="nom@example.com" class="w-full p-3 rounded-xl bg-[#1e1f20] border border-[#3c4043] text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
+          </div>
+          <div>
+            <label class="block text-xs text-slate-300 font-semibold mb-1">Parol</label>
+            <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full p-3 rounded-xl bg-[#1e1f20] border border-[#3c4043] text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
+          </div>
+          
+          <button type="submit" id="btnLoginSubmit" class="w-full py-3.5 rounded-xl gradient-btn text-white font-bold text-xs shadow-lg shadow-indigo-600/20 hover:opacity-95 transition-all flex items-center justify-center gap-2">
+            <span>Tizimga Kirish 🚀</span>
+          </button>
+        </form>
+
+        <div class="flex items-center gap-3 pt-1">
+          <div class="h-px bg-[#282a2c] flex-1"></div>
+          <span class="text-[11px] text-slate-500 font-medium">yoki</span>
+          <div class="h-px bg-[#282a2c] flex-1"></div>
+        </div>
+
+        <!-- Google OAuth Optional Button -->
+        <button type="button" onclick="openGoogleChooserModal()" class="w-full py-3 px-4 rounded-xl bg-[#1e1f20] hover:bg-[#282a2c] text-[#e8eaed] font-medium text-xs border border-[#3c4043] transition-all flex items-center justify-center gap-2.5 shadow-sm">
+          <svg class="w-4 h-4" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <span>Google bilan davom etish</span>
+        </button>
+
+        <p class="text-center text-xs text-slate-400 pt-1">
+          Hisobingiz yo'qmi? <button type="button" onclick="showAuthModal('register')" class="text-indigo-400 font-bold hover:underline">Ro'yxatdan o'ting</button>
+        </p>
+      </div>
+
+      <!-- REGISTER VIEW -->
+      <div id="authModalRegister" class="hidden space-y-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white font-black text-xs shadow-md">
+              AI
+            </div>
+            <span class="font-bold text-white text-sm tracking-tight">AI SMM Assistant</span>
+          </div>
+          <h3 class="font-extrabold text-white text-2xl tracking-tight">Ro'yxatdan O'tish</h3>
+          <p class="text-xs text-slate-400">Bepul hisob oching va oyiga 10 ta AI generatsiyaga ega bo'ling</p>
+        </div>
+
+        <form id="registerForm" class="space-y-3 pt-1">
+          <div>
+            <label class="block text-xs text-slate-300 font-semibold mb-1">Ismingiz</label>
+            <input type="text" id="registerName" required minlength="2" placeholder="Ismingizni kiriting" class="w-full p-2.5 rounded-xl bg-[#1e1f20] border border-[#3c4043] text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
+          </div>
+          <div>
+            <label class="block text-xs text-slate-300 font-semibold mb-1">Elektron Pochta</label>
+            <input type="email" id="registerEmail" required placeholder="nom@example.com" class="w-full p-2.5 rounded-xl bg-[#1e1f20] border border-[#3c4043] text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
+          </div>
+          <div>
+            <label class="block text-xs text-slate-300 font-semibold mb-1">Parol (kamida 8 ta belgi)</label>
+            <input type="password" id="registerPassword" minlength="8" required placeholder="••••••••" class="w-full p-2.5 rounded-xl bg-[#1e1f20] border border-[#3c4043] text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
+          </div>
+          <div>
+            <label class="block text-xs text-slate-300 font-semibold mb-1">Parolni Tasdiqlang</label>
+            <input type="password" id="registerConfirmPassword" minlength="8" required placeholder="Parolni qayta kiriting" class="w-full p-2.5 rounded-xl bg-[#1e1f20] border border-[#3c4043] text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
+            <p id="registerPasswordError" class="text-[11px] text-rose-400 font-medium mt-1 hidden"></p>
+          </div>
+          
+          <button type="submit" id="btnRegisterSubmit" class="w-full py-3.5 rounded-xl gradient-btn text-white font-bold text-xs shadow-lg shadow-indigo-600/20 hover:opacity-95 transition-all flex items-center justify-center gap-2">
+            <span>Ro'yxatdan O'tish 🚀</span>
+          </button>
+        </form>
+
+        <div class="flex items-center gap-3 pt-1">
+          <div class="h-px bg-[#282a2c] flex-1"></div>
+          <span class="text-[11px] text-slate-500 font-medium">yoki</span>
+          <div class="h-px bg-[#282a2c] flex-1"></div>
+        </div>
+
+        <!-- Google OAuth Optional Button -->
+        <button type="button" onclick="openGoogleChooserModal()" class="w-full py-3 px-4 rounded-xl bg-[#1e1f20] hover:bg-[#282a2c] text-[#e8eaed] font-medium text-xs border border-[#3c4043] transition-all flex items-center justify-center gap-2.5 shadow-sm">
+          <svg class="w-4 h-4" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <span>Google bilan davom etish</span>
+        </button>
+
+        <p class="text-center text-xs text-slate-400 pt-1">
+          Hisobingiz bormi? <button type="button" onclick="showAuthModal('login')" class="text-indigo-400 font-bold hover:underline">Kirish</button>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= GOOGLE ACCOUNTS CHOOSER MODAL (OFFICIAL GOOGLE OAUTH 2-COLUMN DARK UI) ================= -->
+  <div id="googleAuthModal" class="fixed inset-0 z-50 bg-[#1f1f1f]/95 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-[#131314] border border-[#2d2f31] rounded-[28px] w-full max-w-[1020px] p-6 sm:p-10 lg:p-12 relative shadow-2xl space-y-6 text-left my-auto">
+      
+      <!-- Top Google Bar -->
+      <div class="flex items-center justify-between pb-4 border-b border-[#282a2c]/60">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <span class="text-sm font-normal text-[#e8eaed]">Sign in with Google</span>
+        </div>
+        <button onclick="closeGoogleAuthModal()" class="text-slate-400 hover:text-white p-1.5 rounded-full hover:bg-[#202124] transition-colors" title="Close">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <!-- 2-Column Main Content -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 items-start">
+        
+        <!-- Left Column: App Brand & Heading -->
+        <div class="space-y-6 pt-2">
+          <!-- AI SMM Assistant Site Logo -->
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 p-0.5 flex items-center justify-center shadow-xl shadow-indigo-500/25">
+            <div class="w-full h-full bg-[#131314] rounded-[14px] flex items-center justify-center">
+              <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+          </div>
+
+          <div>
+            <h1 class="text-4xl lg:text-[42px] font-normal text-[#e8eaed] tracking-tight leading-tight">Choose an account</h1>
+            <p class="text-sm text-[#9aa0a6] mt-3">
+              to continue to <span class="text-indigo-400 font-medium">AI SMM Assistant</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Column: Accounts List -->
+        <div class="space-y-6">
+          <div id="deviceGoogleAccountsList" class="border-t border-[#282a2c] divide-y divide-[#282a2c]">
+            <!-- 1. Daler -->
+            <button type="button" onclick="quickLoginGoogle('dalerxolmamatov0@gmail.com', 'D a l e r')" class="w-full py-3.5 px-3 hover:bg-[#1f2022] rounded-xl flex items-center gap-4 text-left transition-colors group">
+              <div class="w-10 h-10 rounded-full bg-[#1e293b] flex items-center justify-center text-base overflow-hidden shrink-0 border border-slate-700 shadow">
+                🦅
+              </div>
+              <div class="truncate">
+                <div class="font-normal text-[#e8eaed] text-[15px] leading-snug group-hover:text-[#38bdf8] transition-colors">D a l e r</div>
+                <div class="text-[13px] text-[#9aa0a6] truncate font-normal">dalerxolmamatov0@gmail.com</div>
+              </div>
+            </button>
+
+            <!-- 2. Roblox Geme -->
+            <button type="button" onclick="quickLoginGoogle('robloxgamee1227@gmail.com', 'Roblox Geme')" class="w-full py-3.5 px-3 hover:bg-[#1f2022] rounded-xl flex items-center gap-4 text-left transition-colors group">
+              <div class="w-10 h-10 rounded-full bg-[#0f3443] flex items-center justify-center text-base overflow-hidden shrink-0 border border-slate-700 shadow">
+                🎮
+              </div>
+              <div class="truncate">
+                <div class="font-normal text-[#e8eaed] text-[15px] leading-snug group-hover:text-[#38bdf8] transition-colors">Roblox Geme</div>
+                <div class="text-[13px] text-[#9aa0a6] truncate font-normal">robloxgamee1227@gmail.com</div>
+              </div>
+            </button>
+
+            <!-- 3. Roblox Game -->
+            <button type="button" onclick="quickLoginGoogle('robloxgamee100@gmail.com', 'Roblox Game')" class="w-full py-3.5 px-3 hover:bg-[#1f2022] rounded-xl flex items-center gap-4 text-left transition-colors group">
+              <div class="w-10 h-10 rounded-full bg-[#4a1c1c] flex items-center justify-center text-base overflow-hidden shrink-0 border border-slate-700 shadow">
+                🕹️
+              </div>
+              <div class="truncate">
+                <div class="font-normal text-[#e8eaed] text-[15px] leading-snug group-hover:text-[#38bdf8] transition-colors">Roblox Game</div>
+                <div class="text-[13px] text-[#9aa0a6] truncate font-normal">robloxgamee100@gmail.com</div>
+              </div>
+            </button>
+
+            <!-- 4. Xolmamatov Daler -->
+            <button type="button" onclick="quickLoginGoogle('xolmamatovdaler0@gmail.com', 'Xolmamatov Daler')" class="w-full py-3.5 px-3 hover:bg-[#1f2022] rounded-xl flex items-center gap-4 text-left transition-colors group">
+              <div class="w-10 h-10 rounded-full bg-[#334155] flex items-center justify-center text-base overflow-hidden shrink-0 border border-slate-700 shadow">
+                🏢
+              </div>
+              <div class="truncate">
+                <div class="font-normal text-[#e8eaed] text-[15px] leading-snug group-hover:text-[#38bdf8] transition-colors">Xolmamatov Daler</div>
+                <div class="text-[13px] text-[#9aa0a6] truncate font-normal">xolmamatovdaler0@gmail.com</div>
+              </div>
+            </button>
+
+            <!-- 5. daler xolmamatov -->
+            <button type="button" onclick="quickLoginGoogle('xolmamatovdaler6@gmail.com', 'daler xolmamatov')" class="w-full py-3.5 px-3 hover:bg-[#1f2022] rounded-xl flex items-center gap-4 text-left transition-colors group">
+              <div class="w-10 h-10 rounded-full bg-[#7c3aed] flex items-center justify-center font-medium text-white text-base shrink-0 shadow">
+                d
+              </div>
+              <div class="truncate">
+                <div class="font-normal text-[#e8eaed] text-[15px] leading-snug group-hover:text-[#38bdf8] transition-colors">daler xolmamatov</div>
+                <div class="text-[13px] text-[#9aa0a6] truncate font-normal">xolmamatovdaler6@gmail.com</div>
+              </div>
+            </button>
+
+            <!-- 6. Daler -->
+            <button type="button" onclick="quickLoginGoogle('dalerbee173@gmail.com', 'Daler')" class="w-full py-3.5 px-3 hover:bg-[#1f2022] rounded-xl flex items-center gap-4 text-left transition-colors group">
+              <div class="w-10 h-10 rounded-full bg-[#059669] flex items-center justify-center font-medium text-white text-base shrink-0 shadow">
+                D
+              </div>
+              <div class="truncate">
+                <div class="font-normal text-[#e8eaed] text-[15px] leading-snug group-hover:text-[#38bdf8] transition-colors">Daler</div>
+                <div class="text-[13px] text-[#9aa0a6] truncate font-normal">dalerbee173@gmail.com</div>
+              </div>
+            </button>
+
+            <!-- 7. Use another account -->
+            <button type="button" onclick="toggleDirectGoogleForm()" class="w-full py-3.5 px-3 hover:bg-[#1f2022] rounded-xl flex items-center gap-4 text-left transition-colors text-[#e8eaed]">
+              <div class="w-10 h-10 rounded-full border border-[#5f6368] flex items-center justify-center text-[#9aa0a6] shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+              </div>
+              <div>
+                <div class="font-normal text-[#e8eaed] text-[15px]">Use another account</div>
+              </div>
+            </button>
+          </div>
+
+          <!-- Expandable Custom Google Email Form -->
+          <div id="googleCustomInputSection" class="hidden p-4 rounded-xl bg-[#1e1f20] border border-[#3c4043] space-y-3">
+            <form id="googleDirectLoginForm" class="space-y-3">
+              <div>
+                <label class="block text-xs text-[#bdc1c6] font-medium mb-1">Email or phone</label>
+                <input type="email" id="googleDirectEmail" required placeholder="example@gmail.com" class="w-full p-2.5 rounded-lg bg-[#131314] border border-[#5f6368] text-white text-xs focus:border-indigo-400 focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs text-[#bdc1c6] font-medium mb-1">Name (optional)</label>
+                <input type="text" id="googleDirectName" placeholder="Your Name" class="w-full p-2.5 rounded-lg bg-[#131314] border border-[#5f6368] text-white text-xs focus:border-indigo-400 focus:outline-none">
+              </div>
+              <button type="submit" class="w-full py-2.5 rounded-lg bg-[#1a73e8] hover:bg-[#1b66c9] text-white font-medium text-xs shadow transition-colors">
+                Next 🚀
+              </button>
+            </form>
+          </div>
+
+          <!-- Footer Disclaimer -->
+          <div class="pt-2">
+            <p class="text-[12px] text-[#9aa0a6] leading-relaxed">
+              Before using this app, you can review AI SMM Assistant's <a href="#" class="text-[#8ab4f8] hover:underline">Privacy Policy</a> and <a href="#" class="text-[#8ab4f8] hover:underline">Terms of Service</a>.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= SHIKOYAT VA TAKLIFLAR (FEEDBACK) MODAL ================= -->
+  <div id="feedbackModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-panel bg-slate-950/95 border border-slate-700 rounded-3xl w-full max-w-lg p-6 relative shadow-2xl space-y-4">
+      <button onclick="closeFeedbackModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-lg">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <div class="text-center space-y-1">
+        <div class="w-10 h-10 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center mx-auto mb-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
+        </div>
+        <h3 class="font-extrabold text-white text-xl">Shikoyat va Takliflar</h3>
+        <p class="text-xs text-slate-400">Platformani yanada yaxshilash uchun o'z fikr va taklifingizni qoldiring</p>
+        <p class="text-xs text-indigo-400 font-medium pt-0.5">Iltimos, ma'lumotlaringizni to'g'ri kiriting</p>
+      </div>
+
+      <!-- Type Selectors -->
+      <div class="grid grid-cols-3 gap-2 text-xs">
+        <button type="button" data-type="suggestion" class="feedback-type-btn p-2.5 rounded-xl border border-indigo-500 bg-indigo-600/20 text-indigo-300 font-semibold transition-all flex flex-col items-center gap-1">
+          <span class="text-base">💡</span>
+          <span>Taklif</span>
+        </button>
+        <button type="button" data-type="complaint" class="feedback-type-btn p-2.5 rounded-xl border border-slate-700 bg-slate-900/60 text-slate-400 font-semibold transition-all flex flex-col items-center gap-1">
+          <span class="text-base">⚠️</span>
+          <span>Shikoyat</span>
+        </button>
+        <button type="button" data-type="question" class="feedback-type-btn p-2.5 rounded-xl border border-slate-700 bg-slate-900/60 text-slate-400 font-semibold transition-all flex flex-col items-center gap-1">
+          <span class="text-base">❓</span>
+          <span>Savol / Yordam</span>
+        </button>
+      </div>
+
+      <form id="feedbackForm" class="space-y-3 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Ismingiz</label>
+            <input type="text" id="feedbackName" required placeholder="Ismingizni kiriting" class="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs">
+          </div>
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Elektron Pochta</label>
+            <input type="email" id="feedbackEmail" required placeholder="nom@example.com" class="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs">
+          </div>
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Telegram (Username) <span class="text-rose-400">*</span></label>
+            <input type="text" id="feedbackTelegram" required placeholder="@username" class="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Mavzu</label>
+          <input type="text" id="feedbackSubject" required placeholder="Masalan: Yangi Reels shablonlari qo'shish taklifi" class="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Batafsil Xabar</label>
+          <textarea id="feedbackMessage" rows="4" required placeholder="Taklif yoki shikoyatingizni batafsil bayon qiling..." class="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs"></textarea>
+        </div>
+
+        <button type="submit" id="btnSubmitFeedback" class="w-full py-3 rounded-xl gradient-btn text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2">
+          <span>Yuborish 🚀</span>
+        </button>
+
+        <div class="flex items-center gap-3 pt-1">
+          <div class="h-px bg-slate-800 flex-1"></div>
+          <span class="text-[11px] text-slate-500 font-medium">yoki bot orqali</span>
+          <div class="h-px bg-slate-800 flex-1"></div>
+        </div>
+
+        <!-- Telegram Direct Bot Button -->
+        <button type="button" onclick="handleDirectTelegramSend()" class="w-full py-2.5 px-4 rounded-xl bg-[#229ED9]/15 hover:bg-[#229ED9]/25 text-[#38bdf8] border border-[#229ED9]/30 font-semibold text-xs transition-all flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.718-3.084 12.984-3.238 13.68-.106.474-.325.632-.544.646-.474.032-.831-.308-1.29-.608-.718-.468-1.124-.759-1.821-1.218-.805-.531-.283-.823.175-1.298.12-.125 2.197-2.012 2.237-2.183.005-.021.01-.1-.04-.143-.05-.043-.124-.028-.178-.016-.076.017-1.288.82-3.636 2.406-.344.237-.656.353-.935.347-.308-.007-.899-.174-1.339-.317-.54-.176-.97-.269-.933-.568.019-.156.234-.316.645-.48 2.529-1.101 4.217-1.827 5.064-2.179 2.41-.998 2.911-1.172 3.237-1.177.072-.001.233.018.337.103.088.072.112.169.124.238.012.069.027.224.016.347z"/>
+          </svg>
+          <span>Telegram Bot orqali yuborish</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= HISTORY DETAIL MODAL ================= -->
+  <div id="historyDetailModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-panel bg-slate-950/95 border border-slate-700 rounded-3xl w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+        <h4 id="historyModalTitle" class="font-bold text-white text-sm">Generatsiya Tafsilotlari</h4>
+        <button onclick="closeHistoryModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div id="historyModalBody" class="p-4 overflow-y-auto flex-1 text-xs"></div>
+    </div>
+  </div>
+
+  <!-- ================= PRO PRICING MODAL ================= -->
+  <div id="pricingModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 overflow-y-auto" onclick="if(event.target === this) closePricingModal();">
+    <div class="glass-panel bg-[#131314] border border-[#2d2f31] rounded-[32px] w-full max-w-4xl p-6 sm:p-8 relative shadow-2xl space-y-6 my-8 max-h-[90vh] overflow-y-auto">
+      <button type="button" onclick="closePricingModal()" class="absolute top-4 right-4 sm:top-5 sm:right-5 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-800/90 hover:bg-rose-600/30 border border-slate-700 hover:border-rose-500 text-slate-300 hover:text-white flex items-center justify-center transition-all shadow-lg z-20 group" title="Yopish">
+        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <div class="text-center space-y-2 max-w-xl mx-auto pt-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-black">
+          <span>👑 SMM AI Pro Ta'riflar Rejasi</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-black text-white">O'zingizga Mos Ta'rifni Tanlang</h3>
+        <p class="text-xs sm:text-sm text-slate-400">Biznesingizni avtomatlashtirish va professional SMM natijalariga erishish uchun eng yaxshi reja.</p>
+      </div>
+
+      <!-- 3 Ta'riflar Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
+        <!-- 1-Ta'rif: 30 000 so'm -->
+        <div class="glass-card p-6 rounded-3xl border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between space-y-5">
+          <div class="space-y-4">
+            <div class="space-y-1">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">1-Ta'rif</span>
+              <h4 class="text-lg font-black text-white">Boshlang'ich Pro</h4>
+              <p class="text-xs text-slate-400">Yangi boshlovchilar va kichik loyihalar</p>
+            </div>
+
+            <div class="pt-1">
+              <span class="text-3xl font-black text-white">30 000</span>
+              <span class="text-xs text-slate-400">so'm / oy</span>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-300 pt-3 border-t border-slate-800">
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Oyiga 35 ta AI Generatsiya</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> 7 kunlik Kontent Reja</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Reels ssenariy va hooklar</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Hashtag va Reklama matnlari</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Standart tezlik</li>
+            </ul>
+          </div>
+
+          <button onclick="openCheckoutModal('Boshlang\'ich Pro', '30 000 so\'m')" class="w-full py-3 rounded-2xl bg-slate-800 hover:bg-indigo-600 text-white font-bold text-xs transition-all border border-slate-700 shadow-md">
+            30 000 so'm — Tanlash 🚀
+          </button>
+        </div>
+
+        <!-- 2-Ta'rif: 50 000 so'm (Eng Mashhur) -->
+        <div class="glass-card p-6 rounded-3xl border-2 border-indigo-500 bg-gradient-to-b from-indigo-950/40 via-slate-900/90 to-slate-950 flex flex-col justify-between space-y-5 relative shadow-xl shadow-indigo-600/20 transform md:-translate-y-2">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 text-white text-[10px] font-black uppercase tracking-wider shadow-md">
+            ⭐ Eng Mashhur
+          </div>
+
+          <div class="space-y-4">
+            <div class="space-y-1 pt-1">
+              <span class="text-[11px] font-bold text-indigo-400 uppercase tracking-wider">2-Ta'rif</span>
+              <h4 class="text-lg font-black text-white">Standart Pro</h4>
+              <p class="text-xs text-slate-300">Faol SMM mutaxassislar va brendlar</p>
+            </div>
+
+            <div class="pt-1">
+              <span class="text-3xl font-black text-white">50 000</span>
+              <span class="text-xs text-slate-400">so'm / oy</span>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-200 pt-3 border-t border-slate-800">
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Oyiga 50 ta AI Generatsiya</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> 30 kunlik Auto-Pilot Kontent Reja</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Raqobatchilarni AI Tahlili (Spy)</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Maxsus Brend Ohangi (Tone of Voice)</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> PDF & Word eksport</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Turbo tezlikdagi AI Server</li>
+            </ul>
+          </div>
+
+          <button onclick="openCheckoutModal('Standart Pro', '50 000 so\'m')" class="w-full py-3.5 rounded-2xl gradient-btn text-white font-black text-xs shadow-xl shadow-indigo-600/30 hover:opacity-95 transition-all">
+            50 000 so'm — Tanlash ⭐
+          </button>
+        </div>
+
+        <!-- 3-Ta'rif: 100 000 so'm (VIP Biznes) -->
+        <div class="glass-card p-6 rounded-3xl border border-amber-500/40 bg-gradient-to-b from-amber-950/20 via-slate-900/90 to-slate-950 flex flex-col justify-between space-y-5 relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-wider shadow-md">
+            👑 Maksimal VIP
+          </div>
+
+          <div class="space-y-4">
+            <div class="space-y-1 pt-1">
+              <span class="text-[11px] font-bold text-amber-400 uppercase tracking-wider">3-Ta'rif</span>
+              <h4 class="text-lg font-black text-white">VIP Biznes Pro</h4>
+              <p class="text-xs text-slate-400">Agentliklar va yirik tadbirkorlar</p>
+            </div>
+
+            <div class="pt-1">
+              <span class="text-3xl font-black text-white">100 000</span>
+              <span class="text-xs text-slate-400">so'm / oy</span>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-300 pt-3 border-t border-slate-800">
+              <li class="flex items-center gap-2"><span class="text-amber-400 font-bold">✓</span> <strong>Barcha Pro Imkoniyatlar + Cheksiz</strong></li>
+              <li class="flex items-center gap-2"><span class="text-amber-400 font-bold">✓</span> 24/7 Shaxsiy AI Marketing Strateg</li>
+              <li class="flex items-center gap-2"><span class="text-amber-400 font-bold">✓</span> 5 tagacha Biznes Profil boshqaruvi</li>
+              <li class="flex items-center gap-2"><span class="text-amber-400 font-bold">✓</span> Cheksiz Target Reklama & Voronkalar</li>
+              <li class="flex items-center gap-2"><span class="text-amber-400 font-bold">✓</span> Telegram Bot orqali Avto-Postlash</li>
+              <li class="flex items-center gap-2"><span class="text-amber-400 font-bold">✓</span> VIP Shaxsiy Menejer</li>
+            </ul>
+          </div>
+
+          <button onclick="openCheckoutModal('VIP Biznes Pro', '100 000 so\'m')" class="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-xs transition-all shadow-lg shadow-amber-500/20">
+            100 000 so'm — Tanlash 👑
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CHECKOUT / ACTIVATION MODAL ================= -->
+  <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 overflow-y-auto" onclick="if(event.target === this) closeCheckoutModal();">
+    <div class="glass-panel bg-[#131314] border border-[#2d2f31] rounded-[32px] w-full max-w-lg p-6 sm:p-7 relative shadow-2xl space-y-5 text-center my-6">
+      
+      <!-- Top Left: Orqaga qaytish tugmasi -->
+      <button type="button" onclick="closeCheckoutModal(); showPricingModal();" class="absolute top-4 left-4 sm:top-5 sm:left-5 px-3 py-2 rounded-2xl bg-slate-800/90 hover:bg-indigo-600/30 border border-slate-700 hover:border-indigo-500 text-slate-300 hover:text-white text-xs font-bold transition-all shadow-lg flex items-center gap-1.5 z-20" title="Ta'riflarga qaytish">
+        <span>← Orqaga</span>
+      </button>
+
+      <!-- Top Right: Katta va aniq X Yopish tugmasi -->
+      <button type="button" onclick="closeCheckoutModal()" class="absolute top-4 right-4 sm:top-5 sm:right-5 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-800/90 hover:bg-rose-600/30 border border-slate-700 hover:border-rose-500 text-slate-300 hover:text-white flex items-center justify-center transition-all shadow-lg z-20 group" title="Yopish">
+        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="space-y-1.5 pt-7 sm:pt-4">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[11px] font-bold">
+          <span>💳 To'lov va Pro Faollashtirish</span>
+        </div>
+        <h3 class="font-extrabold text-white text-xl" id="checkoutPlanTitle">Standart Pro</h3>
+        <p class="text-2xl font-black gradient-text" id="checkoutPlanPrice">50 000 so'm / oy</p>
+      </div>
+
+      <!-- Realistic Stylized Visa Card Component -->
+      <div class="p-5 rounded-3xl bg-gradient-to-tr from-[#0f172a] via-[#1e1b4b] to-[#1e3a8a] border-2 border-indigo-500/40 text-left space-y-4 shadow-2xl relative overflow-hidden group">
+        <!-- Background Glow Accent -->
+        <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-indigo-500/20 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-extrabold uppercase tracking-widest text-slate-300">VISA DEBIT</span>
+          </div>
+          <!-- Visa Logo Text Badge -->
+          <div class="px-2.5 py-0.5 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white font-black text-xs tracking-wider">
+            VISA
+          </div>
+        </div>
+
+        <!-- Holographic Chip Icon -->
+        <div class="w-10 h-7 rounded-md bg-gradient-to-br from-amber-200 via-amber-400 to-yellow-600 border border-amber-300/60 shadow-inner flex items-center justify-center">
+          <div class="w-7 h-4 border border-amber-900/40 rounded-sm opacity-60"></div>
+        </div>
+
+        <!-- Card Number with 1-Click Copy -->
+        <div class="space-y-1">
+          <span class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Plastik Karta Raqami:</span>
+          <div class="flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-black/40 border border-white/10">
+            <span class="font-mono text-base sm:text-lg font-black text-white tracking-widest" id="visaCardNumberText">4916 9903 6131 4013</span>
+            <button type="button" onclick="copyCardNumberToClipboard('4916990361314013')" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition-all shadow-md shadow-indigo-600/30 flex items-center gap-1">
+              <span>Nusxalash 📋</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between text-xs pt-1 border-t border-white/10 text-slate-300">
+          <div>
+            <span class="block text-[9px] text-slate-400 uppercase">Qabul qiluvchi</span>
+            <span class="font-bold text-white text-xs">AI SMM ASSISTANT</span>
+          </div>
+          <div class="text-right">
+            <span class="block text-[9px] text-slate-400 uppercase">Yechiladigan summa</span>
+            <span class="font-bold text-amber-400 text-xs font-mono" id="cardDeductAmount">59 000 so'm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Xaridni tasdiqlash bo'yicha maxsus ogohlantirish (User talabi) -->
+      <div class="p-3.5 rounded-2xl bg-amber-500/15 border-2 border-amber-500/40 text-center text-xs space-y-1 text-amber-200">
+        <p class="font-extrabold text-amber-300 text-xs flex items-center justify-center gap-1.5">
+          <span>⚠️ DIQQAT:</span>
+        </p>
+        <p class="font-bold text-xs leading-relaxed text-white">
+          "Xaridingizni tasdiqlash uchun chekni tashlash esingizdan chiqmasin"
+        </p>
+      </div>
+
+      <!-- ================= TO'LOV QILISH ILOVALARI BO'LIMI ================= -->
+      <div class="space-y-2.5 text-left pt-1">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-white flex items-center gap-1.5">
+            <span>💳 To'lov qilish (Ilovani tanlang):</span>
+          </span>
+          <span class="text-[10px] text-slate-400" id="selectedPaymentAppBadge">Ilovani bosing ↓</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <!-- 1. Payme -->
+          <button type="button" onclick="selectPaymentApp('Payme')" id="payAppBtn-Payme" class="pay-app-btn p-2.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-left transition-all flex items-center gap-2 group">
+            <span class="w-7 h-7 rounded-xl bg-cyan-500/20 text-cyan-400 font-black text-xs flex items-center justify-center shrink-0 border border-cyan-500/30">P</span>
+            <div class="truncate">
+              <div class="text-xs font-bold text-white group-hover:text-cyan-300">Payme</div>
+              <div class="text-[9px] text-slate-400">Ilova orqali</div>
+            </div>
+          </button>
+
+          <!-- 2. Click -->
+          <button type="button" onclick="selectPaymentApp('Click')" id="payAppBtn-Click" class="pay-app-btn p-2.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-left transition-all flex items-center gap-2 group">
+            <span class="w-7 h-7 rounded-xl bg-blue-500/20 text-blue-400 font-black text-xs flex items-center justify-center shrink-0 border border-blue-500/30">C</span>
+            <div class="truncate">
+              <div class="text-xs font-bold text-white group-hover:text-blue-300">Click</div>
+              <div class="text-[9px] text-slate-400">Ilova orqali</div>
+            </div>
+          </button>
+
+          <!-- 3. Uzum Bank -->
+          <button type="button" onclick="selectPaymentApp('Uzum Bank')" id="payAppBtn-UzumBank" class="pay-app-btn p-2.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-left transition-all flex items-center gap-2 group">
+            <span class="w-7 h-7 rounded-xl bg-purple-500/20 text-purple-400 font-black text-xs flex items-center justify-center shrink-0 border border-purple-500/30">🍇</span>
+            <div class="truncate">
+              <div class="text-xs font-bold text-white group-hover:text-purple-300">Uzum Bank</div>
+              <div class="text-[9px] text-slate-400">Ilova orqali</div>
+            </div>
+          </button>
+
+          <!-- 4. Anorbank -->
+          <button type="button" onclick="selectPaymentApp('Anorbank')" id="payAppBtn-Anorbank" class="pay-app-btn p-2.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-left transition-all flex items-center gap-2 group">
+            <span class="w-7 h-7 rounded-xl bg-red-500/20 text-red-400 font-black text-xs flex items-center justify-center shrink-0 border border-red-500/30">🔴</span>
+            <div class="truncate">
+              <div class="text-xs font-bold text-white group-hover:text-red-300">Anorbank</div>
+              <div class="text-[9px] text-slate-400">Ilova orqali</div>
+            </div>
+          </button>
+
+          <!-- 5. Paynet -->
+          <button type="button" onclick="selectPaymentApp('Paynet')" id="payAppBtn-Paynet" class="pay-app-btn p-2.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-left transition-all flex items-center gap-2 group">
+            <span class="w-7 h-7 rounded-xl bg-emerald-500/20 text-emerald-400 font-black text-xs flex items-center justify-center shrink-0 border border-emerald-500/30">🟢</span>
+            <div class="truncate">
+              <div class="text-xs font-bold text-white group-hover:text-emerald-300">Paynet</div>
+              <div class="text-[9px] text-slate-400">Ilova orqali</div>
+            </div>
+          </button>
+
+          <!-- 6. Zoomrad -->
+          <button type="button" onclick="selectPaymentApp('Zoomrad')" id="payAppBtn-Zoomrad" class="pay-app-btn p-2.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-left transition-all flex items-center gap-2 group">
+            <span class="w-7 h-7 rounded-xl bg-teal-500/20 text-teal-400 font-black text-xs flex items-center justify-center shrink-0 border border-teal-500/30">💎</span>
+            <div class="truncate">
+              <div class="text-xs font-bold text-white group-hover:text-teal-300">Zoomrad</div>
+              <div class="text-[9px] text-slate-400">Ilova orqali</div>
+            </div>
+          </button>
+
+          <!-- 7. Hamkorbank -->
+          <button type="button" onclick="selectPaymentApp('Hamkorbank')" id="payAppBtn-Hamkorbank" class="pay-app-btn col-span-2 sm:col-span-2 p-2.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-left transition-all flex items-center gap-2 group">
+            <span class="w-7 h-7 rounded-xl bg-indigo-500/20 text-indigo-400 font-black text-xs flex items-center justify-center shrink-0 border border-indigo-500/30">🏦</span>
+            <div class="truncate">
+              <div class="text-xs font-bold text-white group-hover:text-indigo-300">Hamkorbank</div>
+              <div class="text-[9px] text-slate-400">Ilova orqali to'lov</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="space-y-2 pt-2">
+        <button type="button" onclick="sendReceiptViaTelegram()" class="w-full py-3.5 px-4 rounded-2xl bg-[#229ED9] hover:bg-[#1e8bc2] text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#229ED9]/30">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.718-3.084 12.984-3.238 13.68-.106.474-.325.632-.544.646-.474.032-.831-.308-1.29-.608-.718-.468-1.124-.759-1.821-1.218-.805-.531-.283-.823.175-1.298.12-.125 2.197-2.012 2.237-2.183.005-.021.01-.1-.04-.143-.05-.043-.124-.028-.178-.016-.076.017-1.288.82-3.636 2.406-.344.237-.656.353-.935.347-.308-.007-.899-.174-1.339-.317-.54-.176-.97-.269-.933-.568.019-.156.234-.316.645-.48 2.529-1.101 4.217-1.827 5.064-2.179 2.41-.998 2.911-1.172 3.237-1.177.072-.001.233.018.337.103.088.072.112.169.124.238.012.069.027.224.016.347z"/></svg>
+          <span>To'lov Chekini Telegram Botga Yuborish ✈️</span>
+        </button>
+
+        <button type="button" onclick="confirmPaymentAndNotify()" class="w-full py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 font-bold text-xs transition-all">
+          To'lov qildim (Tasdiqlashga yuborish) 📋
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= LOGOUT CONFIRMATION MODAL ================= -->
+  <div id="logoutConfirmModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-panel bg-[#131314] border border-[#2d2f31] rounded-[24px] w-full max-w-sm p-6 relative shadow-2xl space-y-4 text-center">
+      <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 flex items-center justify-center mx-auto">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+        </svg>
+      </div>
+
+      <div class="space-y-1">
+        <h3 class="font-extrabold text-white text-lg tracking-tight">Hisobdan chiqish</h3>
+        <p class="text-xs text-slate-400">Haqiqatan ham profilingizdan chiqmoqchimisiz?</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 pt-2">
+        <button type="button" onclick="closeLogoutConfirmModal()" class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-colors border border-slate-700">
+          Bekor qilish
+        </button>
+        <button type="button" onclick="confirmLogoutAction()" class="py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg shadow-rose-600/30 transition-all flex items-center justify-center gap-1.5">
+          <span>Ha, chiqish</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PERSISTENT FLOATING BOTTOM-RIGHT FEEDBACK BUTTON ================= -->
+  <div id="floatingFeedbackWidget" class="fixed bottom-6 right-6 z-40">
+    <button onclick="showFeedbackModal('suggestion')" class="group flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-[#131314]/95 hover:bg-slate-900 border-2 border-indigo-500/40 hover:border-indigo-400 text-white shadow-2xl shadow-indigo-600/25 backdrop-blur-md transition-all hover:scale-105 active:scale-95">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 p-0.5 flex items-center justify-center shadow-lg shadow-indigo-500/40">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+        </svg>
+      </div>
+      <span class="text-sm font-extrabold tracking-tight">Shikoyat va Takliflar</span>
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-sm shadow-emerald-400/50"></span>
+    </button>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toastContainer" class="fixed bottom-24 right-6 z-50 space-y-2 pointer-events-none"></div>
+
+  <!-- SCRIPTS -->
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/export.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/feedback.js"></script>
+  <script src="/static/js/tools.js"></script>
+  <script src="/static/js/dashboard.js"></script>
+  <script src="/static/js/chat.js"></script>
+  <script src="/static/js/history.js"></script>
+  <script src="/static/js/profile.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      initAuth();
+      initFeedback();
+      initDashboard();
+      initTools();
+      initChat();
+      initHistory();
+      initProfile();
+    });
+  </script>
+</body>
+</html>

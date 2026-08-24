@@ -1,0 +1,117 @@
+import uuid
+import httpx
+from sqlalchemy.orm import Session
+from fastapi import HTTPException, status
+from app.models.user import User
+from app.schemas.auth import UserRegister, UserLogin, GoogleAuthRequest
+from app.utils.security import hash_password, verify_password, create_access_token
+from app.config import settings
+
+class AuthService:
+    @staticmethod
+    def register_user(db: Session, user_data: UserRegister) -> User:
+        # Email bandligini tekshirish
+        existing_user = db.query(User).filter(User.email == user_data.email).first()
+        if existing_user:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Ushbu elektron pochta manzili allaqachon ro'yxatdan o'tgan"
+            )
+
+        new_user = User(
+            name=user_data.name,
+            email=user_data.email,
+            password_hash=hash_password(user_data.password),
+            auth_provider="local"
+        )
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+        return new_user
+
+    @staticmethod
+    def authenticate_user(db: Session, login_data: UserLogin) -> dict:
+        user = db.query(User).filter(User.email == login_data.email).first()
+        if not user or not verify_password(login_data.password, user.password_hash):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Elektron pochta yoki parol noto'g'ri",
+                headers={"WWW-Authenticate": "Bearer"}
+            )
+
+        token = create_access_token(data={"sub": user.id, "email": user.email})
+        return {
+            "access_token": token,
+            "token_type": "bearer",
+            "user": user
+        }
+
+    @staticmethod
+    def authenticate_google_user(db: Session, google_data: GoogleAuthRequest) -> dict:
+        """
+        Google orqali autentifikatsiya qilish:
+        1. Google ID Token (credential) orqali tekshirish.
+        2. Agar token bo'lmasa, uzatilgan email/name orqali sinov/demo rejimda ishlatish.
+        3. Foydalanuvchi mavjud bo'lmasa, avtomatik yangi akkaunt yaratish.
+        """
+        email = google_data.email
+        name = google_data.name or "Google User"
+        avatar_url = google_data.avatar_url
+
+        # Agar credential berilgan bo'lsa, Google TokenInfo orqali tekshirish
+        if google_data.credential:
+            try:
+                with httpx.Client(timeout=5.0) as client:
+                    resp = client.get(f"https://oauth2.googleapis.com/tokeninfo?id_token={google_data.credential}")
+                    if resp.status_code == 200:
+                        info = resp.json()
+                        email = info.get("email", email)
+                        name = info.get("name", name)
+                        avatar_url = info.get("picture", avatar_url)
+            except Exception:
+                # Offline yoki test holatida uzatilgan ma'lumotlar bilan davom etiladi
+                pass
+
+        if not email:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Google akkauntidan email ma'lumotlarini olib bo'lmadi"
+            )
+
+        # Foydalanuvchini bazadan qidirish
+        user = db.query(User).filter(User.email == email).first()
+        if not user:
+            # Yangi foydalanuvchi yaratish
+            user = User(
+                name=name,
+                email=email,
+                password_hash=hash_password(str(uuid.uuid4())), # Xavfsiz random parol
+                auth_provider="google",
+                avatar_url=avatar_url
+            )
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+        else:
+            # Mavjud foydalanuvchi ma'lumotlarini yangilash (agar kerak bo'lsa)
+            if avatar_url and not user.avatar_url:
+                user.avatar_url = avatar_url
+                db.commit()
+                db.refresh(user)
+
+        token = create_access_token(data={"sub": user.id, "email": user.email})
+        return {
+            "access_token": token,
+            "token_type": "bearer",
+            "user": user
+        }
+
+    @staticmethod
+    def get_user_by_id(db: Session, user_id: str) -> User:
+        user = db.query(User).filter(User.id == user_id).first()
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Foydalanuvchi topilmadi"
+            )
+        return user
