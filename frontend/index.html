@@ -61,14 +61,40 @@
       </div>
     </div>
 
-    <!-- Right Header Actions (Guest vs Logged-In) -->
-    <div class="flex items-center gap-3">
+    <!-- Right Header Actions (Language Switcher, Guest vs Logged-In) -->
+    <div class="flex items-center gap-2.5 sm:gap-3">
+      
+      <!-- Language Selector Switcher -->
+      <div class="relative">
+        <button id="langDropdownBtn" type="button" onclick="toggleLangDropdown(event)" class="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all border border-slate-700/80 shadow-sm">
+          <span class="langCurrentFlag text-sm sm:text-base">🇺🇿</span>
+          <span class="langCurrentName font-bold">UZ</span>
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div id="langDropdownMenu" class="hidden absolute right-0 mt-2 w-36 bg-[#131314] border border-[#2d2f31] rounded-2xl shadow-2xl py-1.5 z-50 divide-y divide-slate-800/60">
+          <button type="button" onclick="setLanguage('uz'); toggleLangDropdown();" data-lang="uz" class="langDropdownItem w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-600/20 text-xs text-slate-200 transition-colors">
+            <span class="text-base">🇺🇿</span>
+            <span>O'zbekcha</span>
+          </button>
+          <button type="button" onclick="setLanguage('en'); toggleLangDropdown();" data-lang="en" class="langDropdownItem w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-600/20 text-xs text-slate-200 transition-colors">
+            <span class="text-base">🇬🇧</span>
+            <span>English</span>
+          </button>
+          <button type="button" onclick="setLanguage('ru'); toggleLangDropdown();" data-lang="ru" class="langDropdownItem w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-600/20 text-xs text-slate-200 transition-colors">
+            <span class="text-base">🇷🇺</span>
+            <span>Русский</span>
+          </button>
+        </div>
+      </div>
+
       <!-- Guest Menu -->
       <div id="navAuthGuest" class="flex items-center gap-2">
-        <button onclick="showAuthModal('login')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all border border-slate-700">
+        <button onclick="showAuthModal('login')" data-i18n="nav_login" class="px-3.5 sm:px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all border border-slate-700">
           Kirish
         </button>
-        <button onclick="showAuthModal('register')" class="px-4 py-2 rounded-xl gradient-btn text-white text-xs font-bold shadow-md transition-all">
+        <button onclick="showAuthModal('register')" data-i18n="nav_start_free" class="px-3.5 sm:px-4 py-2 rounded-xl gradient-btn text-white text-xs font-bold shadow-md transition-all whitespace-nowrap">
           Bepul Boshlash 🚀
         </button>
       </div>
@@ -77,7 +103,7 @@
       <div id="navAuthUser" class="hidden flex items-center gap-3">
         <!-- Usage Counter Badge -->
         <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs">
-          <span class="text-slate-400">Oylik limit:</span>
+          <span class="text-slate-400" data-i18n="nav_limit">Oylik limit:</span>
           <span id="headerUsageBadge" class="font-extrabold text-indigo-400">0 / 10</span>
         </div>
 
@@ -99,24 +125,24 @@
     <section class="relative pt-16 lg:pt-24 px-4 max-w-5xl mx-auto text-center space-y-6">
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold">
         <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
-        Sun'iy Intellekt Davrida SMM Yangi Bosqichda
+        <span data-i18n="hero_badge">Sun'iy Intellekt Davrida SMM Yangi Bosqichda</span>
       </div>
       
       <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-        AI yordamida SMM kontentingizni <br class="hidden sm:inline"/>
-        <span class="gradient-text">bir necha soniyada</span> yarating.
+        <span data-i18n="hero_title_1">AI yordamida SMM kontentingizni</span> <br class="hidden sm:inline"/>
+        <span class="gradient-text" data-i18n="hero_title_2">bir necha soniyada</span> <span data-i18n="hero_title_3">yarating.</span>
       </h1>
 
-      <p class="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+      <p class="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed" data-i18n="hero_desc">
         Postlar, virusli Reels g‘oyalari, 7-30 kunlik kontent-rejalar, reklama matnlari va marketing strategiyalarini professional darajada yarating.
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
         <button onclick="showAuthModal('register')" class="w-full sm:w-auto px-8 py-4 rounded-2xl gradient-btn text-white font-extrabold text-sm shadow-xl shadow-indigo-600/30 hover:scale-105 transition-all flex items-center justify-center gap-2">
-          <span>Bepul boshlash (Oyiga 10 ta AI generatsiya)</span>
+          <span data-i18n="hero_start_btn">Bepul boshlash (Oyiga 10 ta AI generatsiya)</span>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
         </button>
-        <button onclick="showAuthModal('login')" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-bold text-sm border border-slate-700 transition-all">
+        <button onclick="showAuthModal('login')" data-i18n="hero_login_btn" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-bold text-sm border border-slate-700 transition-all">
           Tizimga kirish
         </button>
       </div>
@@ -124,20 +150,20 @@
       <!-- Quick Social Proof / Feature Tags -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-10 text-center">
         <div class="p-4 rounded-2xl glass-card">
-          <div class="text-indigo-400 font-black text-xl">100%</div>
-          <div class="text-xs text-slate-400 mt-1">O'zbek tiliga mos</div>
+          <div class="text-indigo-400 font-black text-xl" data-i18n="stat_1_val">100%</div>
+          <div class="text-xs text-slate-400 mt-1" data-i18n="stat_1_lbl">O'zbek tiliga mos</div>
         </div>
         <div class="p-4 rounded-2xl glass-card">
-          <div class="text-purple-400 font-black text-xl">7 ta</div>
-          <div class="text-xs text-slate-400 mt-1">Kuchli AI Asboblar</div>
+          <div class="text-purple-400 font-black text-xl" data-i18n="stat_2_val">10x</div>
+          <div class="text-xs text-slate-400 mt-1" data-i18n="stat_2_lbl">Tezroq kontent</div>
         </div>
         <div class="p-4 rounded-2xl glass-card">
-          <div class="text-pink-400 font-black text-xl">AIDA</div>
-          <div class="text-xs text-slate-400 mt-1">Sotuvchi Kopirayting</div>
+          <div class="text-pink-400 font-black text-xl" data-i18n="stat_3_val">10 ta</div>
+          <div class="text-xs text-slate-400 mt-1" data-i18n="stat_3_lbl">Har oy bepul</div>
         </div>
         <div class="p-4 rounded-2xl glass-card">
-          <div class="text-emerald-400 font-black text-xl">30 kun</div>
-          <div class="text-xs text-slate-400 mt-1">Mutlaqo Bepul</div>
+          <div class="text-emerald-400 font-black text-xl" data-i18n="stat_4_val">24/7</div>
+          <div class="text-xs text-slate-400 mt-1" data-i18n="stat_4_lbl">AI Yordamchi</div>
         </div>
       </div>
     </section>
@@ -1001,8 +1027,8 @@
             </div>
             <span class="font-bold text-white text-sm tracking-tight">AI SMM Assistant</span>
           </div>
-          <h3 class="font-extrabold text-white text-2xl tracking-tight">Tizimga Kirish</h3>
-          <p class="text-xs text-slate-400">Google hisobingiz yoki elektron pochtangiz orqali kiring</p>
+          <h3 class="font-extrabold text-white text-2xl tracking-tight" data-i18n="auth_login_title">Tizimga Kirish</h3>
+          <p class="text-xs text-slate-400" data-i18n="auth_login_sub">Google hisobingiz yoki elektron pochtangiz orqali kiring</p>
         </div>
 
         <!-- Google OAuth Button (PRIMARY TOP ACTION) -->
@@ -1017,33 +1043,33 @@
               <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
               <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
             </svg>
-            <span id="googleLoginBtnText">Google orqali davom etish</span>
+            <span id="googleLoginBtnText" data-i18n="auth_google_btn">Google orqali davom etish</span>
           </button>
         </div>
 
         <div class="flex items-center gap-3 py-1">
           <div class="h-px bg-[#282a2c] flex-1"></div>
-          <span class="text-[11px] text-slate-500 font-medium">yoki elektron pochta orqali</span>
+          <span class="text-[11px] text-slate-500 font-medium" data-i18n="auth_or_email">yoki elektron pochta orqali</span>
           <div class="h-px bg-[#282a2c] flex-1"></div>
         </div>
 
         <form id="loginForm" class="space-y-3.5">
           <div>
-            <label class="block text-xs text-slate-300 font-semibold mb-1">Elektron Pochta</label>
+            <label class="block text-xs text-slate-300 font-semibold mb-1" data-i18n="auth_email">Elektron Pochta</label>
             <input type="email" id="loginEmail" required placeholder="nom@example.com" class="w-full p-3 rounded-xl bg-[#1e1f20] border border-[#3c4043] text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
           </div>
           <div>
-            <label class="block text-xs text-slate-300 font-semibold mb-1">Parol</label>
+            <label class="block text-xs text-slate-300 font-semibold mb-1" data-i18n="auth_password">Parol</label>
             <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full p-3 rounded-xl bg-[#1e1f20] border border-[#3c4043] text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
           </div>
           
           <button type="submit" id="btnLoginSubmit" class="w-full py-3.5 rounded-xl gradient-btn text-white font-bold text-xs shadow-lg shadow-indigo-600/20 hover:opacity-95 transition-all flex items-center justify-center gap-2">
-            <span>Tizimga Kirish 🚀</span>
+            <span data-i18n="auth_submit_login">Tizimga Kirish 🚀</span>
           </button>
         </form>
 
         <p class="text-center text-xs text-slate-400 pt-1">
-          Hisobingiz yo'qmi? <button type="button" onclick="showAuthModal('register')" class="text-indigo-400 font-bold hover:underline">Ro'yxatdan o'ting</button>
+          <span data-i18n="auth_no_account">Hisobingiz yo'qmi?</span> <button type="button" onclick="showAuthModal('register')" data-i18n="auth_register_link" class="text-indigo-400 font-bold hover:underline">Ro'yxatdan o'ting</button>
         </p>
       </div>
 
@@ -1056,8 +1082,8 @@
             </div>
             <span class="font-bold text-white text-sm tracking-tight">AI SMM Assistant</span>
           </div>
-          <h3 class="font-extrabold text-white text-2xl tracking-tight">Ro'yxatdan O'tish</h3>
-          <p class="text-xs text-slate-400">Bepul hisob oching va oyiga 10 ta AI generatsiyaga ega bo'ling</p>
+          <h3 class="font-extrabold text-white text-2xl tracking-tight" data-i18n="auth_register_title">Ro'yxatdan O'tish</h3>
+          <p class="text-xs text-slate-400" data-i18n="auth_register_sub">Bepul hisob oching va oyiga 10 ta AI generatsiyaga ega bo'ling</p>
         </div>
 
         <!-- Google OAuth Button (PRIMARY TOP ACTION) -->
@@ -1072,42 +1098,42 @@
               <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
               <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
             </svg>
-            <span id="googleRegisterBtnText">Google orqali davom etish</span>
+            <span id="googleRegisterBtnText" data-i18n="auth_google_btn">Google orqali davom etish</span>
           </button>
         </div>
 
         <div class="flex items-center gap-3 py-1">
           <div class="h-px bg-[#282a2c] flex-1"></div>
-          <span class="text-[11px] text-slate-500 font-medium">yoki elektron pochta orqali</span>
+          <span class="text-[11px] text-slate-500 font-medium" data-i18n="auth_or_email">yoki elektron pochta orqali</span>
           <div class="h-px bg-[#282a2c] flex-1"></div>
         </div>
 
         <form id="registerForm" class="space-y-3">
           <div>
-            <label class="block text-xs text-slate-300 font-semibold mb-1">Ismingiz</label>
-            <input type="text" id="registerName" required minlength="2" placeholder="Ismingizni kiriting" class="w-full p-2.5 rounded-xl bg-[#1e1f20] border border-[#3c4043] text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
+            <label class="block text-xs text-slate-300 font-semibold mb-1" data-i18n="auth_name">Ismingiz</label>
+            <input type="text" id="registerName" required minlength="2" data-i18n-placeholder="auth_name_placeholder" placeholder="Ismingizni kiriting" class="w-full p-2.5 rounded-xl bg-[#1e1f20] border border-[#3c4043] text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
           </div>
           <div>
-            <label class="block text-xs text-slate-300 font-semibold mb-1">Elektron Pochta</label>
+            <label class="block text-xs text-slate-300 font-semibold mb-1" data-i18n="auth_email">Elektron Pochta</label>
             <input type="email" id="registerEmail" required placeholder="nom@example.com" class="w-full p-2.5 rounded-xl bg-[#1e1f20] border border-[#3c4043] text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
           </div>
           <div>
-            <label class="block text-xs text-slate-300 font-semibold mb-1">Parol (kamida 8 ta belgi)</label>
+            <label class="block text-xs text-slate-300 font-semibold mb-1" data-i18n="auth_password">Parol (kamida 8 ta belgi)</label>
             <input type="password" id="registerPassword" minlength="8" required placeholder="••••••••" class="w-full p-2.5 rounded-xl bg-[#1e1f20] border border-[#3c4043] text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
           </div>
           <div>
-            <label class="block text-xs text-slate-300 font-semibold mb-1">Parolni Tasdiqlang</label>
+            <label class="block text-xs text-slate-300 font-semibold mb-1" data-i18n="auth_confirm_password">Parolni Tasdiqlang</label>
             <input type="password" id="registerConfirmPassword" minlength="8" required placeholder="Parolni qayta kiriting" class="w-full p-2.5 rounded-xl bg-[#1e1f20] border border-[#3c4043] text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
             <p id="registerPasswordError" class="text-[11px] text-rose-400 font-medium mt-1 hidden"></p>
           </div>
           
           <button type="submit" id="btnRegisterSubmit" class="w-full py-3.5 rounded-xl gradient-btn text-white font-bold text-xs shadow-lg shadow-indigo-600/20 hover:opacity-95 transition-all flex items-center justify-center gap-2">
-            <span>Ro'yxatdan O'tish 🚀</span>
+            <span data-i18n="auth_submit_register">Ro'yxatdan O'tish 🚀</span>
           </button>
         </form>
 
         <p class="text-center text-xs text-slate-400 pt-1">
-          Hisobingiz bormi? <button type="button" onclick="showAuthModal('login')" class="text-indigo-400 font-bold hover:underline">Kirish</button>
+          <span data-i18n="auth_have_account">Hisobingiz bormi?</span> <button type="button" onclick="showAuthModal('login')" data-i18n="auth_login_link" class="text-indigo-400 font-bold hover:underline">Kirish</button>
         </p>
       </div>
     </div>
@@ -1517,7 +1543,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
         </svg>
       </div>
-      <span class="text-sm font-extrabold tracking-tight">Shikoyat va Takliflar</span>
+      <span class="text-sm font-extrabold tracking-tight" data-i18n="feedback_btn">Shikoyat va Takliflar</span>
       <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-sm shadow-emerald-400/50"></span>
     </button>
   </div>
@@ -1527,6 +1553,7 @@
 
   <!-- SCRIPTS -->
   <script src="/static/js/api.js"></script>
+  <script src="/static/js/i18n.js"></script>
   <script src="/static/js/export.js"></script>
   <script src="/static/js/auth.js"></script>
   <script src="/static/js/feedback.js"></script>
