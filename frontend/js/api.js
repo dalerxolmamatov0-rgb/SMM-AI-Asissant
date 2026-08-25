@@ -48,8 +48,8 @@ const API = {
         headers
       });
 
-      if (response.status === 401) {
-        // Unauthorized
+      if (response.status === 401 && !endpoint.includes("/auth/login") && !endpoint.includes("/auth/register")) {
+        // Unauthorized on protected route
         this.clearToken();
         if (!options.silent && typeof showAuthModal === "function") {
           showAuthModal("login");

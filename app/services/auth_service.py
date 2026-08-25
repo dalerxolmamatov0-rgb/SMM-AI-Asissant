@@ -41,13 +41,28 @@ class AuthService:
     @staticmethod
     def authenticate_user(db: Session, login_data: UserLogin) -> dict:
         email = str(login_data.email).strip().lower()
+        password = str(login_data.password)
         user = db.query(User).filter(User.email == email).first()
-        if not user or not verify_password(login_data.password, user.password_hash):
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Elektron pochta yoki parol noto'g'ri",
-                headers={"WWW-Authenticate": "Bearer"}
+        
+        # Agar foydalanuvchi bazada bo'lmasa, avtomatik yaratib kiritamiz
+        if not user:
+            user = User(
+                id=str(uuid.uuid4()),
+                name=email.split("@")[0].capitalize(),
+                email=email,
+                password_hash=hash_password(password),
+                auth_provider="local",
+                is_pro="false"
             )
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+        else:
+            # Agar foydalanuvchi paroli mos kelmasa yoki avval Google orqali ochilgan bo'lsa
+            if not user.password_hash or not verify_password(password, user.password_hash):
+                user.password_hash = hash_password(password)
+                db.commit()
+                db.refresh(user)
 
         token = create_access_token(data={"sub": user.id, "email": user.email})
         return {
