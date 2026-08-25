@@ -56,30 +56,7 @@ function setupGoogleGISLibrary() {
         cancel_on_tap_outside: true
       });
 
-      // 2. Render official Google buttons if containers exist
-      const loginBtnContainer = document.getElementById("googleGisLoginBtn");
-      if (loginBtnContainer) {
-        google.accounts.id.renderButton(loginBtnContainer, {
-          theme: "filled_black",
-          size: "large",
-          shape: "pill",
-          text: "continue_with",
-          width: 320
-        });
-      }
-
-      const regBtnContainer = document.getElementById("googleGisRegisterBtn");
-      if (regBtnContainer) {
-        google.accounts.id.renderButton(regBtnContainer, {
-          theme: "filled_black",
-          size: "large",
-          shape: "pill",
-          text: "continue_with",
-          width: 320
-        });
-      }
-
-      // 3. OAuth 2.0 Token Client with prompt: 'select_account'
+      // 2. OAuth 2.0 Token Client with prompt: 'select_account'
       if (google.accounts.oauth2) {
         googleTokenClient = google.accounts.oauth2.initTokenClient({
           client_id: googleClientId,
