@@ -31,10 +31,12 @@ class AuthService:
                 )
 
         new_user = User(
+            id=str(uuid.uuid4()),
             name=name,
             email=email,
             password_hash=hash_password(user_data.password),
-            auth_provider="local"
+            auth_provider="local",
+            is_pro="false"
         )
         db.add(new_user)
         db.commit()

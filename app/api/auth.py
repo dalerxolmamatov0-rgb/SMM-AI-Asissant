@@ -26,8 +26,13 @@ def register(user_data: UserRegister, db: Session = Depends(get_db)):
     Yangi foydalanuvchini ro'yxatdan o'tkazish va JWT token berish.
     """
     new_user = AuthService.register_user(db, user_data)
-    auth_result = AuthService.authenticate_user(db, UserLogin(email=user_data.email, password=user_data.password))
-    return auth_result
+    from app.utils.security import create_access_token
+    token = create_access_token(data={"sub": new_user.id, "email": new_user.email})
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+        "user": new_user
+    }
 
 @router.post("/login", response_model=Token)
 def login(login_data: UserLogin, db: Session = Depends(get_db)):

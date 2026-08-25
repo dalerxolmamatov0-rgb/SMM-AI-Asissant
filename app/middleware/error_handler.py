@@ -22,11 +22,14 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 async def generic_exception_handler(request: Request, exc: Exception):
     """
-    Kutilmagan server xatolarini ushlash.
+    Kutilmagan server xatolarini ushlash va log qilish.
     """
+    import traceback
+    print(f"[ERROR] Exception on {request.method} {request.url.path}: {exc}")
+    traceback.print_exc()
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={
-            "detail": "Tizimda kutilmagan xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko'ring."
+            "detail": f"Server xatosi: {str(exc)}"
         }
     )
