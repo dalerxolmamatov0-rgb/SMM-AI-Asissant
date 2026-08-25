@@ -30,18 +30,34 @@ def get_current_user(
         )
 
     user_id: str = payload.get("sub")
-    if user_id is None:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token ma'lumotlari noto'g'ri",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+    email: str = payload.get("email")
 
-    user = db.query(User).filter(User.id == user_id).first()
+    user = None
+    if user_id:
+        user = db.query(User).filter(User.id == user_id).first()
+    if not user and email:
+        user = db.query(User).filter(User.email == email.strip().lower()).first()
+
+    # Agar serverless konteyner almashgan bo'lsa va JWT imzosi to'g'ri bo'lsa:
     if user is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Foydalanuvchi topilmadi",
-        )
+        if email or user_id:
+            import uuid
+            user_name = (email.split("@")[0] if email else "Foydalanuvchi").capitalize()
+            user = User(
+                id=user_id or str(uuid.uuid4()),
+                name=user_name,
+                email=email or f"user_{str(user_id)[:8]}@gmail.com",
+                password_hash="verified_jwt_session",
+                auth_provider="local",
+                is_pro="false"
+            )
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Foydalanuvchi sessiyasi topilmadi. Iltimos, qayta kiring.",
+            )
 
     return user
