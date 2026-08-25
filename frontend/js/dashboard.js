@@ -218,9 +218,16 @@ function fallbackCopyText(text, showUserToast = true) {
 
 async function sendReceiptViaTelegram() {
   const user = (typeof getCurrentUser === "function" ? getCurrentUser() : null);
-  const name = user?.name || localStorage.getItem("smm_last_name") || "Daler";
-  const email = user?.email || localStorage.getItem("smm_last_email") || "dalerxolmamatov0@gmail.com";
-  let telegram = localStorage.getItem("smm_telegram_username") || "@ac_1Daler";
+  const name = user?.name || localStorage.getItem("smm_last_name") || "Foydalanuvchi";
+  const email = user?.email || localStorage.getItem("smm_last_email") || "user@example.com";
+  
+  const tgInput = document.getElementById("checkoutTelegramInput");
+  const noteInput = document.getElementById("checkoutReceiptNote");
+  
+  let telegram = tgInput?.value.trim() || localStorage.getItem("smm_telegram_username") || "";
+  if (telegram) localStorage.setItem("smm_telegram_username", telegram);
+  
+  const note = noteInput?.value.trim() || "";
 
   const payload = {
     name,
@@ -229,7 +236,7 @@ async function sendReceiptViaTelegram() {
     type: "payment",
     is_payment: true,
     subject: `💳 Pro Ta'rif To'lovi: ${selectedCheckoutPlan.title} (${selectedCheckoutPlan.price})`,
-    message: `Foydalanuvchi ${selectedPaymentApp} orqali ${selectedCheckoutPlan.title} ta'rifiga ${selectedCheckoutPlan.price} to'lov qildi va chekni yubormoqda.\nKarta: 4916 9903 6131 4013\nTo'lov ilovasi: ${selectedPaymentApp}`
+    message: `Foydalanuvchi ${selectedPaymentApp} orqali ${selectedCheckoutPlan.title} ta'rifiga ${selectedCheckoutPlan.price} to'lov qildi.\nKarta: 4916 9903 6131 4013\nTo'lov ilovasi: ${selectedPaymentApp}${note ? `\nIzoh/Tranzaksiya: ${note}` : ""}`
   };
 
   try {
@@ -253,9 +260,16 @@ async function sendReceiptViaTelegram() {
 
 async function confirmPaymentAndNotify() {
   const user = (typeof getCurrentUser === "function" ? getCurrentUser() : null);
-  const name = user?.name || localStorage.getItem("smm_last_name") || "Daler";
-  const email = user?.email || localStorage.getItem("smm_last_email") || "dalerxolmamatov0@gmail.com";
-  let telegram = localStorage.getItem("smm_telegram_username") || "@ac_1Daler";
+  const name = user?.name || localStorage.getItem("smm_last_name") || "Foydalanuvchi";
+  const email = user?.email || localStorage.getItem("smm_last_email") || "user@example.com";
+  
+  const tgInput = document.getElementById("checkoutTelegramInput");
+  const noteInput = document.getElementById("checkoutReceiptNote");
+  
+  let telegram = tgInput?.value.trim() || localStorage.getItem("smm_telegram_username") || "";
+  if (telegram) localStorage.setItem("smm_telegram_username", telegram);
+  
+  const note = noteInput?.value.trim() || "";
 
   const payload = {
     name,
@@ -264,7 +278,7 @@ async function confirmPaymentAndNotify() {
     type: "payment",
     is_payment: true,
     subject: `💳 To'lov Tasdiqlash So'rovi: ${selectedCheckoutPlan.title} (${selectedCheckoutPlan.price})`,
-    message: `Foydalanuvchi ${selectedPaymentApp} orqali ${selectedCheckoutPlan.title} (${selectedCheckoutPlan.price}) to'lovini bajarganini bildirdi.\nKarta: 4916 9903 6131 4013\nTo'lov ilovasi: ${selectedPaymentApp}`
+    message: `Foydalanuvchi ${selectedPaymentApp} orqali ${selectedCheckoutPlan.title} (${selectedCheckoutPlan.price}) to'lovini bajarganini bildirdi.\nKarta: 4916 9903 6131 4013\nTo'lov ilovasi: ${selectedPaymentApp}${note ? `\nIzoh/Tranzaksiya: ${note}` : ""}`
   };
 
   try {
@@ -282,7 +296,7 @@ async function confirmPaymentAndNotify() {
   }
 
   closeCheckoutModal();
-  showToast(`To'lov so'rovingiz qabul qilindi. Chekingiz tekshirilishi bilan Pro obunangiz faollashtiriladi! 🌟`, "info");
+  showToast(`To'lov so'rovingiz qabul qilindi. Chekingiz tekshirilishi bilan 1 oylik Pro obunangiz faollashtiriladi! 🌟`, "info");
 }
 
 // Close modals on Escape key press

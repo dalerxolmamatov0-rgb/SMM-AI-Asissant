@@ -14,6 +14,7 @@ from app.api.business import router as business_router
 from app.api.history import router as history_router
 from app.api.chat import router as chat_router
 from app.api.feedback import router as feedback_router
+from app.api.telegram import router as telegram_router
 from app.middleware.error_handler import validation_exception_handler, generic_exception_handler
 
 # Ma'lumotlar bazasi jadvallarini avtomatik yaratish va yangilash
@@ -55,6 +56,7 @@ app.include_router(business_router)
 app.include_router(history_router)
 app.include_router(chat_router)
 app.include_router(feedback_router)
+app.include_router(telegram_router)
 
 @app.get("/api/health")
 def health_check():

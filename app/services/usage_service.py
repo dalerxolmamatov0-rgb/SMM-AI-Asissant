@@ -15,8 +15,21 @@ class UsageService:
     def get_user_usage(cls, db: Session, user_id: str) -> dict:
         current_month = cls.get_current_month_str()
         user = db.query(User).filter(User.id == user_id).first()
-        is_pro = bool(user and str(user.is_pro).lower() in ["true", "1", "yes"])
-        pro_plan = user.pro_plan if user else None
+        now = datetime.now(timezone.utc)
+        
+        is_pro = False
+        if user and str(user.is_pro).lower() in ["true", "1", "yes"]:
+            if user.pro_expires_at:
+                expires_at = user.pro_expires_at.replace(tzinfo=timezone.utc) if user.pro_expires_at.tzinfo is None else user.pro_expires_at
+                if expires_at > now:
+                    is_pro = True
+                else:
+                    user.is_pro = "false"
+                    db.commit()
+            else:
+                is_pro = True
+
+        pro_plan = user.pro_plan if (user and is_pro) else None
 
         usage_record = db.query(Usage).filter(
             Usage.user_id == user_id,
@@ -54,8 +67,21 @@ class UsageService:
         """
         current_month = cls.get_current_month_str()
         user = db.query(User).filter(User.id == user_id).first()
-        is_pro = bool(user and str(user.is_pro).lower() in ["true", "1", "yes"])
-        pro_plan = user.pro_plan if user else None
+        now = datetime.now(timezone.utc)
+        
+        is_pro = False
+        if user and str(user.is_pro).lower() in ["true", "1", "yes"]:
+            if user.pro_expires_at:
+                expires_at = user.pro_expires_at.replace(tzinfo=timezone.utc) if user.pro_expires_at.tzinfo is None else user.pro_expires_at
+                if expires_at > now:
+                    is_pro = True
+                else:
+                    user.is_pro = "false"
+                    db.commit()
+            else:
+                is_pro = True
+
+        pro_plan = user.pro_plan if (user and is_pro) else None
 
         usage_record = db.query(Usage).filter(
             Usage.user_id == user_id,

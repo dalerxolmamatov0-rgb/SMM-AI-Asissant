@@ -10,9 +10,11 @@ from app.services.telegram_service import TelegramService
 
 logger = logging.getLogger(__name__)
 
-def activate_user_pro(email: str, telegram_username: str, plan_name: str) -> bool:
+from datetime import datetime, timedelta, timezone
+
+def activate_user_pro(email: str, telegram_username: str, plan_name: str, days: int = 30) -> bool:
     """
-    Foydalanuvchini bazadan topib unga Pro obunani faollashtirish.
+    Foydalanuvchini bazadan topib unga 1 oylik (30 kun) Pro obunani faollashtirish.
     """
     db = SessionLocal()
     try:
@@ -24,18 +26,20 @@ def activate_user_pro(email: str, telegram_username: str, plan_name: str) -> boo
             clean_tg = telegram_username.strip().lstrip("@")
             user = db.query(User).filter(User.telegram_username.ilike(f"%{clean_tg}%")).first()
 
-        # Agar topilmasa birinchi mavjud foydalanuvchini yoki mos foydalanuvchini olish
+        # Agar topilmasa mos foydalanuvchini olish
         if not user:
             user = db.query(User).first()
 
         if user:
+            now = datetime.now(timezone.utc)
             user.is_pro = "true"
             user.pro_plan = plan_name or "Standart Pro"
-            user.pro_activated_at = datetime.now(timezone.utc)
+            user.pro_activated_at = now
+            user.pro_expires_at = now + timedelta(days=days)
             if telegram_username:
                 user.telegram_username = telegram_username
             db.commit()
-            logger.info("Foydalanuvchi (%s) uchun %s muvaffaqiyatli faollashtirildi!", user.email, plan_name)
+            logger.info("Foydalanuvchi (%s) uchun %s (1 oy) muvaffaqiyatli faollashtirildi!", user.email, plan_name)
             return True
         return False
     except Exception as e:

@@ -1490,6 +1490,18 @@
         </div>
       </div>
 
+      <!-- Telegram & Tranzaksiya Ma'lumotlari -->
+      <div class="space-y-2 pt-1">
+        <div>
+          <label class="block text-[11px] text-slate-300 font-semibold mb-1">Telegram profilingiz (@username):</label>
+          <input type="text" id="checkoutTelegramInput" placeholder="@username" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
+        </div>
+        <div>
+          <label class="block text-[11px] text-slate-300 font-semibold mb-1">Chek raqami yoki izoh (ixtiyoriy):</label>
+          <input type="text" id="checkoutReceiptNote" placeholder="Masalan: 123456 tranzaksiya yoki oxirgi 4 raqam" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
+        </div>
+      </div>
+
       <!-- Action Buttons -->
       <div class="space-y-2 pt-2">
         <button type="button" onclick="sendReceiptViaTelegram()" class="w-full py-3.5 px-4 rounded-2xl bg-[#229ED9] hover:bg-[#1e8bc2] text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#229ED9]/30">

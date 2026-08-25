@@ -42,6 +42,8 @@ def init_db():
                     conn.execute(text("ALTER TABLE users ADD COLUMN telegram_username VARCHAR(100)"))
                 if "pro_activated_at" not in columns:
                     conn.execute(text("ALTER TABLE users ADD COLUMN pro_activated_at DATETIME"))
+                if "pro_expires_at" not in columns:
+                    conn.execute(text("ALTER TABLE users ADD COLUMN pro_expires_at DATETIME"))
         if "feedbacks" in table_names:
             f_columns = [c["name"] for c in inspector.get_columns("feedbacks")]
             with engine.begin() as conn:

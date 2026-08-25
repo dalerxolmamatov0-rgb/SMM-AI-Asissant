@@ -20,6 +20,7 @@ class User(Base):
     pro_plan = Column(String(100), nullable=True) # e.g. "Standart Pro", "VIP Biznes Pro", "Boshlang'ich Pro"
     telegram_username = Column(String(100), nullable=True)
     pro_activated_at = Column(DateTime, nullable=True)
+    pro_expires_at = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     # Relationships
