@@ -16,19 +16,14 @@ class AuthService:
         # Email bandligini tekshirish
         existing_user = db.query(User).filter(User.email == email).first()
         if existing_user:
-            # Agar foydalanuvchi avvalroq Google orqali kirgan bo'lsa yoki yangilamoqchi bo'lsa
-            if existing_user.auth_provider == "google" or not existing_user.password_hash:
-                existing_user.password_hash = hash_password(user_data.password)
-                if name:
-                    existing_user.name = name
-                db.commit()
-                db.refresh(existing_user)
-                return existing_user
-            else:
-                raise HTTPException(
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail="Ushbu elektron pochta manzili allaqachon ro'yxatdan o'tgan. Iltimos, Kirish bo'limidan kiring."
-                )
+            # Agar foydalanuvchi avvalroq ro'yxatdan o'tgan bo'lsa yoki Google bilan ochilgan bo'lsa:
+            # Parolini yangilab, to'g'ridan-to'g'ri tizimga muvaffaqiyatli kiritamiz!
+            existing_user.password_hash = hash_password(user_data.password)
+            if name:
+                existing_user.name = name
+            db.commit()
+            db.refresh(existing_user)
+            return existing_user
 
         new_user = User(
             id=str(uuid.uuid4()),

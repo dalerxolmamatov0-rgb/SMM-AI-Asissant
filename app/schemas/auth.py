@@ -5,8 +5,8 @@ from datetime import datetime
 class UserRegister(BaseModel):
     name: str = Field(..., min_length=2, max_length=100, description="Foydalanuvchi ismi")
     email: EmailStr = Field(..., description="Elektron pochta manzili")
-    password: str = Field(..., min_length=8, max_length=100, description="Parol (kamida 8 ta belgi)")
-    confirm_password: Optional[str] = Field(None, min_length=8, max_length=100, description="Parolni tasdiqlash")
+    password: str = Field(..., min_length=6, max_length=100, description="Parol")
+    confirm_password: Optional[str] = Field(None, description="Parolni tasdiqlash")
 
     @model_validator(mode="after")
     def check_passwords_match(self):
@@ -35,7 +35,7 @@ class UserOut(BaseModel):
     is_pro: Optional[str] = "false"
     pro_plan: Optional[str] = None
     telegram_username: Optional[str] = None
-    created_at: datetime
+    created_at: Optional[datetime] = None
 
     model_config = ConfigDict(from_attributes=True)
 
