@@ -28,8 +28,8 @@ class GoogleAuthRequest(BaseModel):
 
 class UserOut(BaseModel):
     id: str
-    name: str
-    email: str
+    name: Optional[str] = "Foydalanuvchi"
+    email: Optional[str] = ""
     auth_provider: Optional[str] = "local"
     avatar_url: Optional[str] = None
     is_pro: Optional[str] = "false"
