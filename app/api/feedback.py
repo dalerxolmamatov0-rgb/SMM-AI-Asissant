@@ -26,20 +26,34 @@ def submit_feedback(
     Shikoyat va taklif yuborish (ham tizimga kirgan foydalanuvchilar, ham mehmonlar uchun).
     """
     user_id = None
+    user_email = data.email
+    user_name = data.name
+
     if authorization and authorization.startswith("Bearer "):
         token = authorization.split(" ")[1]
         payload = decode_access_token(token)
-        if payload and "sub" in payload:
-            user_id = payload["sub"]
+        if payload:
+            user_id = payload.get("sub")
+            if not user_email and payload.get("email"):
+                user_email = payload.get("email")
+
+    if user_id and (not user_email or not user_name):
+        u = db.query(User).filter(User.id == user_id).first()
+        if u:
+            user_email = user_email or u.email
+            user_name = user_name or u.name
+
+    user_email = user_email or "foydalanuvchi@gmail.com"
+    user_name = user_name or user_email.split("@")[0].capitalize()
 
     feedback = Feedback(
         user_id=user_id,
-        name=data.name,
-        email=data.email,
-        telegram_username=data.telegram_username,
-        type=data.type,
-        subject=data.subject,
-        message=data.message,
+        name=user_name,
+        email=user_email,
+        telegram_username=data.telegram_username or "@ac_1Daler",
+        type=data.type or "payment",
+        subject=data.subject or "Pro Ta'rif To'lovi",
+        message=data.message or "Pro obuna to'lovi so'rovi",
         status="new"
     )
     db.add(feedback)
@@ -61,8 +75,12 @@ def submit_feedback(
             "telegram_username": feedback.telegram_username,
             "subject": feedback.subject,
             "message": feedback.message,
+            "is_payment": True,
+            "with_buttons": True,
             "created_at": feedback.created_at.strftime("%Y-%m-%d %H:%M:%S") if feedback.created_at else ""
         })
+    except Exception as e:
+        print("Telegram send error:", e)
     except Exception:
         pass
 

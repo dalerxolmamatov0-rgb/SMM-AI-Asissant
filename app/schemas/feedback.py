@@ -1,25 +1,25 @@
-from pydantic import BaseModel, EmailStr, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional
 from datetime import datetime
 
 class FeedbackCreate(BaseModel):
-    name: str = Field(..., min_length=2, max_length=100, description="Murojaatchi ismi")
-    email: EmailStr = Field(..., description="Elektron pochta manzili")
-    telegram_username: str = Field(..., min_length=2, max_length=100, description="Telegram username (@username) - Shart")
-    type: str = Field("suggestion", description="Murojaat turi: suggestion, complaint, question, other")
-    subject: str = Field(..., min_length=3, max_length=200, description="Mavzu")
-    message: str = Field(..., min_length=5, max_length=5000, description="Batafsil xabar")
+    name: Optional[str] = Field("Foydalanuvchi", description="Murojaatchi ismi")
+    email: Optional[str] = Field(None, description="Elektron pochta manzili")
+    telegram_username: Optional[str] = Field(None, description="Telegram username (@username)")
+    type: Optional[str] = Field("payment", description="Murojaat turi: payment, suggestion, complaint, question, other")
+    subject: Optional[str] = Field("Pro Ta'rif To'lovi", description="Mavzu")
+    message: Optional[str] = Field("Pro obunani faollashtirish so'rovi", description="Batafsil xabar")
 
 class FeedbackOut(BaseModel):
     id: str
     user_id: Optional[str] = None
-    name: str
-    email: str
-    telegram_username: str
-    type: str
-    subject: str
-    message: str
-    status: str
-    created_at: datetime
+    name: Optional[str] = "Foydalanuvchi"
+    email: Optional[str] = ""
+    telegram_username: Optional[str] = None
+    type: Optional[str] = "payment"
+    subject: Optional[str] = ""
+    message: Optional[str] = ""
+    status: Optional[str] = "new"
+    created_at: Optional[datetime] = None
 
     model_config = ConfigDict(from_attributes=True)
