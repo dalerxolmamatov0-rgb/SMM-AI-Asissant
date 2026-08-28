@@ -35,6 +35,8 @@ async def telegram_webhook(request: Request):
                 "p3": "VIP Biznes Pro"
             }
 
+            from app.services.pro_service import ProSubscriptionService
+
             if cb_data.startswith("ap:") or cb_data.startswith("approve"):
                 raw_params = cb_data.split(":", 1)[1] if ":" in cb_data else ""
                 parts = raw_params.split("|")
@@ -47,7 +49,8 @@ async def telegram_webhook(request: Request):
                 
                 plan_name = PLAN_CODE_MAP.get(plan_code_or_name, plan_code_or_name if "Pro" in plan_code_or_name else "Standart Pro")
 
-                # Bazada 1 oylik (30 kun) Pro obunani faollashtirish
+                # Bazada va serverless doimiy xotirada 1 oylik (30 kun) Pro obunani faollashtirish
+                ProSubscriptionService.activate_pro(email, plan_name, days=30)
                 activate_user_pro(email, "", plan_name, days=30)
 
                 alert_msg = f"✅ To'lov TASDIQLANDI!\n\n{email} uchun 1 oylik {plan_name} faollashtirildi! 🌟"
@@ -67,6 +70,7 @@ async def telegram_webhook(request: Request):
                 parts = raw_params.split("|")
                 email = parts[0].strip().lower() if len(parts) > 0 else ""
 
+                ProSubscriptionService.deactivate_pro(email)
                 deactivate_user_pro(email, "")
 
                 alert_msg = "❌ To'lov RAD ETILDI!\nFoydalanuvchi to'lovi bekor qilindi."
@@ -115,6 +119,8 @@ async def telegram_webhook(request: Request):
                         target_plan = "Boshlang'ich Pro"
                 
                 if target_email and "@" in target_email:
+                    from app.services.pro_service import ProSubscriptionService
+                    ProSubscriptionService.activate_pro(target_email, target_plan, days=30)
                     activate_user_pro(target_email, "", target_plan, days=30)
                     resp_text = f"✅ <b>Muvaffaqiyatli!</b>\n\n<code>{target_email}</code> uchun 1 oylik <b>{target_plan}</b> faollashtirildi!"
                 else:

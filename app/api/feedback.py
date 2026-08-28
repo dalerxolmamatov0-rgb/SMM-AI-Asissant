@@ -9,11 +9,16 @@ from app.utils.security import decode_access_token
 
 from app.services.telegram_service import TelegramService
 
+from fastapi import APIRouter, Depends, status, Header, Request
+from app.services.telegram_service import TelegramService
+from app.services.pro_service import ProSubscriptionService
+
 router = APIRouter(prefix="/api/feedback", tags=["Feedback"])
 
 @router.post("", response_model=FeedbackOut, status_code=status.HTTP_201_CREATED)
 def submit_feedback(
     data: FeedbackCreate,
+    request: Request,
     db: Session = Depends(get_db),
     authorization: Optional[str] = Header(None)
 ):
@@ -41,7 +46,13 @@ def submit_feedback(
     db.commit()
     db.refresh(feedback)
 
-    # Telegram Bot orqali xabar yuborish
+    # Telegram Bot Webhookni avtomatik sozlash va xabar yuborish
+    try:
+        base_url = str(request.base_url)
+        ProSubscriptionService.ensure_telegram_webhook(base_url)
+    except Exception:
+        pass
+
     try:
         TelegramService.send_feedback_notification({
             "type": feedback.type,
