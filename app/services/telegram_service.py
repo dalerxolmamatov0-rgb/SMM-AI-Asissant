@@ -89,20 +89,28 @@ class TelegramService:
 
         # Plan extraction
         plan = "Standart Pro"
+        plan_code = "p2"
         if "100 000" in str(subject) or "vip" in str(subject).lower():
             plan = "VIP Biznes Pro"
+            plan_code = "p3"
         elif "30 000" in str(subject) or "boshlang'ich" in str(subject).lower():
             plan = "Boshlang'ich Pro"
+            plan_code = "p1"
         elif "50 000" in str(subject) or "59 000" in str(subject) or "standart" in str(subject).lower():
             plan = "Standart Pro"
+            plan_code = "p2"
 
         # Agar to'lov bo'lsa yoki tasdiqlash so'ralsa, [✅ Tasdiqlash] va [❌ Rad etish] tugmalari qo'shiladi
+        # Telegram callback_data limiti qat'iy 64 bayt!
+        clean_email = str(email).strip().lower()[:36]
         if is_payment or feedback_data.get("with_buttons", False):
+            text += f"\n\n👉 <b>Tezkor tasdiqlash buyrug'i:</b> <code>/approve {clean_email}</code>"
+            payload["text"] = text
             payload["reply_markup"] = {
                 "inline_keyboard": [
                     [
-                        {"text": "✅ Tasdiqlash ✅", "callback_data": f"approve:{email}|{clean_tg}|{plan}"},
-                        {"text": "❌ Rad etish ❌", "callback_data": f"reject:{email}|{clean_tg}|{plan}"}
+                        {"text": f"✅ Tasdiqlash (1 oy Pro)", "callback_data": f"ap:{clean_email}|{plan_code}"},
+                        {"text": "❌ Rad etish", "callback_data": f"rj:{clean_email}"}
                     ]
                 ]
             }
@@ -116,8 +124,25 @@ class TelegramService:
             with urllib.request.urlopen(req, timeout=10) as response:
                 res_data = json.loads(response.read().decode("utf-8"))
                 return res_data.get("ok", False)
+        except urllib.error.HTTPError as he:
+            err_body = he.read().decode("utf-8", errors="ignore")
+            logger.error("Telegram API HTTP Error %s: %s", he.code, err_body)
+            print(f"[TELEGRAM ERROR] {he.code}: {err_body}")
+            # Agar tugmalar bilan yuborishda xatolik bo'lsa, oddiy matn sifatida qayta urinib ko'ramiz
+            try:
+                payload.pop("reply_markup", None)
+                req_fallback = urllib.request.Request(
+                    url,
+                    data=json.dumps(payload).encode("utf-8"),
+                    headers={"Content-Type": "application/json"}
+                )
+                with urllib.request.urlopen(req_fallback, timeout=10) as resp2:
+                    return json.loads(resp2.read().decode("utf-8")).get("ok", False)
+            except Exception:
+                return False
         except Exception as e:
             logger.error("Telegramga xabar yuborishda xatolik: %s", str(e))
+            print(f"[TELEGRAM EXCEPTION]: {e}")
             return False
 
     @staticmethod

@@ -104,35 +104,44 @@ async def start_telegram_poller():
                         chat_id = message.get("chat", {}).get("id")
                         message_id = message.get("message_id")
 
-                        if cb_data.startswith("approve"):
+                        PLAN_CODE_MAP = {
+                            "p1": "Boshlang'ich Pro",
+                            "p2": "Standart Pro",
+                            "p3": "VIP Biznes Pro"
+                        }
+
+                        if cb_data.startswith("ap:") or cb_data.startswith("approve"):
                             raw_params = cb_data.split(":", 1)[1] if ":" in cb_data else ""
                             parts = raw_params.split("|")
-                            email = parts[0] if len(parts) > 0 else ""
-                            user_tg = parts[1] if len(parts) > 1 else ""
-                            plan_name = parts[2] if len(parts) > 2 else "Standart Pro"
+                            email = parts[0].strip().lower() if len(parts) > 0 else ""
+                            
+                            plan_code_or_name = parts[1] if len(parts) > 1 else "p2"
+                            if len(parts) > 2:
+                                plan_code_or_name = parts[2]
+                            
+                            plan_name = PLAN_CODE_MAP.get(plan_code_or_name, plan_code_or_name if "Pro" in plan_code_or_name else "Standart Pro")
 
-                            # Bazada Pro obunani avtomatik faollashtirish
-                            activate_user_pro(email, user_tg, plan_name)
+                            # Bazada Pro obunani 1 oyga (30 kunga) faollashtirish
+                            activate_user_pro(email, "", plan_name, days=30)
 
-                            alert_msg = f"✅ To'lov TASDIQLANDI!\n\nSaytda {plan_name} obunasi darhol faollashtirildi!"
+                            alert_msg = f"✅ To'lov TASDIQLANDI!\n\nSaytda 1 oylik {plan_name} obunasi darhol faollashtirildi!"
                             TelegramService.answer_callback_query(cb_id, alert_msg, show_alert=True)
                             
                             # Tugmani o'zgartirish
                             if chat_id and message_id:
                                 new_markup = {
                                     "inline_keyboard": [
-                                        [{"text": f"✅ TASDIQLANDI ({plan_name})", "callback_data": "done_approved"}]
+                                        [{"text": f"✅ TASDIQLANDI (1 OY {plan_name} FAOL)", "callback_data": "done_approved"}]
                                     ]
                                 }
                                 TelegramService.edit_message_reply_markup(chat_id, message_id, new_markup)
 
-                        elif cb_data.startswith("reject"):
+                        elif cb_data.startswith("rj:") or cb_data.startswith("reject"):
                             raw_params = cb_data.split(":", 1)[1] if ":" in cb_data else ""
                             parts = raw_params.split("|")
-                            email = parts[0] if len(parts) > 0 else ""
-                            user_tg = parts[1] if len(parts) > 1 else ""
+                            email = parts[0].strip().lower() if len(parts) > 0 else ""
 
-                            deactivate_user_pro(email, user_tg)
+                            deactivate_user_pro(email, "")
 
                             alert_msg = f"❌ To'lov RAD ETILDI!\nFoydalanuvchi to'lovi bekor qilindi."
                             TelegramService.answer_callback_query(cb_id, alert_msg, show_alert=True)
