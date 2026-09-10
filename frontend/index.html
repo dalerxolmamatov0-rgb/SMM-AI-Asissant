@@ -67,23 +67,22 @@
       <!-- Language Selector Switcher -->
       <div class="relative">
         <button id="langDropdownBtn" type="button" onclick="toggleLangDropdown(event)" class="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all border border-slate-700/80 shadow-sm">
-          <span class="langCurrentFlag text-sm sm:text-base">🇺🇿</span>
-          <span class="langCurrentName font-bold">UZ</span>
+          <span class="langCurrentName font-extrabold text-indigo-400 font-mono">UZ</span>
           <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
         </button>
 
         <!-- Dropdown Menu -->
         <div id="langDropdownMenu" class="hidden absolute right-0 mt-2 w-36 bg-[#131314] border border-[#2d2f31] rounded-2xl shadow-2xl py-1.5 z-50 divide-y divide-slate-800/60">
           <button type="button" onclick="setLanguage('uz'); toggleLangDropdown();" data-lang="uz" class="langDropdownItem w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-600/20 text-xs text-slate-200 transition-colors">
-            <span class="text-base">🇺🇿</span>
+            <span class="font-extrabold text-xs text-indigo-400 font-mono w-6">UZ</span>
             <span>O'zbekcha</span>
           </button>
           <button type="button" onclick="setLanguage('en'); toggleLangDropdown();" data-lang="en" class="langDropdownItem w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-600/20 text-xs text-slate-200 transition-colors">
-            <span class="text-base">🇬🇧</span>
+            <span class="font-extrabold text-xs text-indigo-400 font-mono w-6">EN</span>
             <span>English</span>
           </button>
           <button type="button" onclick="setLanguage('ru'); toggleLangDropdown();" data-lang="ru" class="langDropdownItem w-full px-3.5 py-2 text-left flex items-center gap-2.5 hover:bg-indigo-600/20 text-xs text-slate-200 transition-colors">
-            <span class="text-base">🇷🇺</span>
+            <span class="font-extrabold text-xs text-indigo-400 font-mono w-6">RU</span>
             <span>Русский</span>
           </button>
         </div>

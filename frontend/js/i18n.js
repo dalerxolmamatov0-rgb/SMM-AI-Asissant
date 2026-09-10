@@ -386,9 +386,9 @@ const translations = {
 };
 
 const LANG_CONFIG = {
-  uz: { name: "O'zbekcha", flag: "🇺🇿", short: "UZ" },
-  en: { name: "English", flag: "🇬🇧", short: "EN" },
-  ru: { name: "Русский", flag: "🇷🇺", short: "RU" }
+  uz: { name: "O'zbekcha", flag: "UZ", short: "UZ" },
+  en: { name: "English", flag: "EN", short: "EN" },
+  ru: { name: "Русский", flag: "RU", short: "RU" }
 };
 
 let currentLang = localStorage.getItem("smm_app_lang") || "uz";
@@ -446,7 +446,7 @@ function updateLangSwitcherUI(lang) {
   const currentFlagEls = document.querySelectorAll(".langCurrentFlag");
   const currentNameEls = document.querySelectorAll(".langCurrentName");
   
-  currentFlagEls.forEach(el => el.innerText = cfg.flag);
+  currentFlagEls.forEach(el => el.innerText = cfg.short);
   currentNameEls.forEach(el => el.innerText = cfg.short);
 
   // Highlight active item in dropdown
