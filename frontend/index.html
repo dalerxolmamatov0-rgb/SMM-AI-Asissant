@@ -293,34 +293,34 @@
         <nav class="space-y-1 text-xs font-semibold">
           <button data-view="dashboardHomeView" class="sidebar-nav-item sidebar-link-active w-full px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 transition-all text-left">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-            Dashboard
+            <span data-i18n="nav_dashboard">Dashboard</span>
           </button>
           <button data-view="toolsView" class="sidebar-nav-item text-slate-400 hover:text-white w-full px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 transition-all text-left">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-            AI Asboblar (Tools)
+            <span data-i18n="nav_tools">AI Asboblar (Tools)</span>
           </button>
           <button data-view="proView" class="sidebar-nav-item text-amber-400/90 hover:text-amber-300 w-full px-3.5 py-2.5 rounded-xl flex items-center justify-between transition-all text-left group hover:bg-amber-500/10">
             <div class="flex items-center gap-2.5">
               <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
-              <span class="font-bold">SMM AI Pro</span>
+              <span data-i18n="nav_pro" class="font-bold">SMM AI Pro</span>
             </div>
             <span class="px-1.5 py-0.5 rounded-md bg-gradient-to-r from-amber-500/20 to-pink-500/20 text-amber-300 border border-amber-500/40 text-[9px] font-extrabold uppercase tracking-wider">PRO</span>
           </button>
           <button data-view="chatView" class="sidebar-nav-item text-slate-400 hover:text-white w-full px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 transition-all text-left">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
-            AI Marketing Chat
+            <span data-i18n="nav_chat">AI Marketing Chat</span>
           </button>
           <button data-view="historyView" class="sidebar-nav-item text-slate-400 hover:text-white w-full px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 transition-all text-left">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            Tarix (History)
+            <span data-i18n="nav_history">Tarix (History)</span>
           </button>
           <button data-view="profileView" class="sidebar-nav-item text-slate-400 hover:text-white w-full px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 transition-all text-left">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-            Biznes Profil
+            <span data-i18n="nav_profile">Biznes Profil</span>
           </button>
           <button onclick="showFeedbackModal('suggestion')" class="w-full px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 transition-all text-left text-slate-400 hover:text-indigo-300 hover:bg-slate-900/60">
             <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
-            Shikoyat va Takliflar
+            <span data-i18n="nav_feedback">Shikoyat va Takliflar</span>
           </button>
         </nav>
       </div>
@@ -328,13 +328,13 @@
       <!-- Bottom Monthly Usage Card in Sidebar -->
       <div class="glass-card p-3.5 rounded-2xl border border-slate-700/60 text-xs space-y-2 mt-4">
         <div class="flex items-center justify-between">
-          <span class="text-slate-400 font-medium">Oylik Foydalanish</span>
+          <span data-i18n="sidebar_usage_title" class="text-slate-400 font-medium">Oylik Foydalanish</span>
           <span class="text-[11px] font-bold text-indigo-400"><span id="statUsageCount">0</span> / 10</span>
         </div>
         <div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
           <div id="usageProgressBar" class="bg-indigo-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
-        <p class="text-[10px] text-slate-500">Qolgan generatsiyalar: <strong id="statRemainingCount" class="text-slate-300">10</strong> ta</p>
+        <p class="text-[10px] text-slate-500"><span data-i18n="sidebar_remaining_txt">Qolgan generatsiyalar:</span> <strong id="statRemainingCount" class="text-slate-300">10</strong> <span data-i18n="sidebar_remaining_unit">ta</span></p>
       </div>
     </aside>
 
@@ -342,30 +342,30 @@
     <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0c1220]/95 backdrop-blur-xl border-t border-slate-800 flex items-center justify-around px-2 py-2 safe-area-bottom shadow-2xl">
       <button data-view="dashboardHomeView" class="sidebar-nav-item sidebar-link-active flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-slate-400 hover:text-white transition-all text-center group">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-        <span class="text-[10px] font-semibold leading-none">Asosiy</span>
+        <span data-i18n="mob_home" class="text-[10px] font-semibold leading-none">Asosiy</span>
       </button>
       <button data-view="toolsView" class="sidebar-nav-item flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-slate-400 hover:text-white transition-all text-center group">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-        <span class="text-[10px] font-semibold leading-none">Asboblar</span>
+        <span data-i18n="mob_tools" class="text-[10px] font-semibold leading-none">Asboblar</span>
       </button>
       <button data-view="proView" class="sidebar-nav-item flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-amber-400 hover:text-amber-300 transition-all text-center group">
         <div class="relative">
           <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
           <span class="absolute -top-1 -right-2 px-1 py-0.2 bg-gradient-to-r from-amber-500 to-pink-500 text-[7px] font-black text-white rounded-full leading-none">PRO</span>
         </div>
-        <span class="text-[10px] font-bold text-amber-300 leading-none">Pro Hub</span>
+        <span data-i18n="mob_pro" class="text-[10px] font-bold text-amber-300 leading-none">Pro Hub</span>
       </button>
       <button data-view="chatView" class="sidebar-nav-item flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-slate-400 hover:text-white transition-all text-center group">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
-        <span class="text-[10px] font-semibold leading-none">Chat</span>
+        <span data-i18n="mob_chat" class="text-[10px] font-semibold leading-none">Chat</span>
       </button>
       <button data-view="historyView" class="sidebar-nav-item flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-slate-400 hover:text-white transition-all text-center group">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        <span class="text-[10px] font-semibold leading-none">Tarix</span>
+        <span data-i18n="mob_history" class="text-[10px] font-semibold leading-none">Tarix</span>
       </button>
       <button data-view="profileView" class="sidebar-nav-item flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-slate-400 hover:text-white transition-all text-center group">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-        <span class="text-[10px] font-semibold leading-none">Profil</span>
+        <span data-i18n="mob_profile" class="text-[10px] font-semibold leading-none">Profil</span>
       </button>
     </nav>
 
@@ -376,8 +376,8 @@
       <section id="dashboardHomeView" class="space-y-6">
         <div class="flex items-center justify-between">
           <div>
-            <h2 class="text-2xl font-black text-white">Dashboard</h2>
-            <p class="text-xs text-slate-400 mt-0.5">Xush kelibsiz! Kerakli AI asbobni tanlang va kontent yaratishni boshlang.</p>
+            <h2 data-i18n="dash_title" class="text-2xl font-black text-white">Dashboard</h2>
+            <p data-i18n="dash_subtitle" class="text-xs text-slate-400 mt-0.5">Xush kelibsiz! Kerakli AI asbobni tanlang va kontent yaratishni boshlang.</p>
           </div>
         </div>
 
@@ -385,51 +385,51 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
           <button data-tool="toolPanelPost" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-indigo-500/50">
             <div class="text-xl">📝</div>
-            <div class="font-bold text-white text-xs">Post Yaratish</div>
-            <div class="text-[11px] text-slate-400">AIDA matn & teglar</div>
+            <div data-i18n="quick_post_title" class="font-bold text-white text-xs">Post Yaratish</div>
+            <div data-i18n="quick_post_sub" class="text-[11px] text-slate-400">AIDA matn & teglar</div>
           </button>
           <button data-tool="toolPanelReels" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-rose-500/50">
             <div class="text-xl">🎬</div>
-            <div class="font-bold text-white text-xs">Reels G'oyalari</div>
-            <div class="text-[11px] text-slate-400">Viral ssenariylar</div>
+            <div data-i18n="quick_reels_title" class="font-bold text-white text-xs">Reels G'oyalari</div>
+            <div data-i18n="quick_reels_sub" class="text-[11px] text-slate-400">Viral ssenariylar</div>
           </button>
           <button data-tool="toolPanelPlan" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-purple-500/50">
             <div class="text-xl">📅</div>
-            <div class="font-bold text-white text-xs">Kontent Reja</div>
-            <div class="text-[11px] text-slate-400">7/14/30 kunlik reja</div>
+            <div data-i18n="quick_plan_title" class="font-bold text-white text-xs">Kontent Reja</div>
+            <div data-i18n="quick_plan_sub" class="text-[11px] text-slate-400">7/14/30 kunlik reja</div>
           </button>
           <button data-tool="toolPanelHashtags" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-cyan-500/50">
             <div class="text-xl">🏷</div>
-            <div class="font-bold text-white text-xs">Hashtaglar</div>
-            <div class="text-[11px] text-slate-400">Toifalangan teglar</div>
+            <div data-i18n="quick_hash_title" class="font-bold text-white text-xs">Hashtaglar</div>
+            <div data-i18n="quick_hash_sub" class="text-[11px] text-slate-400">Toifalangan teglar</div>
           </button>
           <button data-tool="toolPanelAdCopy" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-amber-500/50">
             <div class="text-xl">📣</div>
-            <div class="font-bold text-white text-xs">Reklama Matni</div>
-            <div class="text-[11px] text-slate-400">Short, Medium, Long</div>
+            <div data-i18n="quick_ads_title" class="font-bold text-white text-xs">Reklama Matni</div>
+            <div data-i18n="quick_ads_sub" class="text-[11px] text-slate-400">Short, Medium, Long</div>
           </button>
           <button data-tool="toolPanelImagePrompt" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-emerald-500/50">
             <div class="text-xl">🎨</div>
-            <div class="font-bold text-white text-xs">Rasm Prompts</div>
-            <div class="text-[11px] text-slate-400">Midjourney & DALL-E</div>
+            <div data-i18n="quick_img_title" class="font-bold text-white text-xs">Rasm Prompts</div>
+            <div data-i18n="quick_img_sub" class="text-[11px] text-slate-400">Midjourney & DALL-E</div>
           </button>
           <button data-tool="toolPanelAudience" class="quick-action-btn glass-card p-4 rounded-2xl text-left space-y-2 hover:border-blue-500/50">
             <div class="text-xl">🎯</div>
-            <div class="font-bold text-white text-xs">Auditoriya Tahlili</div>
-            <div class="text-[11px] text-slate-400">Ideal mijoz avatar</div>
+            <div data-i18n="quick_aud_title" class="font-bold text-white text-xs">Auditoriya Tahlili</div>
+            <div data-i18n="quick_aud_sub" class="text-[11px] text-slate-400">Ideal mijoz avatar</div>
           </button>
           <button onclick="switchAppView('chatView')" class="glass-card p-4 rounded-2xl text-left space-y-2 hover:border-indigo-500/50">
             <div class="text-xl">💬</div>
-            <div class="font-bold text-white text-xs">Marketing Chat</div>
-            <div class="text-[11px] text-slate-400">AI Konsultant</div>
+            <div data-i18n="quick_chat_title" class="font-bold text-white text-xs">Marketing Chat</div>
+            <div data-i18n="quick_chat_sub" class="text-[11px] text-slate-400">AI Konsultant</div>
           </button>
         </div>
 
         <!-- Recent Generations Section -->
         <div class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
           <div class="flex items-center justify-between">
-            <h3 class="font-bold text-white text-sm">Oxirgi Generatsiyalar (Recent Generations)</h3>
-            <button onclick="switchAppView('historyView')" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold">Barchasini ko'rish →</button>
+            <h3 data-i18n="recent_gen_title" class="font-bold text-white text-sm">Oxirgi Generatsiyalar (Recent Generations)</h3>
+            <button onclick="switchAppView('historyView')" data-i18n="recent_gen_view_all" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold">Barchasini ko'rish →</button>
           </div>
           <div id="recentGenerationsList"></div>
         </div>
@@ -439,54 +439,54 @@
       <section id="toolsView" class="hidden space-y-6">
         <!-- Tools Nav Bar -->
         <div class="flex items-center gap-2 overflow-x-auto pb-2">
-          <button data-tool-panel="toolPanelPost" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-lg whitespace-nowrap">📝 AI Post</button>
-          <button data-tool-panel="toolPanelReels" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">🎬 Reels Ssenariy</button>
-          <button data-tool-panel="toolPanelPlan" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">📅 Kontent Reja</button>
-          <button data-tool-panel="toolPanelHashtags" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">🏷 Hashtaglar</button>
-          <button data-tool-panel="toolPanelAdCopy" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">📣 Reklama (Ads)</button>
-          <button data-tool-panel="toolPanelImagePrompt" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">🎨 Image Prompts</button>
-          <button data-tool-panel="toolPanelAudience" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">🎯 Auditoriya</button>
+          <button data-tool-panel="toolPanelPost" data-i18n="tab_tool_post" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-lg whitespace-nowrap">📝 AI Post</button>
+          <button data-tool-panel="toolPanelReels" data-i18n="tab_tool_reels" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">🎬 Reels Ssenariy</button>
+          <button data-tool-panel="toolPanelPlan" data-i18n="tab_tool_plan" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">📅 Kontent Reja</button>
+          <button data-tool-panel="toolPanelHashtags" data-i18n="tab_tool_hash" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">🏷 Hashtaglar</button>
+          <button data-tool-panel="toolPanelAdCopy" data-i18n="tab_tool_ads" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">📣 Reklama (Ads)</button>
+          <button data-tool-panel="toolPanelImagePrompt" data-i18n="tab_tool_img" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">🎨 Image Prompts</button>
+          <button data-tool-panel="toolPanelAudience" data-i18n="tab_tool_aud" class="tool-nav-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800/60 text-slate-400 hover:text-white whitespace-nowrap">🎯 Auditoriya</button>
         </div>
 
         <!-- 1. Post Panel -->
         <div id="toolPanelPost" class="space-y-5">
           <form id="formGenPost" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
-            <h3 class="font-bold text-white text-base">📝 AI Post Generator</h3>
+            <h3 data-i18n="tab_tool_post" class="font-bold text-white text-base">📝 AI Post Generator</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Nomi</label>
-                <input type="text" id="postBizName" placeholder="Masalan: 'Chustiyosh'" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_biz_name" class="block text-xs text-slate-300 font-semibold mb-1">Biznes Nomi</label>
+                <input type="text" id="postBizName" data-i18n-placeholder="ph_biz_name" placeholder="Masalan: 'Chustiyosh'" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
-                <input type="text" id="postBizType" required value="Restoran va Kafexona" placeholder="Restoran, Kiyim do'koni..." class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_biz_type" class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+                <input type="text" id="postBizType" required value="Restoran va Kafexona" data-i18n-placeholder="ph_biz_type" placeholder="Restoran, Kiyim do'koni..." class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Xizmat *</label>
-                <input type="text" id="postProduct" required value="Mualliflik go'shtli bifsteks taomi" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_product_service" class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Xizmat *</label>
+                <input type="text" id="postProduct" required value="Mualliflik go'shtli bifsteks taomi" data-i18n-placeholder="ph_product" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Post Mavzusi *</label>
-                <input type="text" id="postTopic" required value="Maxsus oshpaz siri va juma aksiyasi" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_topic" class="block text-xs text-slate-300 font-semibold mb-1">Post Mavzusi *</label>
+                <input type="text" id="postTopic" required value="Maxsus oshpaz siri va juma aksiyasi" data-i18n-placeholder="ph_topic" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Ohang (Tone)</label>
+                <label data-i18n="label_tone" class="block text-xs text-slate-300 font-semibold mb-1">Ohang (Tone)</label>
                 <select id="postTone" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
-                  <option value="Do'stona va ishtahani ochuvchi">Do'stona va ishtahani ochuvchi</option>
-                  <option value="Ekspert va professional">Ekspert va professional</option>
-                  <option value="Savdoga yo'naltirilgan">Savdoga yo'naltirilgan</option>
+                  <option data-i18n="tone_friendly" value="Do'stona va ishtahani ochuvchi">Do'stona va ishtahani ochuvchi</option>
+                  <option data-i18n="tone_professional" value="Ekspert va professional">Ekspert va professional</option>
+                  <option data-i18n="tone_sales" value="Savdoga yo'naltirilgan">Savdoga yo'naltirilgan</option>
                 </select>
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Post Maqsadi</label>
+                <label data-i18n="label_goal" class="block text-xs text-slate-300 font-semibold mb-1">Post Maqsadi</label>
                 <select id="postGoal" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
-                  <option value="Sotuvni oshirish va buyurtma olish">Sotuv va buyurtma olish</option>
-                  <option value="Obunachi jalb qilish">Obunachi jalb qilish</option>
-                  <option value="Ishonchni mustahkamlash">Ishonchni mustahkamlash</option>
+                  <option data-i18n="goal_sales" value="Sotuvni oshirish va buyurtma olish">Sotuv va buyurtma olish</option>
+                  <option data-i18n="goal_followers" value="Obunachi jalb qilish">Obunachi jalb qilish</option>
+                  <option data-i18n="goal_trust" value="Ishonchni mustahkamlash">Ishonchni mustahkamlash</option>
                 </select>
               </div>
             </div>
-            <button type="submit" id="btnSubmitPost" class="w-full py-3 rounded-xl gradient-btn text-white font-bold text-xs shadow-md">
+            <button type="submit" id="btnSubmitPost" data-i18n="btn_gen_post" class="w-full py-3 rounded-xl gradient-btn text-white font-bold text-xs shadow-md">
               Postni Generatsiya Qilish 🚀
             </button>
           </form>
@@ -496,22 +496,22 @@
         <!-- 2. Reels Panel -->
         <div id="toolPanelReels" class="hidden space-y-5">
           <form id="formGenReels" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
-            <h3 class="font-bold text-white text-base">🎬 Reels Idea Generator</h3>
+            <h3 data-i18n="tab_tool_reels" class="font-bold text-white text-base">🎬 Reels Idea Generator</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
-                <input type="text" id="reelsBizType" required value="Kiyim-kechak do'koni" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_biz_type" class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+                <input type="text" id="reelsBizType" required value="Kiyim-kechak do'koni" data-i18n-placeholder="ph_biz_type" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Xizmat *</label>
-                <input type="text" id="reelsProduct" required value="Yangi bahorgi liboslar" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_product_service" class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Xizmat *</label>
+                <input type="text" id="reelsProduct" required value="Yangi bahorgi liboslar" data-i18n-placeholder="ph_product" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div class="sm:col-span-2">
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Maxsus Mavzu (ixtiyoriy)</label>
-                <input type="text" id="reelsTopic" placeholder="Masalan: 1 ta kiyim bilan 4 xil obraz" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_topic" class="block text-xs text-slate-300 font-semibold mb-1">Maxsus Mavzu (ixtiyoriy)</label>
+                <input type="text" id="reelsTopic" data-i18n-placeholder="ph_reels_topic" placeholder="Masalan: 1 ta kiyim bilan 4 xil obraz" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
             </div>
-            <button type="submit" id="btnSubmitReels" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-md">
+            <button type="submit" id="btnSubmitReels" data-i18n="btn_gen_reels" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-md">
               Reels Ssenariy Yaratish 🎬
             </button>
           </form>
@@ -521,26 +521,26 @@
         <!-- 3. Plan Panel -->
         <div id="toolPanelPlan" class="hidden space-y-5">
           <form id="formGenPlan" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
-            <h3 class="font-bold text-white text-base">📅 Kontent Reja Generatori (7, 14, 30 Kun)</h3>
+            <h3 data-i18n="tab_tool_plan" class="font-bold text-white text-base">📅 Kontent Reja Generatori (7, 14, 30 Kun)</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
-                <input type="text" id="planBizType" required value="IT Kurslar va Dasturlash Akademiyasi" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_biz_type" class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+                <input type="text" id="planBizType" required value="IT Kurslar va Dasturlash Akademiyasi" data-i18n-placeholder="ph_biz_type" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Davomiylik (Kunlar) *</label>
+                <label data-i18n="label_duration" class="block text-xs text-slate-300 font-semibold mb-1">Davomiylik (Kunlar) *</label>
                 <select id="planDuration" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-indigo-400">
-                  <option value="7">7 Kunlik Reja</option>
-                  <option value="14">14 Kunlik Reja</option>
-                  <option value="30">30 Kunlik Reja (To'liq Oy)</option>
+                  <option data-i18n="opt_7_days" value="7">7 Kunlik Reja</option>
+                  <option data-i18n="opt_14_days" value="14">14 Kunlik Reja</option>
+                  <option data-i18n="opt_30_days" value="30">30 Kunlik Reja (To'liq Oy)</option>
                 </select>
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Asosiy Maqsad</label>
-                <input type="text" id="planGoal" value="Yangi guruhlarga qabul va sotuv" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_goal" class="block text-xs text-slate-300 font-semibold mb-1">Asosiy Maqsad</label>
+                <input type="text" id="planGoal" value="Yangi guruhlarga qabul va sotuv" data-i18n-placeholder="ph_topic" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
             </div>
-            <button type="submit" id="btnSubmitPlan" class="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md">
+            <button type="submit" id="btnSubmitPlan" data-i18n="btn_gen_plan" class="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md">
               Kontent Kalendarni Yaratish 📅
             </button>
           </form>
@@ -550,22 +550,22 @@
         <!-- 4. Hashtags Panel -->
         <div id="toolPanelHashtags" class="hidden space-y-5">
           <form id="formGenHashtags" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
-            <h3 class="font-bold text-white text-base">🏷 Toifalangan Hashtag Generator</h3>
+            <h3 data-i18n="tab_tool_hash" class="font-bold text-white text-base">🏷 Toifalangan Hashtag Generator</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
-                <input type="text" id="hashBizType" required value="Go'zallik Saloni" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_biz_type" class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+                <input type="text" id="hashBizType" required value="Go'zallik Saloni" data-i18n-placeholder="ph_biz_type" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Xizmat *</label>
-                <input type="text" id="hashProduct" required value="Soch turmagi va makiyaj" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_product_service" class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Xizmat *</label>
+                <input type="text" id="hashProduct" required value="Soch turmagi va makiyaj" data-i18n-placeholder="ph_product" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Shahar / Hudud</label>
-                <input type="text" id="hashCity" value="Toshkent" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_city" class="block text-xs text-slate-300 font-semibold mb-1">Shahar / Hudud</label>
+                <input type="text" id="hashCity" value="Toshkent" data-i18n-placeholder="ph_city" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
             </div>
-            <button type="submit" id="btnSubmitHashtags" class="w-full py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs shadow-md">
+            <button type="submit" id="btnSubmitHashtags" data-i18n="btn_gen_hash" class="w-full py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs shadow-md">
               Hashtaglarni Saralash 🏷
             </button>
           </form>
@@ -575,26 +575,26 @@
         <!-- 5. Ad Copy Panel -->
         <div id="toolPanelAdCopy" class="hidden space-y-5">
           <form id="formGenAdCopy" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
-            <h3 class="font-bold text-white text-base">📣 Ad Copy Generator (Short / Medium / Long)</h3>
+            <h3 data-i18n="tab_tool_ads" class="font-bold text-white text-base">📣 Ad Copy Generator (Short / Medium / Long)</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
-                <input type="text" id="adBizType" required value="Ingliz tili kursi" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_biz_type" class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+                <input type="text" id="adBizType" required value="Ingliz tili kursi" data-i18n-placeholder="ph_ad_biz" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Kurs *</label>
-                <input type="text" id="adProduct" required value="IELTS 7.5+ intensiv kursi" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_product_service" class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Kurs *</label>
+                <input type="text" id="adProduct" required value="IELTS 7.5+ intensiv kursi" data-i18n-placeholder="ph_ad_prod" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Maqsadli Auditoriya *</label>
-                <input type="text" id="adAudience" required value="Talabalar va xorijga ketuvchilar" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_audience" class="block text-xs text-slate-300 font-semibold mb-1">Maqsadli Auditoriya *</label>
+                <input type="text" id="adAudience" required value="Talabalar va xorijga ketuvchilar" data-i18n-placeholder="ph_ad_aud" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Maxsus Taklif / Chegirma *</label>
-                <input type="text" id="adOffer" required value="Birinchi 10 kishiga 25% chegirma va bepul mock test" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_offer" class="block text-xs text-slate-300 font-semibold mb-1">Maxsus Taklif / Chegirma *</label>
+                <input type="text" id="adOffer" required value="Birinchi 10 kishiga 25% chegirma va bepul mock test" data-i18n-placeholder="ph_ad_offer" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
             </div>
-            <button type="submit" id="btnSubmitAdCopy" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md">
+            <button type="submit" id="btnSubmitAdCopy" data-i18n="btn_gen_ads" class="w-full py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md">
               Reklama Matnlarini Yaratish 📣
             </button>
           </form>
@@ -604,24 +604,24 @@
         <!-- 6. Image Prompt Panel -->
         <div id="toolPanelImagePrompt" class="hidden space-y-5">
           <form id="formGenImagePrompt" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
-            <h3 class="font-bold text-white text-base">🎨 AI Image Prompt Generator (Midjourney / DALL-E)</h3>
+            <h3 data-i18n="tab_tool_img" class="font-bold text-white text-base">🎨 AI Image Prompt Generator (Midjourney / DALL-E)</h3>
             <div class="space-y-3">
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot yoki Post Vizual Tavsifi *</label>
-                <input type="text" id="imgDesc" required value="Nafis bej rangli qahva chashkasi va zamonaviy laptop shinam kafeda" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_img_desc" class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot yoki Post Vizual Tavsifi *</label>
+                <input type="text" id="imgDesc" required value="Nafis bej rangli qahva chashkasi va zamonaviy laptop shinam kafeda" data-i18n-placeholder="ph_img_desc" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label class="block text-xs text-slate-300 font-semibold mb-1">Uslub (Style Preference)</label>
-                  <input type="text" id="imgStyle" value="Photorealistic, Studio Lighting, 8k, Hasselblad" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                  <label data-i18n="label_img_style" class="block text-xs text-slate-300 font-semibold mb-1">Uslub (Style Preference)</label>
+                  <input type="text" id="imgStyle" value="Photorealistic, Studio Lighting, 8k, Hasselblad" data-i18n-placeholder="ph_img_style" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
                 </div>
                 <div>
-                  <label class="block text-xs text-slate-300 font-semibold mb-1">Brend Ranglari</label>
-                  <input type="text" id="imgColors" placeholder="Och pastel, oltin, qora" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                  <label data-i18n="label_img_colors" class="block text-xs text-slate-300 font-semibold mb-1">Brend Ranglari</label>
+                  <input type="text" id="imgColors" data-i18n-placeholder="ph_img_colors" placeholder="Och pastel, oltin, qora" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
                 </div>
               </div>
             </div>
-            <button type="submit" id="btnSubmitImagePrompt" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md">
+            <button type="submit" id="btnSubmitImagePrompt" data-i18n="btn_gen_img" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md">
               Image Promptlarni Yaratish 🎨
             </button>
           </form>
@@ -631,22 +631,22 @@
         <!-- 7. Audience Panel -->
         <div id="toolPanelAudience" class="hidden space-y-5">
           <form id="formGenAudience" class="glass-panel p-5 rounded-3xl border border-slate-800 space-y-4">
-            <h3 class="font-bold text-white text-base">🎯 Target Audience Analyzer (Auditoriya Tahlili)</h3>
+            <h3 data-i18n="tab_tool_aud" class="font-bold text-white text-base">🎯 Target Audience Analyzer (Auditoriya Tahlili)</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Nomi</label>
-                <input type="text" id="audBizName" placeholder="Kompaniya nomi" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_biz_name" class="block text-xs text-slate-300 font-semibold mb-1">Biznes Nomi</label>
+                <input type="text" id="audBizName" data-i18n-placeholder="ph_aud_biz" placeholder="Kompaniya nomi" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
-                <input type="text" id="audBizType" required value="Ko'chmas mulk agentligi (Novostroyka)" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_biz_type" class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+                <input type="text" id="audBizType" required value="Ko'chmas mulk agentligi (Novostroyka)" data-i18n-placeholder="ph_aud_type" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Segment</label>
-                <input type="text" id="audProduct" value="Toshkent markazidagi premium xonadonlar" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="label_price_seg" class="block text-xs text-slate-300 font-semibold mb-1">Mahsulot / Segment</label>
+                <input type="text" id="audProduct" value="Toshkent markazidagi premium xonadonlar" data-i18n-placeholder="ph_aud_prod" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
             </div>
-            <button type="submit" id="btnSubmitAudience" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md">
+            <button type="submit" id="btnSubmitAudience" data-i18n="btn_gen_aud" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md">
               Auditoriyani Tahlil Qilish 🎯
             </button>
           </form>
@@ -765,11 +765,8 @@
         <!-- 3 TA'RIFLAR BO'LIMI (PRICING TIERS) -->
         <div class="pt-6 space-y-6">
           <div class="text-center space-y-2">
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-bold">
-              <span>💎 Qulay va Shaffof Narxlar</span>
-            </div>
-            <h3 class="text-2xl sm:text-3xl font-black text-white">SMM AI Pro Ta'riflar Rejasi</h3>
-            <p class="text-xs sm:text-sm text-slate-400 max-w-lg mx-auto">O'zingizga mos ta'rifni tanlang va biznesingiz marketingini yangi bosqichga olib chiqing.</p>
+            <h3 data-i18n="pro_title" class="text-2xl sm:text-3xl font-black text-white">SMM AI Pro Ta'riflar Rejasi</h3>
+            <p data-i18n="pro_subtitle" class="text-xs sm:text-sm text-slate-400 max-w-lg mx-auto">O'zingizga mos ta'rifni tanlang va biznesingiz marketingini yangi bosqichga olib chiqing.</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -777,126 +774,126 @@
             <div class="glass-card p-6 rounded-3xl border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between space-y-6 relative">
               <div class="space-y-4">
                 <div class="space-y-1">
-                  <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">1-Ta'rif</span>
-                  <h4 class="text-xl font-black text-white">Boshlang'ich Pro</h4>
-                  <p class="text-xs text-slate-400">Yangi boshlovchi va kichik loyihalar uchun</p>
+                  <span data-i18n="plan1_badge" class="text-xs font-bold text-slate-400 uppercase tracking-wider">1-Ta'rif</span>
+                  <h4 data-i18n="plan1_name" class="text-xl font-black text-white">Boshlang'ich Pro</h4>
+                  <p data-i18n="plan1_sub" class="text-xs text-slate-400">Yangi boshlovchi va kichik loyihalar uchun</p>
                 </div>
 
                 <div class="pt-2">
                   <span class="text-3xl font-black text-white">30 000</span>
-                  <span class="text-xs text-slate-400">so'm / oy</span>
+                  <span data-i18n="plan1_unit" class="text-xs text-slate-400">so'm / oy</span>
                 </div>
 
                 <ul class="space-y-2.5 text-xs text-slate-300 pt-2 border-t border-slate-800">
                   <li class="flex items-center gap-2">
-                    <span class="text-emerald-400 font-bold">✓</span> Oyiga 35 ta AI Generatsiya
+                    <span class="text-emerald-400 font-bold">✓</span> <span data-i18n="plan1_f1">Oyiga 35 ta AI Generatsiya</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-emerald-400 font-bold">✓</span> 7 kunlik Kontent Reja
+                    <span class="text-emerald-400 font-bold">✓</span> <span data-i18n="plan1_f2">7 kunlik Kontent Reja</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-emerald-400 font-bold">✓</span> Reels ssenariy va hooklar
+                    <span class="text-emerald-400 font-bold">✓</span> <span data-i18n="plan1_f3">Reels ssenariy va hooklar</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-emerald-400 font-bold">✓</span> Hashtag va Target matnlari
+                    <span class="text-emerald-400 font-bold">✓</span> <span data-i18n="plan1_f4">Hashtag va Target matnlari</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-emerald-400 font-bold">✓</span> Standart AI server tezligi
+                    <span class="text-emerald-400 font-bold">✓</span> <span data-i18n="plan1_f5">Standart AI server tezligi</span>
                   </li>
                 </ul>
               </div>
 
-              <button onclick="openCheckoutModal('Boshlang\'ich Pro', '30 000 so\'m')" class="w-full py-3 rounded-2xl bg-slate-800 hover:bg-indigo-600 text-white font-bold text-xs transition-all border border-slate-700 shadow-md">
+              <button onclick="openCheckoutModal('Boshlang\'ich Pro', '30 000 so\'m')" data-i18n="plan1_btn" class="w-full py-3 rounded-2xl bg-slate-800 hover:bg-indigo-600 text-white font-bold text-xs transition-all border border-slate-700 shadow-md">
                 30 000 so'm — Tanlash 🚀
               </button>
             </div>
 
             <!-- 2-Ta'rif: 50 000 so'm (Eng Mashhur) -->
             <div class="glass-card p-6 rounded-3xl border-2 border-indigo-500 bg-gradient-to-b from-indigo-950/40 via-slate-900/90 to-slate-950 flex flex-col justify-between space-y-6 relative shadow-2xl shadow-indigo-600/20 transform md:-translate-y-2">
-              <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 text-white text-[10px] font-black uppercase tracking-wider shadow-md">
+              <div data-i18n="plan2_badge" class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 text-white text-[10px] font-black uppercase tracking-wider shadow-md">
                 ⭐ Eng Mashhur / Tavsiya
               </div>
 
               <div class="space-y-4">
                 <div class="space-y-1 pt-1">
-                  <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">2-Ta'rif</span>
-                  <h4 class="text-xl font-black text-white">Standart Pro</h4>
-                  <p class="text-xs text-slate-300">Faol SMM mutaxassislar va o'suvchi brendlar uchun</p>
+                  <span data-i18n="plan2_badge_tier" class="text-xs font-bold text-indigo-400 uppercase tracking-wider">2-Ta'rif</span>
+                  <h4 data-i18n="plan2_name" class="text-xl font-black text-white">Standart Pro</h4>
+                  <p data-i18n="plan2_sub" class="text-xs text-slate-300">Faol SMM mutaxassislar va o'suvchi brendlar uchun</p>
                 </div>
 
                 <div class="pt-2">
                   <span class="text-3xl font-black text-white">50 000</span>
-                  <span class="text-xs text-slate-400">so'm / oy</span>
+                  <span data-i18n="plan2_unit" class="text-xs text-slate-400">so'm / oy</span>
                 </div>
 
                 <ul class="space-y-2.5 text-xs text-slate-200 pt-2 border-t border-slate-800">
                   <li class="flex items-center gap-2">
-                    <span class="text-emerald-400 font-bold">✓</span> Oyiga 50 ta AI Generatsiya
+                    <span class="text-emerald-400 font-bold">✓</span> <span data-i18n="plan2_f1">Oyiga 50 ta AI Generatsiya</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-emerald-400 font-bold">✓</span> 30 kunlik Auto-Pilot Kontent Kalendar
+                    <span class="text-emerald-400 font-bold">✓</span> <span data-i18n="plan2_f2">30 kunlik Auto-Pilot Kontent Kalendar</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-emerald-400 font-bold">✓</span> Raqobatchilarni AI Tahlili (Spy)
+                    <span class="text-emerald-400 font-bold">✓</span> <span data-i18n="plan2_f3">Raqobatchilarni AI Tahlili (Spy)</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-emerald-400 font-bold">✓</span> Maxsus Brend Ohangi (Tone of Voice)
+                    <span class="text-emerald-400 font-bold">✓</span> <span data-i18n="plan2_f4">Maxsus Brend Ohangi (Tone of Voice)</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-emerald-400 font-bold">✓</span> PDF & Word eksport qilish
+                    <span class="text-emerald-400 font-bold">✓</span> <span data-i18n="plan2_f5">PDF & Word eksport qilish</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-emerald-400 font-bold">✓</span> Turbo tezlikdagi AI Serverlar
+                    <span class="text-emerald-400 font-bold">✓</span> <span data-i18n="plan2_f6">Turbo tezlikdagi AI Serverlar</span>
                   </li>
                 </ul>
               </div>
 
-              <button onclick="openCheckoutModal('Standart Pro', '50 000 so\'m')" class="w-full py-3.5 rounded-2xl gradient-btn text-white font-black text-xs shadow-xl shadow-indigo-600/30 hover:opacity-95 transition-all">
+              <button onclick="openCheckoutModal('Standart Pro', '50 000 so\'m')" data-i18n="plan2_btn" class="w-full py-3.5 rounded-2xl gradient-btn text-white font-black text-xs shadow-xl shadow-indigo-600/30 hover:opacity-95 transition-all">
                 50 000 so'm — Tanlash ⭐
               </button>
             </div>
 
             <!-- 3-Ta'rif: 100 000 so'm (VIP Biznes) -->
             <div class="glass-card p-6 rounded-3xl border border-amber-500/40 bg-gradient-to-b from-amber-950/20 via-slate-900/90 to-slate-950 flex flex-col justify-between space-y-6 relative">
-              <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-wider shadow-md">
+              <div data-i18n="plan3_badge" class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-black uppercase tracking-wider shadow-md">
                 👑 Maksimal VIP
               </div>
 
               <div class="space-y-4">
                 <div class="space-y-1 pt-1">
-                  <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">3-Ta'rif</span>
-                  <h4 class="text-xl font-black text-white">VIP Biznes Pro</h4>
-                  <p class="text-xs text-slate-400">Agentliklar, tadbirkorlar va yirik kompaniyalar uchun</p>
+                  <span data-i18n="plan3_badge_tier" class="text-xs font-bold text-amber-400 uppercase tracking-wider">3-Ta'rif</span>
+                  <h4 data-i18n="plan3_name" class="text-xl font-black text-white">VIP Biznes Pro</h4>
+                  <p data-i18n="plan3_sub" class="text-xs text-slate-400">Agentliklar, tadbirkorlar va yirik kompaniyalar uchun</p>
                 </div>
 
                 <div class="pt-2">
                   <span class="text-3xl font-black text-white">100 000</span>
-                  <span class="text-xs text-slate-400">so'm / oy</span>
+                  <span data-i18n="plan3_unit" class="text-xs text-slate-400">so'm / oy</span>
                 </div>
 
                 <ul class="space-y-2.5 text-xs text-slate-300 pt-2 border-t border-slate-800">
                   <li class="flex items-center gap-2">
-                    <span class="text-amber-400 font-bold">✓</span> <strong>Barcha Pro Imkoniyatlar + Cheksiz</strong>
+                    <span class="text-amber-400 font-bold">✓</span> <span data-i18n="plan3_f1">Barcha Pro Imkoniyatlar + Cheksiz</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-amber-400 font-bold">✓</span> 24/7 Shaxsiy AI Marketing Strateg
+                    <span class="text-amber-400 font-bold">✓</span> <span data-i18n="plan3_f2">24/7 Shaxsiy AI Marketing Strateg</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-amber-400 font-bold">✓</span> 5 tagacha Biznes Profilni bir vaqtda boshqarish
+                    <span class="text-amber-400 font-bold">✓</span> <span data-i18n="plan3_f3">5 tagacha Biznes Profilni boshqarish</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-amber-400 font-bold">✓</span> Cheksiz Target Reklama & Voronkalar
+                    <span class="text-amber-400 font-bold">✓</span> <span data-i18n="plan3_f4">Cheksiz Target Reklama & Voronkalar</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-amber-400 font-bold">✓</span> Telegram Bot orqali Avto-Postlash
+                    <span class="text-amber-400 font-bold">✓</span> <span data-i18n="plan3_f5">Telegram Bot orqali Avto-Postlash</span>
                   </li>
                   <li class="flex items-center gap-2">
-                    <span class="text-amber-400 font-bold">✓</span> VIP Shaxsiy Menejer & Ustuvor Yordam
+                    <span class="text-amber-400 font-bold">✓</span> <span data-i18n="plan3_f6">VIP Shaxsiy Menejer & Ustuvor Yordam</span>
                   </li>
                 </ul>
               </div>
 
-              <button onclick="openCheckoutModal('VIP Biznes Pro', '100 000 so\'m')" class="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-xs transition-all shadow-lg shadow-amber-500/20">
+              <button onclick="openCheckoutModal('VIP Biznes Pro', '100 000 so\'m')" data-i18n="plan3_btn" class="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-xs transition-all shadow-lg shadow-amber-500/20">
                 100 000 so'm — Tanlash 👑
               </button>
             </div>
@@ -911,11 +908,11 @@
           <div class="flex items-center gap-3">
             <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold text-xs">AI</div>
             <div>
-              <h4 class="font-bold text-white text-xs">AI Marketing Konsultant</h4>
-              <p class="text-[10px] text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Online</p>
+              <h4 data-i18n="chat_title" class="font-bold text-white text-xs">AI Marketing Konsultant</h4>
+              <p class="text-[10px] text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> <span data-i18n="chat_online">Online</span></p>
             </div>
           </div>
-          <button id="btnClearChat" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-900/30 text-slate-400 hover:text-rose-300 text-xs transition-all border border-slate-700">
+          <button id="btnClearChat" data-i18n="chat_clear" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-900/30 text-slate-400 hover:text-rose-300 text-xs transition-all border border-slate-700">
             Tozalash 🗑
           </button>
         </div>
@@ -925,9 +922,9 @@
 
         <!-- Chat Input Form -->
         <form id="chatForm" class="p-3 border-t border-slate-800 flex items-center gap-2 bg-slate-950/60">
-          <input type="text" id="chatInput" placeholder="Marketing, Reels yoki sotuv bo'yicha savol bering..." 
+          <input type="text" id="chatInput" data-i18n-placeholder="chat_placeholder" placeholder="Marketing, Reels yoki sotuv bo'yicha savol bering..." 
             class="flex-1 p-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:outline-none focus:border-indigo-500">
-          <button type="submit" class="px-5 py-3 rounded-xl gradient-btn text-white font-bold text-xs shadow-md">
+          <button type="submit" data-i18n="chat_send" class="px-5 py-3 rounded-xl gradient-btn text-white font-bold text-xs shadow-md">
             Yuborish 🚀
           </button>
         </form>
@@ -937,18 +934,18 @@
       <section id="historyView" class="hidden space-y-5">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div>
-            <h2 class="text-2xl font-black text-white">Generatsiyalar Tarixi</h2>
-            <p class="text-xs text-slate-400">Barcha yaratilgan kontentlar xavfsiz saqlanadi.</p>
+            <h2 data-i18n="history_title" class="text-2xl font-black text-white">Generatsiyalar Tarixi</h2>
+            <p data-i18n="history_sub" class="text-xs text-slate-400">Barcha yaratilgan kontentlar xavfsiz saqlanadi.</p>
           </div>
           <select id="historyFilterType" class="p-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-slate-200">
-            <option value="">Barcha turlar</option>
-            <option value="post">Postlar</option>
-            <option value="reels">Reels</option>
-            <option value="content_plan">Kontent Reja</option>
-            <option value="hashtags">Hashtaglar</option>
-            <option value="ad_copy">Reklama</option>
-            <option value="image_prompt">Image Prompts</option>
-            <option value="audience">Auditoriya</option>
+            <option data-i18n="history_filter_all" value="">Barcha turlar</option>
+            <option data-i18n="history_filter_post" value="post">Postlar</option>
+            <option data-i18n="history_filter_reels" value="reels">Reels</option>
+            <option data-i18n="history_filter_plan" value="content_plan">Kontent Reja</option>
+            <option data-i18n="history_filter_hash" value="hashtags">Hashtaglar</option>
+            <option data-i18n="history_filter_ads" value="ad_copy">Reklama</option>
+            <option data-i18n="history_filter_img" value="image_prompt">Image Prompts</option>
+            <option data-i18n="history_filter_aud" value="audience">Auditoriya</option>
           </select>
         </div>
 
@@ -959,40 +956,39 @@
       <section id="profileView" class="hidden space-y-5">
         <div class="max-w-2xl mx-auto glass-panel p-6 rounded-3xl border border-slate-800 space-y-5">
           <div>
-            <h2 class="text-xl font-bold text-white">🏢 Biznes Profil Sozlamalari</h2>
-            <p class="text-xs text-slate-400 mt-1">Ushbu ma'lumotlar saqlanadi va AI generatorlarda avtomatik to'ldiriladi.</p>
+            <h2 data-i18n="profile_title" class="text-xl font-bold text-white">🏢 Biznes Profil Sozlamalari</h2>
+            <p data-i18n="profile_sub" class="text-xs text-slate-400 mt-1">Ushbu ma'lumotlar saqlanadi va AI generatorlarda avtomatik to'ldiriladi.</p>
           </div>
 
           <form id="businessProfileForm" class="space-y-4">
             <div>
-              <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes / Brend Nomi *</label>
-              <input type="text" id="profBizName" required placeholder="Masalan: 'Chustiyosh'" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              <label data-i18n="profile_biz_name" class="block text-xs text-slate-300 font-semibold mb-1">Biznes / Brend Nomi *</label>
+              <input type="text" id="profBizName" required data-i18n-placeholder="ph_biz_name" placeholder="Masalan: 'Chustiyosh'" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
             </div>
             <div>
-              <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
-              <input type="text" id="profBizType" required placeholder="Restoran, Butik, IT Kurs..." class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+              <label data-i18n="profile_biz_type" class="block text-xs text-slate-300 font-semibold mb-1">Biznes Turi *</label>
+              <input type="text" id="profBizType" required data-i18n-placeholder="ph_biz_type" placeholder="Restoran, Butik, IT Kurs..." class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
             </div>
             <div>
-              <label class="block text-xs text-slate-300 font-semibold mb-1">Biznes / Mahsulot Tavsifi</label>
-              <textarea id="profDesc" rows="3" placeholder="Biznesingizning asosiy xususiyatlari..." class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs"></textarea>
+              <label data-i18n="profile_desc" class="block text-xs text-slate-300 font-semibold mb-1">Biznes / Mahsulot Tavsifi</label>
+              <textarea id="profDesc" rows="3" data-i18n-placeholder="ph_product" placeholder="Biznesingizning asosiy xususiyatlari..." class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs"></textarea>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Maqsadli Auditoriya</label>
-                <input type="text" id="profAudience" placeholder="18-35 yoshli yoshlar" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                <label data-i18n="profile_aud" class="block text-xs text-slate-300 font-semibold mb-1">Maqsadli Auditoriya</label>
+                <input type="text" id="profAudience" data-i18n-placeholder="ph_ad_aud" placeholder="18-35 yoshli yoshlar" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
               </div>
               <div>
-                <label class="block text-xs text-slate-300 font-semibold mb-1">Tone of Voice (Ohang)</label>
+                <label data-i18n="profile_tone" class="block text-xs text-slate-300 font-semibold mb-1">Tone of Voice (Ohang)</label>
                 <select id="profTone" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
-                  <option value="Do'stona va samimiy">Do'stona va samimiy</option>
-                  <option value="Ekspert va professional">Ekspert va professional</option>
-                  <option value="Savdoga yo'naltirilgan">Savdoga yo'naltirilgan</option>
-                  <option value="Trendbop va dinamik">Trendbop va dinamik</option>
+                  <option data-i18n="tone_friendly" value="Do'stona va samimiy">Do'stona va samimiy</option>
+                  <option data-i18n="tone_professional" value="Ekspert va professional">Ekspert va professional</option>
+                  <option data-i18n="tone_sales" value="Savdoga yo'naltirilgan">Savdoga yo'naltirilgan</option>
                 </select>
               </div>
             </div>
             <div>
-              <label class="block text-xs text-slate-300 font-semibold mb-1">Asosiy Platforma</label>
+              <label data-i18n="profile_platform" class="block text-xs text-slate-300 font-semibold mb-1">Asosiy Platforma</label>
               <select id="profPlatform" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
                 <option value="Instagram">Instagram</option>
                 <option value="Telegram">Telegram</option>
@@ -1000,8 +996,8 @@
                 <option value="Facebook">Facebook</option>
               </select>
             </div>
-            <button type="submit" class="w-full py-3 rounded-xl gradient-btn text-white font-bold text-xs shadow-md">
-              Profilni Saqlash 💾
+            <button type="submit" data-i18n="profile_save_btn" class="w-full py-3 rounded-xl gradient-btn text-white font-bold text-xs shadow-md">
+              Biznes Profilni Saqlash 💾
             </button>
           </form>
         </div>
@@ -1355,7 +1351,7 @@
       <!-- Modal Header -->
       <div class="space-y-1.5 pt-7 sm:pt-4">
         <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[11px] font-bold">
-          <span>💳 To'lov va Pro Faollashtirish</span>
+          <span data-i18n="checkout_title">💳 To'lov va Pro Faollashtirish</span>
         </div>
         <h3 class="font-extrabold text-white text-xl" id="checkoutPlanTitle">Standart Pro</h3>
         <p class="text-2xl font-black gradient-text" id="checkoutPlanPrice">50 000 so'm / oy</p>
@@ -1383,10 +1379,10 @@
 
         <!-- Card Number with 1-Click Copy -->
         <div class="space-y-1">
-          <span class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Plastik Karta Raqami:</span>
+          <span data-i18n="checkout_card_label" class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Plastik Karta Raqami:</span>
           <div class="flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-black/40 border border-white/10">
             <span class="font-mono text-base sm:text-lg font-black text-white tracking-widest" id="visaCardNumberText">4916 9903 6131 4013</span>
-            <button type="button" onclick="copyCardNumberToClipboard('4916990361314013')" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition-all shadow-md shadow-indigo-600/30 flex items-center gap-1">
+            <button type="button" onclick="copyCardNumberToClipboard('4916990361314013')" data-i18n="btn_copy" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition-all shadow-md shadow-indigo-600/30 flex items-center gap-1">
               <span>Nusxalash 📋</span>
             </button>
           </div>
@@ -1394,11 +1390,11 @@
 
         <div class="flex items-center justify-between text-xs pt-1 border-t border-white/10 text-slate-300">
           <div>
-            <span class="block text-[9px] text-slate-400 uppercase">Qabul qiluvchi</span>
+            <span data-i18n="checkout_card_holder" class="block text-[9px] text-slate-400 uppercase">Karta egasi: Daler X.</span>
             <span class="font-bold text-white text-xs">AI SMM ASSISTANT</span>
           </div>
           <div class="text-right">
-            <span class="block text-[9px] text-slate-400 uppercase">Yechiladigan summa</span>
+            <span data-i18n="checkout_deduct" class="block text-[9px] text-slate-400 uppercase">Yechiladigan summa</span>
             <span class="font-bold text-amber-400 text-xs font-mono" id="cardDeductAmount">59 000 so'm</span>
           </div>
         </div>
@@ -1407,9 +1403,9 @@
       <!-- Xaridni tasdiqlash bo'yicha maxsus ogohlantirish (User talabi) -->
       <div class="p-3.5 rounded-2xl bg-amber-500/15 border-2 border-amber-500/40 text-center text-xs space-y-1 text-amber-200">
         <p class="font-extrabold text-amber-300 text-xs flex items-center justify-center gap-1.5">
-          <span>⚠️ DIQQAT:</span>
+          <span data-i18n="checkout_warning_title">⚠️ DIQQAT:</span>
         </p>
-        <p class="font-bold text-xs leading-relaxed text-white">
+        <p data-i18n="checkout_warning_txt" class="font-bold text-xs leading-relaxed text-white">
           "Xaridingizni tasdiqlash uchun chekni tashlash esingizdan chiqmasin"
         </p>
       </div>
@@ -1417,10 +1413,10 @@
       <!-- ================= TO'LOV QILISH ILOVALARI BO'LIMI ================= -->
       <div class="space-y-2.5 text-left pt-1">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-white flex items-center gap-1.5">
+          <span data-i18n="checkout_apps_title" class="text-xs font-bold text-white flex items-center gap-1.5">
             <span>💳 To'lov qilish (Ilovani tanlang):</span>
           </span>
-          <span class="text-[10px] text-slate-400" id="selectedPaymentAppBadge">Ilovani bosing ↓</span>
+          <span data-i18n="checkout_apps_sub" class="text-[10px] text-slate-400" id="selectedPaymentAppBadge">Ilovani bosing ↓</span>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -1429,7 +1425,7 @@
             <span class="w-7 h-7 rounded-xl bg-cyan-500/20 text-cyan-400 font-black text-xs flex items-center justify-center shrink-0 border border-cyan-500/30">P</span>
             <div class="truncate">
               <div class="text-xs font-bold text-white group-hover:text-cyan-300">Payme</div>
-              <div class="text-[9px] text-slate-400">Ilova orqali</div>
+              <div class="text-[9px] text-slate-400">Payme</div>
             </div>
           </button>
 
@@ -1438,7 +1434,7 @@
             <span class="w-7 h-7 rounded-xl bg-blue-500/20 text-blue-400 font-black text-xs flex items-center justify-center shrink-0 border border-blue-500/30">C</span>
             <div class="truncate">
               <div class="text-xs font-bold text-white group-hover:text-blue-300">Click</div>
-              <div class="text-[9px] text-slate-400">Ilova orqali</div>
+              <div class="text-[9px] text-slate-400">Click</div>
             </div>
           </button>
 
@@ -1447,7 +1443,7 @@
             <span class="w-7 h-7 rounded-xl bg-purple-500/20 text-purple-400 font-black text-xs flex items-center justify-center shrink-0 border border-purple-500/30">🍇</span>
             <div class="truncate">
               <div class="text-xs font-bold text-white group-hover:text-purple-300">Uzum Bank</div>
-              <div class="text-[9px] text-slate-400">Ilova orqali</div>
+              <div class="text-[9px] text-slate-400">Uzum Bank</div>
             </div>
           </button>
 
@@ -1456,7 +1452,7 @@
             <span class="w-7 h-7 rounded-xl bg-red-500/20 text-red-400 font-black text-xs flex items-center justify-center shrink-0 border border-red-500/30">🔴</span>
             <div class="truncate">
               <div class="text-xs font-bold text-white group-hover:text-red-300">Anorbank</div>
-              <div class="text-[9px] text-slate-400">Ilova orqali</div>
+              <div class="text-[9px] text-slate-400">Anorbank</div>
             </div>
           </button>
 
@@ -1465,7 +1461,7 @@
             <span class="w-7 h-7 rounded-xl bg-emerald-500/20 text-emerald-400 font-black text-xs flex items-center justify-center shrink-0 border border-emerald-500/30">🟢</span>
             <div class="truncate">
               <div class="text-xs font-bold text-white group-hover:text-emerald-300">Paynet</div>
-              <div class="text-[9px] text-slate-400">Ilova orqali</div>
+              <div class="text-[9px] text-slate-400">Paynet</div>
             </div>
           </button>
 
@@ -1474,7 +1470,7 @@
             <span class="w-7 h-7 rounded-xl bg-teal-500/20 text-teal-400 font-black text-xs flex items-center justify-center shrink-0 border border-teal-500/30">💎</span>
             <div class="truncate">
               <div class="text-xs font-bold text-white group-hover:text-teal-300">Zoomrad</div>
-              <div class="text-[9px] text-slate-400">Ilova orqali</div>
+              <div class="text-[9px] text-slate-400">Zoomrad</div>
             </div>
           </button>
 
@@ -1483,32 +1479,32 @@
             <span class="w-7 h-7 rounded-xl bg-indigo-500/20 text-indigo-400 font-black text-xs flex items-center justify-center shrink-0 border border-indigo-500/30">🏦</span>
             <div class="truncate">
               <div class="text-xs font-bold text-white group-hover:text-indigo-300">Hamkorbank</div>
-              <div class="text-[9px] text-slate-400">Ilova orqali to'lov</div>
+              <div class="text-[9px] text-slate-400">Hamkorbank</div>
             </div>
           </button>
         </div>
       </div>
 
       <!-- Telegram & Tranzaksiya Ma'lumotlari -->
-      <div class="space-y-2 pt-1">
+      <div class="space-y-2 pt-1 text-left">
         <div>
-          <label class="block text-[11px] text-slate-300 font-semibold mb-1">Telegram profilingiz (@username):</label>
+          <label data-i18n="checkout_tg_label" class="block text-[11px] text-slate-300 font-semibold mb-1">Telegram profilingiz (@username):</label>
           <input type="text" id="checkoutTelegramInput" placeholder="@username" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
         </div>
         <div>
-          <label class="block text-[11px] text-slate-300 font-semibold mb-1">Chek raqami yoki izoh (ixtiyoriy):</label>
-          <input type="text" id="checkoutReceiptNote" placeholder="Masalan: 123456 tranzaksiya yoki oxirgi 4 raqam" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
+          <label data-i18n="checkout_note_label" class="block text-[11px] text-slate-300 font-semibold mb-1">Chek raqami yoki izoh (ixtiyoriy):</label>
+          <input type="text" id="checkoutReceiptNote" data-i18n-placeholder="ph_topic" placeholder="Masalan: 123456 tranzaksiya yoki oxirgi 4 raqam" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:border-indigo-400 focus:outline-none transition-colors">
         </div>
       </div>
 
       <!-- Action Buttons -->
       <div class="space-y-2 pt-2">
-        <button type="button" onclick="sendReceiptViaTelegram()" class="w-full py-3.5 px-4 rounded-2xl bg-[#229ED9] hover:bg-[#1e8bc2] text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#229ED9]/30">
+        <button type="button" onclick="sendReceiptViaTelegram()" data-i18n="checkout_send_bot_btn" class="w-full py-3.5 px-4 rounded-2xl bg-[#229ED9] hover:bg-[#1e8bc2] text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#229ED9]/30">
           <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.718-3.084 12.984-3.238 13.68-.106.474-.325.632-.544.646-.474.032-.831-.308-1.29-.608-.718-.468-1.124-.759-1.821-1.218-.805-.531-.283-.823.175-1.298.12-.125 2.197-2.012 2.237-2.183.005-.021.01-.1-.04-.143-.05-.043-.124-.028-.178-.016-.076.017-1.288.82-3.636 2.406-.344.237-.656.353-.935.347-.308-.007-.899-.174-1.339-.317-.54-.176-.97-.269-.933-.568.019-.156.234-.316.645-.48 2.529-1.101 4.217-1.827 5.064-2.179 2.41-.998 2.911-1.172 3.237-1.177.072-.001.233.018.337.103.088.072.112.169.124.238.012.069.027.224.016.347z"/></svg>
           <span>To'lov Chekini Telegram Botga Yuborish ✈️</span>
         </button>
 
-        <button type="button" onclick="confirmPaymentAndNotify()" class="w-full py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 font-bold text-xs transition-all">
+        <button type="button" onclick="confirmPaymentAndNotify()" data-i18n="checkout_confirm_btn" class="w-full py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 font-bold text-xs transition-all">
           To'lov qildim (Tasdiqlashga yuborish) 📋
         </button>
       </div>
@@ -1525,15 +1521,15 @@
       </div>
 
       <div class="space-y-1">
-        <h3 class="font-extrabold text-white text-lg tracking-tight">Hisobdan chiqish</h3>
-        <p class="text-xs text-slate-400">Haqiqatan ham profilingizdan chiqmoqchimisiz?</p>
+        <h3 data-i18n="logout_title" class="font-extrabold text-white text-lg tracking-tight">Hisobdan chiqish</h3>
+        <p data-i18n="logout_desc" class="text-xs text-slate-400">Haqiqatan ham profilingizdan chiqmoqchimisiz?</p>
       </div>
 
       <div class="grid grid-cols-2 gap-3 pt-2">
-        <button type="button" onclick="closeLogoutConfirmModal()" class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-colors border border-slate-700">
+        <button type="button" onclick="closeLogoutConfirmModal()" data-i18n="logout_cancel" class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-colors border border-slate-700">
           Bekor qilish
         </button>
-        <button type="button" onclick="confirmLogoutAction()" class="py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg shadow-rose-600/30 transition-all flex items-center justify-center gap-1.5">
+        <button type="button" onclick="confirmLogoutAction()" data-i18n="logout_confirm" class="py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg shadow-rose-600/30 transition-all flex items-center justify-center gap-1.5">
           <span>Ha, chiqish</span>
         </button>
       </div>
