@@ -36,16 +36,11 @@ class TelegramService:
         created_at = feedback_data.get("created_at", "")
 
         # Telegram username qatori
-        if not telegram_username:
-            if "daler" in str(name).lower() or "daler" in str(email).lower():
-                telegram_username = "@ac_1Daler"
-            elif email and "@" in email and "example.com" not in email:
-                telegram_username = "@" + email.split("@")[0].replace(".", "_")
-            else:
-                telegram_username = "@ac_1Daler"
-
-        clean_tg = str(telegram_username).strip().lstrip("@")
-        tg_line = f"📱 <b>Telegram:</b> <a href=\"https://t.me/{clean_tg}\">@{clean_tg}</a>"
+        if telegram_username:
+            clean_tg = str(telegram_username).strip().lstrip("@")
+            tg_line = f"📱 <b>Telegram:</b> <a href=\"https://t.me/{clean_tg}\">@{clean_tg}</a>"
+        else:
+            tg_line = "📱 <b>Telegram:</b> Ko'rsatilmagan"
 
         # To'lov xabari yoki oddiy murojaat ekanligini aniqlash
         is_payment = (

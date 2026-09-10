@@ -4,16 +4,6 @@
 
 let selectedFeedbackType = "suggestion";
 
-// Qurilmadagi ma'lum hisoblar ro'yxati (Fallback / Device profile)
-const KNOWN_DEVICE_EMAILS = [
-  "dalerxolmamatov0@gmail.com",
-  "robloxgamee1227@gmail.com",
-  "robloxgamee100@gmail.com",
-  "xolmamatovdaler0@gmail.com",
-  "xolmamatovdaler6@gmail.com",
-  "dalerbee173@gmail.com"
-];
-
 function initFeedback() {
   const form = document.getElementById("feedbackForm");
   if (form) {
@@ -41,23 +31,23 @@ function showFeedbackModal(defaultType = "suggestion") {
 
   modal.classList.remove("hidden");
 
-  // Qurilmadagi foydalanuvchi ma'lumotlarini avtomatik tahlil qilib to'ldirish
-  const user = getCurrentUser();
+  // Faqat joriy tizimga kirgan foydalanuvchi ma'lumotlarini to'ldirish
+  const user = (typeof getCurrentUser === "function") ? getCurrentUser() : null;
   const nameInput = document.getElementById("feedbackName");
   const emailInput = document.getElementById("feedbackEmail");
   const tgInput = document.getElementById("feedbackTelegram");
 
   if (user) {
-    if (nameInput && !nameInput.value) nameInput.value = user.name || "Daler";
-    if (emailInput && !emailInput.value) emailInput.value = user.email || "dalerxolmamatov0@gmail.com";
+    if (nameInput && !nameInput.value) nameInput.value = user.name || "";
+    if (emailInput && !emailInput.value) emailInput.value = user.email || "";
   } else {
-    const savedEmail = localStorage.getItem("smm_last_email") || KNOWN_DEVICE_EMAILS[0];
-    const savedName = localStorage.getItem("smm_last_name") || "Daler";
+    const savedEmail = localStorage.getItem("smm_last_email") || "";
+    const savedName = localStorage.getItem("smm_last_name") || "";
     if (nameInput && !nameInput.value) nameInput.value = savedName;
     if (emailInput && !emailInput.value) emailInput.value = savedEmail;
   }
 
-  const savedTg = localStorage.getItem("smm_telegram_username");
+  const savedTg = localStorage.getItem("smm_telegram_username") || "";
   if (tgInput && !tgInput.value && savedTg) {
     tgInput.value = savedTg;
   }
@@ -112,17 +102,6 @@ async function handleFeedbackSubmit(e) {
     return;
   }
   const formattedTelegram = "@" + cleanTg;
-
-  // 4. Foydalanuvchining qurilmasidagi ma'lumotlar bilan tahlil qilish
-  const currentUser = getCurrentUser();
-  if (currentUser && currentUser.email) {
-    const matchesUser = email.toLowerCase() === currentUser.email.toLowerCase();
-    const matchesDevice = KNOWN_DEVICE_EMAILS.some(e => e.toLowerCase() === email.toLowerCase());
-    if (!matchesUser && !matchesDevice) {
-      showToast("Malumot mos kelmayapti", "error");
-      return;
-    }
-  }
 
   // Ma'lumotlarni qurilmaga saqlash
   localStorage.setItem("smm_last_name", name);

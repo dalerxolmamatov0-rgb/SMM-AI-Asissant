@@ -50,7 +50,7 @@ def submit_feedback(
         user_id=user_id,
         name=user_name,
         email=user_email,
-        telegram_username=data.telegram_username or "@ac_1Daler",
+        telegram_username=data.telegram_username or "",
         type=data.type or "payment",
         subject=data.subject or "Pro Ta'rif To'lovi",
         message=data.message or "Pro obuna to'lovi so'rovi",

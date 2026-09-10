@@ -170,7 +170,7 @@ function openCheckoutModal(title, price) {
       body: JSON.stringify({
         name,
         email,
-        telegram_username: localStorage.getItem("smm_telegram_username") || "@ac_1Daler",
+        telegram_username: localStorage.getItem("smm_telegram_username") || "",
         type: "payment",
         is_payment: true,
         with_buttons: true,
@@ -250,7 +250,7 @@ async function sendReceiptViaTelegram() {
   const tgInput = document.getElementById("checkoutTelegramInput");
   const noteInput = document.getElementById("checkoutReceiptNote");
   
-  let telegram = tgInput?.value.trim() || localStorage.getItem("smm_telegram_username") || "@ac_1Daler";
+  let telegram = tgInput?.value.trim() || localStorage.getItem("smm_telegram_username") || "";
   if (telegram) localStorage.setItem("smm_telegram_username", telegram);
   
   const note = noteInput?.value.trim() || "";
@@ -293,7 +293,7 @@ async function confirmPaymentAndNotify() {
   const tgInput = document.getElementById("checkoutTelegramInput");
   const noteInput = document.getElementById("checkoutReceiptNote");
   
-  let telegram = tgInput?.value.trim() || localStorage.getItem("smm_telegram_username") || "@ac_1Daler";
+  let telegram = tgInput?.value.trim() || localStorage.getItem("smm_telegram_username") || "";
   if (telegram) localStorage.setItem("smm_telegram_username", telegram);
   
   const note = noteInput?.value.trim() || "";
